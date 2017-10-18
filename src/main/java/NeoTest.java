@@ -4,7 +4,7 @@ import static org.neo4j.driver.v1.Values.parameters;
 
 public class NeoTest {
     public static void main(String[] args) {
-        //Felix war hier 
+        //Felix war hier
         Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("trump", "password"));
         Session session = driver.session();
 
