@@ -1,0 +1,5 @@
+1. NEO4J herunterladen: https://neo4j.com/download/community-edition/
+2. Installieren, lokale Datenbank starten. Sichtbar unter http://127.0.0.1:7474/
+3. Database Information --> :server user add --> Name: trump, Passwort: password (Neuen Datenbanknutzer anlegen)
+4. Intelij Projekt aus Github auschecken und bauen.
+5. Ausführen muss "King Arthur" ausgeben.
