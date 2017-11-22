@@ -5,4 +5,4 @@
 5. Ausführen muss "King Arthur" ausgeben.
 
 6. Projekt als .JAR bauen (mit mvn clean package)
-7. JAR in den Plugin Ordner von NEO4J einfügen (in DB-Ordner --> plugins/)
+7. JAR in den Plugins Ordner von NEO4J einfügen (in DB-Ordner --> plugins/) (plugins muss manuell erstellt werden)
