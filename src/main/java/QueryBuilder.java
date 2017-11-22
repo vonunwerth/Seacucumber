@@ -12,6 +12,9 @@ public class QueryBuilder {
 
     }
 
+    /*
+    * ersetzt Leerzeichen + Zeilenumbrüche; schneidet ab "WHERE" ab
+     */
     private static String deleteReturn(String query) {
         query = query.trim().replaceAll("\n", " ");
         String cleaned[] = query.split("WHERE");
