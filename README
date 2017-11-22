@@ -4,5 +4,5 @@
 4. Intelij Projekt aus Github auschecken und bauen.
 5. Ausführen muss "King Arthur" ausgeben.
 
-6. Projekt als .JAR bauen
-7. JAR in den Plugin Ordner von NEO4J einfügen
+6. Projekt als .JAR bauen (mit mvn clean package)
+7. JAR in den Plugin Ordner von NEO4J einfügen (in DB-Ordner --> plugins/)
