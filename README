@@ -1,3 +1,5 @@
+==INSTALLATION
+
 1. NEO4J herunterladen: https://neo4j.com/download/community-edition/
 2. Installieren, lokale Datenbank starten. Sichtbar unter http://127.0.0.1:7474/
 3. Database Information --> :server user add --> Name: trump, Passwort: password (Neuen Datenbanknutzer anlegen)
@@ -8,7 +10,7 @@
 7. JAR in den Plugins Ordner von NEO4J einfügen (in DB-Ordner --> plugins/) (plugins muss manuell erstellt werden)
 
 
-PROCEDURES AND USER FUNCTIONS
+==PROCEDURES AND USER FUNCTIONS
 
 Procedures, sowie UserFunctions sollten in eigenen Packages abgelegt werden, um sie später einfacher aufrufen zu können.
 Aufrufe erfolgen dann in der NEO4J Konsole mit:
