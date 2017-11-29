@@ -23,7 +23,7 @@ public class GraphProcedures {
         query = query.trim().replaceAll("\n", " ");
         String cleaned[] = query.split("RETURN");
         String cleaned2[] = cleaned[0].split("WHERE");
-
+        String clean = cleaned2[0];
         List<SearchHit> list = new ArrayList<>();
 
         list.add(new SearchHit(cleaned2[0]));
@@ -35,5 +35,4 @@ public class GraphProcedures {
 
         return list.stream();
     }
-
 }
