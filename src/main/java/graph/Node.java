@@ -1,96 +1,52 @@
 package graph;
 
-import java.util.Comparator;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Node implements Comparable<Node>, Comparator<Node> {
+import static graph.Graph.nodes;
+
+public class Node {
 
     //Bezeichnung des Knoten
-    private String val;
+    private String label;
     //unsortierte Menge (HashSet) der ausgehenden Kanten
-    private HashSet<Edge> edges = new HashSet<Edge>();
-    //vorangehender Knoten
-    private Node previous = null;
+    private ArrayList<Edge> incomingEdges = new ArrayList<>();
 
-    //String relation;
+    private ArrayList<Edge> outgoingEdges = new ArrayList<>();
 
-    public Node() {
+    public Node(String label) {
+        this.label = label;
+        nodes.add(this);
     }
 
-    public Node(Graph g, String val) {
-        this.val = val;
-        g.getAllNodes().add(this);
-    }
-
-    //testen
     public static void main(String[] args) {
+        Node a = new Node("A");
+        Node b = new Node("B");
+        Node c = new Node("C");
 
-        Graph gr = new Graph();
-
-        Node a = new Node(gr, "A"),
-                b = new Node(gr, "B"),
-                c = new Node(gr, "C"),
-                d = new Node(gr, "D"),
-                e = new Node(gr, "E"),
-                f = new Node(gr, "F"),
-                g = new Node(gr, "G"),
-                h = new Node(gr, "H");
-
-        a.addEdge(b, "f1");
-        a.addEdge(c, "3");
-        a.addEdge(f, "10");
-        a.addEdge(g, "6");
-        b.addEdge(d, "1");
-        c.addEdge(d, "4");
-        c.addEdge(e, "10");
-        c.addEdge(f, "5");
-        d.addEdge(e, "2");
-        d.addEdge(f, "1");
-        f.addEdge(g, "1");
-        System.out.println(gr);
-    }
-
-    public HashSet<Edge> getEdges() {
-        return edges;
-    }
-
-    public void setPrevious(Node previous) {
-        this.previous = previous;
-    }
-
-    public void addEdge(Node node, String relation) {
-        edges.add(new Edge(node, relation));
-    }
-
-    public void addEdges(Node node, String relation) {
-        this.edges.add(new Edge(node, relation));
-        node.edges.add(new Edge(this, relation));
-    }
-
-    public String toString() {
-        return val;
-    }
-
-    public String path() {
-        return "" + (previous == null ? val : previous.path() + " " + val);
-    }
-
-    public String rel() {
-        String str = "test";
-        return str;
-    }
-
-    public String firstNode() {
-        return "" + (previous == null ? val : previous.firstNode());
-    }
-
-    public int compare(Node n1, Node n2) {
-        return n1.toString().compareTo(n2.toString());
+        a.addEdge(b, "Coole Verbindung von A nach B");
+        a.addEdge(c, "I bims 1 Kante vong A->C");
+        b.addEdge(c, "Verb. von B nach C");
+        System.out.println(Arrays.toString(a.incomingEdges.toArray()));
+        System.out.println(Arrays.toString(a.outgoingEdges.toArray()));
+        System.out.println(Arrays.toString(b.incomingEdges.toArray()));
+        System.out.println(Arrays.toString(b.outgoingEdges.toArray()));
+        System.out.println(Arrays.toString(c.incomingEdges.toArray()));
+        System.out.println(Arrays.toString(c.outgoingEdges.toArray()));
     }
 
     @Override
-    public int compareTo(Node o) {
-        return 0;
+    public String toString() {
+        return label;
     }
 
+    public void addEdge(Node node, String relationLabel) {
+        Edge edge = new Edge(this, node, relationLabel);
+        outgoingEdges.add(edge);
+        node.incomingEdges.add(edge);
+    }
+
+    public String getLabel() {
+        return label;
+    }
 }

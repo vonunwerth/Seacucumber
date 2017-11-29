@@ -1,4 +1,4 @@
-package graph;
+package procedure;
 
 public class SearchHit {
 

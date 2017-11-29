@@ -1,4 +1,4 @@
-package graph;
+package procedure;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.logging.Log;
@@ -21,13 +21,13 @@ public class GraphProcedures {
     @Description("Wir wollen die Query")
     public Stream<SearchHit> extractQuery(@Name("query") String query) {
         query = query.trim().replaceAll("\n", " ");
-        String cleaned[] = query.split("WHERE");
+        String cleaned[] = query.split("RETURN");
+        String cleaned2[] = cleaned[0].split("WHERE");
 
         List<SearchHit> list = new ArrayList<>();
 
-        for (String clean : cleaned) {
-            list.add(new SearchHit(clean));
-        }
+        list.add(new SearchHit(cleaned2[0]));
+
 
         //Kurzer kleiner Test!!
         //SearchHit hit1 = new SearchHit("Geht doch, du dich.");
