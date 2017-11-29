@@ -1,6 +1,7 @@
 package procedure;
 
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Result;
 import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
@@ -21,6 +22,10 @@ public class GraphProcedures {
     @Description("Wir wollen die Query")
     public Stream<SearchHit> extractQuery(@Name("query") String query) {
         query = query.trim().replaceAll("\n", " ");
+
+        //Prueft ob die Query korrekt ist. Bei falscher Eingabe Fehlermeldung in Neo4j
+        Result result = db.execute(query);
+
         String cleaned[] = query.split("RETURN");
         String cleaned2[] = cleaned[0].split("WHERE");
         String clean = cleaned2[0];
@@ -28,11 +33,15 @@ public class GraphProcedures {
 
         list.add(new SearchHit(cleaned2[0]));
 
-
         //Kurzer kleiner Test!!
         //SearchHit hit1 = new SearchHit("Geht doch, du dich.");
         //list.add(hit1);
 
+        /*List<SearchHit> list2 = new ArrayList<>();
+        list2.add(new SearchHit(result+""));
+        return list2.stream(); */
+
         return list.stream();
+
     }
 }
