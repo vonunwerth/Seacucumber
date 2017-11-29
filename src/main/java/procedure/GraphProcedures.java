@@ -1,7 +1,6 @@
 package procedure;
 
 import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Result;
 import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
@@ -24,7 +23,7 @@ public class GraphProcedures {
         query = query.trim().replaceAll("\n", " ");
 
         //Prueft ob die Query korrekt ist. Bei falscher Eingabe Fehlermeldung in Neo4j
-        Result result = db.execute(query);
+        db.execute(query);
 
         String cleaned[] = query.split("RETURN");
         String cleaned2[] = cleaned[0].split("WHERE");
