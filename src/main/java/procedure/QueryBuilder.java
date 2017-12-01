@@ -1,7 +1,7 @@
 package procedure;
 
 import graph.Edge;
-import graph.Node;
+import graph.Point;
 
 public class QueryBuilder {
     static String query;
@@ -19,24 +19,24 @@ public class QueryBuilder {
     public static void build() {
         String label = "";
         String identifier = "";
-        String[] node = new String[2];
+        String[] point = new String[2];
         String[] edge = new String[2];
         int direction = 0;
-        Node first = null;
-        Node second = null;
+        Point first = null;
+        Point second = null;
         for (int x = 0; x < query.length(); x++) {
-            String nodeString = "";
+            String pointString = "";
             String edgeString = "";
             if (query.charAt(x) == '>') direction = 1;
             if (query.charAt(x) == '<') direction = 2;
             if (query.charAt(x) == '(') {
                 x++;
                 while (query.charAt(x) != ')' && query.charAt(x) != '{') {
-                    nodeString = nodeString + query.charAt(x);
+                    pointString = pointString + query.charAt(x);
                     x++;
                 }
-                node = nodeString.split(":");
-                Node n = new Node(node[0], node[1]);
+                point = pointString.split(":");
+                Point n = new Point(point[0], point[1]);
                 if (first != null) {
                     if (direction == 1) {
                         Edge e = new Edge(first, n, edge[1]);
@@ -48,8 +48,8 @@ public class QueryBuilder {
                     }
                 }
                 first = n;
-                System.out.println(node[0]);
-                System.out.println(node[1]);
+                System.out.println(point[0]);
+                System.out.println(point[1]);
             }
 
             if (query.charAt(x) == '[') {

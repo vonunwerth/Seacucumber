@@ -6,6 +6,7 @@ import org.neo4j.procedure.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 public class GraphProcedures {
@@ -22,8 +23,9 @@ public class GraphProcedures {
     public Stream<SearchHit> extractQuery(@Name("query") String query) {
         query = query.trim().replaceAll("\n", " ");
 
+        TimeUnit tu = TimeUnit.MILLISECONDS;
         //Prueft ob die Query korrekt ist. Bei falscher Eingabe Fehlermeldung in Neo4j
-        db.execute(query);
+        db.execute(query, 5, tu);
 
         String cleaned[] = query.split("RETURN");
         String cleaned2[] = cleaned[0].split("WHERE");

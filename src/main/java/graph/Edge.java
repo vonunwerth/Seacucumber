@@ -7,12 +7,12 @@ import static graph.Graph.edges;
 
 public class Edge {
 
-    private Node start;
+    private Point start;
 
     public String relation;
-    private Node target;
+    private Point target;
 
-    public Edge(Node start, Node target, String relationLabel) {
+    public Edge(Point start, Point target, String relationLabel) {
         this.start = start;
         this.target = target;
         this.relation = relationLabel;
@@ -24,8 +24,8 @@ public class Edge {
         return start + " " + target + " " + relation;
     }
 
-    public List<Node> getNode() {
-        List<Node> list = new LinkedList<>();
+    public List<Point> getPoint() {
+        List<Point> list = new LinkedList<>();
         list.add(start);
         list.add(target);
         return list;
