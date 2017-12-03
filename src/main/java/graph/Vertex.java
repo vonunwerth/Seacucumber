@@ -2,9 +2,9 @@ package graph;
 
 import java.util.ArrayList;
 
-import static graph.Graph.points;
+import static graph.Graph.vertices;
 
-public class Point {
+public class Vertex {
 
     //Bezeichnung des Knoten
     private String label;
@@ -14,22 +14,22 @@ public class Point {
     private ArrayList<Edge> incomingEdges = new ArrayList<>();
     private ArrayList<Edge> outgoingEdges = new ArrayList<>();
 
-    public Point(String label, String identifier) {
+    public Vertex(String label, String identifier) {
         this.label = label;
         this.identifier = identifier;
-        points.add(this);
+        vertices.add(this);
     }
 
     public static void main(String[] args) {
-        Point a = new Point("BasicPoint", "A");
-        Point b = new Point("BasicPoint", "B");
-        Point c = new Point("BasicPoint", "C");
-        Point d = new Point("BasicPoint", "D");
-        Point e = new Point("BasicPoint", "E");
-        Point f = new Point("BasicPoint", "F");
-        Point g = new Point("BasicPoint", "G");
-        Point h = new Point("BasicPoint", "H");
-        Point i = new Point("BasicPoint", "I");
+        Vertex a = new Vertex("BasicVertex", "A");
+        Vertex b = new Vertex("BasicVertex", "B");
+        Vertex c = new Vertex("BasicVertex", "C");
+        Vertex d = new Vertex("BasicVertex", "D");
+        Vertex e = new Vertex("BasicVertex", "E");
+        Vertex f = new Vertex("BasicVertex", "F");
+        Vertex g = new Vertex("BasicVertex", "G");
+        Vertex h = new Vertex("BasicVertex", "H");
+        Vertex i = new Vertex("BasicVertex", "I");
 
         a.addEdge(b, "Coole Verbindung von A nach B");
         a.addEdge(d, "Kante");
@@ -39,8 +39,8 @@ public class Point {
         a.addEdge(i, "Kante");
         g.addEdge(f, "Kante");
         g.addEdge(e, "Kante");
-        a.printPoint();
-        f.printPoint();
+        a.printVertex();
+        f.printVertex();
     }
 
     @Override
@@ -48,10 +48,10 @@ public class Point {
         return "" + label + ":" + identifier;
     }
 
-    public void addEdge(Point point, String relationLabel) {
-        Edge edge = new Edge(this, point, relationLabel);
+    public void addEdge(Vertex vertex, String relationLabel) {
+        Edge edge = new Edge(this, vertex, relationLabel);
         outgoingEdges.add(edge);
-        point.incomingEdges.add(edge);
+        vertex.incomingEdges.add(edge);
     }
 
     public String getLabel() {
@@ -66,7 +66,7 @@ public class Point {
     *Baut ein Feld in dem die einzelnen Knoten und Kanten eingetragen werden.
     *Gibt auf der Konsole einen Knoten mit allen verbundenen Knoten graphisch aus
      */
-    public void printPoint() {
+    public void printVertex() {
         String[][] field = new String[5][5];
         field[2][2] = "[" + this.identifier + "]";
         String right = " → ";
@@ -79,42 +79,42 @@ public class Point {
             if (this.outgoingEdges.size() == 0) break;
             if (field[2][3] == null) {
                 field[2][3] = right;
-                field[2][4] = "(" + outgoingEdges.get(x).getPoint().get(1).getIdentifier().charAt(0) + ")";
+                field[2][4] = "(" + outgoingEdges.get(x).getVertex().get(1).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[3][3] == null) {
                 field[3][3] = " ↘ ";
-                field[4][4] = "(" + outgoingEdges.get(x).getPoint().get(1).getIdentifier().charAt(0) + ")";
+                field[4][4] = "(" + outgoingEdges.get(x).getVertex().get(1).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[3][2] == null) {
                 field[3][2] = down;
-                field[4][2] = "(" + outgoingEdges.get(x).getPoint().get(1).getIdentifier().charAt(0) + ")";
+                field[4][2] = "(" + outgoingEdges.get(x).getVertex().get(1).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[1][3] == null) {
                 field[1][3] = " ↗ ";
-                field[0][4] = "(" + outgoingEdges.get(x).getPoint().get(1).getIdentifier().charAt(0) + ")";
+                field[0][4] = "(" + outgoingEdges.get(x).getVertex().get(1).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[2][1] == null) {
                 field[2][1] = left;
-                field[2][0] = "(" + outgoingEdges.get(x).getPoint().get(1).getIdentifier().charAt(0) + ")";
+                field[2][0] = "(" + outgoingEdges.get(x).getVertex().get(1).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[1][1] == null) {
                 field[1][1] = " ↖ ";
-                field[0][0] = "(" + outgoingEdges.get(x).getPoint().get(1).getIdentifier().charAt(0) + ")";
+                field[0][0] = "(" + outgoingEdges.get(x).getVertex().get(1).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[1][2] == null) {
                 field[1][2] = up;
-                field[0][2] = "(" + outgoingEdges.get(x).getPoint().get(1).getIdentifier().charAt(0) + ")";
+                field[0][2] = "(" + outgoingEdges.get(x).getVertex().get(1).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[3][1] == null) {
                 field[3][1] = " ↙ ";
-                field[4][0] = "(" + outgoingEdges.get(x).getPoint().get(1).getIdentifier().charAt(0) + ")";
+                field[4][0] = "(" + outgoingEdges.get(x).getVertex().get(1).getIdentifier().charAt(0) + ")";
             }
         }
 
@@ -124,42 +124,42 @@ public class Point {
             if (this.incomingEdges.size() == 0) break;
             if (field[2][3] == null) {
                 field[2][3] = left;
-                field[2][4] = "(" + incomingEdges.get(x).getPoint().get(0).getIdentifier().charAt(0) + ")";
+                field[2][4] = "(" + incomingEdges.get(x).getVertex().get(0).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[3][3] == null) {
                 field[3][3] = " ↖ ";
-                field[4][4] = "(" + incomingEdges.get(x).getPoint().get(0).getIdentifier().charAt(0) + ")";
+                field[4][4] = "(" + incomingEdges.get(x).getVertex().get(0).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[3][2] == null) {
                 field[3][2] = up;
-                field[4][2] = "(" + incomingEdges.get(x).getPoint().get(0).getIdentifier().charAt(0) + ")";
+                field[4][2] = "(" + incomingEdges.get(x).getVertex().get(0).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[1][3] == null) {
                 field[1][3] = " ↙ ";
-                field[0][4] = "(" + incomingEdges.get(x).getPoint().get(0).getIdentifier().charAt(0) + ")";
+                field[0][4] = "(" + incomingEdges.get(x).getVertex().get(0).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[2][1] == null) {
                 field[2][1] = right;
-                field[2][0] = "(" + incomingEdges.get(x).getPoint().get(0).getIdentifier().charAt(0) + ")";
+                field[2][0] = "(" + incomingEdges.get(x).getVertex().get(0).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[1][1] == null) {
                 field[1][1] = " ↘ ";
-                field[0][0] = "(" + incomingEdges.get(x).getPoint().get(0).getIdentifier().charAt(0) + ")";
+                field[0][0] = "(" + incomingEdges.get(x).getVertex().get(0).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[1][2] == null) {
                 field[1][2] = down;
-                field[0][2] = "(" + incomingEdges.get(x).getPoint().get(0).getIdentifier().charAt(0) + ")";
+                field[0][2] = "(" + incomingEdges.get(x).getVertex().get(0).getIdentifier().charAt(0) + ")";
                 continue;
             }
             if (field[3][1] == null) {
                 field[3][1] = " ↗ ";
-                field[4][0] = "(" + incomingEdges.get(x).getPoint().get(0).getIdentifier().charAt(0) + ")";
+                field[4][0] = "(" + incomingEdges.get(x).getVertex().get(0).getIdentifier().charAt(0) + ")";
             }
         }
         printArray(field);
