@@ -14,31 +14,32 @@ public class Vertex {
     private ArrayList<Edge> incomingEdges = new ArrayList<>();
     private ArrayList<Edge> outgoingEdges = new ArrayList<>();
 
-    public Vertex(String label, String identifier) {
+    public Vertex(String label, String identifier, Graph graph) {
         this.label = label;
         this.identifier = identifier;
         vertices.add(this);
     }
 
     public static void main(String[] args) {
-        Vertex a = new Vertex("BasicVertex", "A");
-        Vertex b = new Vertex("BasicVertex", "B");
-        Vertex c = new Vertex("BasicVertex", "C");
-        Vertex d = new Vertex("BasicVertex", "D");
-        Vertex e = new Vertex("BasicVertex", "E");
-        Vertex f = new Vertex("BasicVertex", "F");
-        Vertex g = new Vertex("BasicVertex", "G");
-        Vertex h = new Vertex("BasicVertex", "H");
-        Vertex i = new Vertex("BasicVertex", "I");
+        Graph g = new Graph();
+        Vertex a = new Vertex("BasicVertex", "A", g);
+        Vertex b = new Vertex("BasicVertex", "B", g);
+        Vertex c = new Vertex("BasicVertex", "C", g);
+        Vertex d = new Vertex("BasicVertex", "D", g);
+        Vertex e = new Vertex("BasicVertex", "E", g);
+        Vertex f = new Vertex("BasicVertex", "F", g);
+        Vertex j = new Vertex("BasicVertex", "G", g);
+        Vertex h = new Vertex("BasicVertex", "H", g);
+        Vertex i = new Vertex("BasicVertex", "I", g);
 
-        a.addEdge(b, "Coole Verbindung von A nach B");
-        a.addEdge(d, "Kante");
-        e.addEdge(a, "Kante");
-        f.addEdge(a, "Test");
-        a.addEdge(g, "Kante");
-        a.addEdge(i, "Kante");
-        g.addEdge(f, "Kante");
-        g.addEdge(e, "Kante");
+        a.addEdge(b, "Coole Verbindung von A nach B", g);
+        a.addEdge(d, "Kante", g);
+        e.addEdge(a, "Kante", g);
+        f.addEdge(a, "Test", g);
+        a.addEdge(j, "Kante", g);
+        a.addEdge(i, "Kante", g);
+        j.addEdge(f, "Kante", g);
+        j.addEdge(e, "Kante", g);
         a.printVertex();
         f.printVertex();
     }
@@ -48,8 +49,8 @@ public class Vertex {
         return "" + label + ":" + identifier;
     }
 
-    public void addEdge(Vertex vertex, String relationLabel) {
-        Edge edge = new Edge(this, vertex, relationLabel);
+    public void addEdge(Vertex vertex, String relationLabel, Graph graph) {
+        Edge edge = new Edge(this, vertex, relationLabel, graph);
         outgoingEdges.add(edge);
         vertex.incomingEdges.add(edge);
     }
@@ -68,7 +69,7 @@ public class Vertex {
      */
     public void printVertex() {
         String[][] field = new String[5][5];
-        field[2][2] = "[" + this.identifier + "]";
+        field[2][2] = "[" + this.identifier.charAt(0) + "]";
         String right = " → ";
         String left = " ← ";
         String up = " ↑ ";

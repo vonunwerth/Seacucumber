@@ -8,11 +8,10 @@ import static graph.Graph.edges;
 public class Edge {
 
     private Vertex start;
-
-    public String relation;
+    private String relation;
     private Vertex target;
 
-    public Edge(Vertex start, Vertex target, String relationLabel) {
+    public Edge(Vertex start, Vertex target, String relationLabel, Graph graph) {
         this.start = start;
         this.target = target;
         this.relation = relationLabel;

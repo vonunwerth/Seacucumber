@@ -1,7 +1,8 @@
 package procedure;
 
 import graph.Edge;
-import graph.Point;
+import graph.Graph;
+import graph.Vertex;
 
 public class QueryBuilder {
     static String query;
@@ -12,18 +13,24 @@ public class QueryBuilder {
 
     public static void main(String[] args) {
         //query = "MATCH(marvelMovies:TAG)-[]-(marvelMovies:Avengers)"; //{name:'Marvel'})<-[:HAS_TAG]-(movie)";
-        query = "MATCH \"(:Actor {name: \"Wes Studi\"})-[:ACTS_IN]->(m:Movie)<-[:ACTS_IN]-(:Actor {name: \"Matt Gerald\"})";
-        build();
+        query = "MATCH\n" +
+                "(:Actor {name: \"Wes Studi\"})-[:ACTS_IN]->(m:Movie)<-[:ACTS_IN]-(:Actor {name: \"Matt Gerald\"}),\n" +
+                "(m)<-[:DIRECTED]-(d)-[:DIRECTED]->(others)\n" +
+                "RETURN m.title, d.name, collect(others.title) AS productions\n" +
+                "LIMIT 1";
+        //query = "MATCH \"(:Actor {name: \"Wes Studi\"})-[:ACTS_IN]->(m:Movie)<-[:ACTS_IN]-(:Actor {name: \"Matt Gerald\"})";
+        Graph g = build();
     }
 
-    public static void build() {
+    public static Graph build() {
+        Graph g = new Graph();
         String label = "";
         String identifier = "";
         String[] point = new String[2];
         String[] edge = new String[2];
         int direction = 0;
-        Point first = null;
-        Point second = null;
+        Vertex first = null;
+        Vertex second = null;
         for (int x = 0; x < query.length(); x++) {
             String pointString = "";
             String edgeString = "";
@@ -36,20 +43,39 @@ public class QueryBuilder {
                     x++;
                 }
                 point = pointString.split(":");
-                Point n = new Point(point[0], point[1]);
+                Vertex n;
+                if (pointString.contains(":")) {
+                    if (g.checkLabel(point[0]) == null) {
+                        n = new Vertex(point[0], point[1], g);
+                    } else if (g.checkLabel(point[0]).getLabel().equals("")) {
+                        n = new Vertex(point[0], point[1], g);
+                    } else {
+                        n = g.checkLabel(point[0]);
+                    }
+                } else {
+                    if (g.checkLabel(pointString) == null) {
+                        n = new Vertex(pointString, "#", g);
+                    } else {
+                        n = g.checkLabel(pointString);
+                    }
+                }
                 if (first != null) {
                     if (direction == 1) {
-                        Edge e = new Edge(first, n, edge[1]);
-                        System.out.println(e.toString());
+                        Edge e = new Edge(first, n, edge[1], g);
+                        first.addEdge(n, edge[1], g);
+                        //n.printVertex();
+                        //System.out.println(e.toString());
                     }
                     if (direction == 2) {
-                        Edge e = new Edge(n, first, edge[1]);
-                        System.out.println(e.toString());
+                        Edge e = new Edge(n, first, edge[1], g);
+                        n.addEdge(first, edge[1], g);
+                        //n.printVertex();
+                        //System.out.println(e.toString());
                     }
                 }
                 first = n;
-                System.out.println(point[0]);
-                System.out.println(point[1]);
+                //System.out.println(point[0]);
+                //System.out.println(point[1]);
             }
 
             if (query.charAt(x) == '[') {
@@ -59,8 +85,13 @@ public class QueryBuilder {
                     x++;
                 }
                 edge = edgeString.split(":");
-                System.out.println(edge[1]);
+                //System.out.println(edge[1]);
             }
         }
+        System.out.println("Alle Punkte:");
+        for (Vertex v : Graph.vertices) {
+            v.printVertex();
+        }
+        return g;
     }
 }
