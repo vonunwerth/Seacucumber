@@ -27,6 +27,7 @@ public class GraphProcedures {
         //Prueft ob die Query korrekt ist. Bei falscher Eingabe Fehlermeldung in Neo4j
         db.execute(query, 5, tu);
 
+
         String cleaned[] = query.split("RETURN");
         String cleaned2[] = cleaned[0].split("WHERE");
         String clean = cleaned2[0];

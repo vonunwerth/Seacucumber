@@ -1,4 +1,5 @@
 import org.neo4j.driver.v1.*;
+import org.neo4j.driver.v1.exceptions.ClientException;
 
 import static org.neo4j.driver.v1.Values.parameters;
 
@@ -11,11 +12,16 @@ public class NeoTest {
         //Felix war hier
         Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("trump", "password"));
         Session session = driver.session();
-        StatementResult result = session.run("CALL example.search('T','title:*')",  //TODO Query isnt working
+        StatementResult result = session.run("CALL graph.extractQuery(\'MATCH  {name: \"Tom Hanks\"})-[:ACTED_IN]->(tomHanksMovies) RETURN tom,tomHanksMovies\')",  //TODO Query isnt working
                 parameters("name", "Arthur"));
-        while (result.hasNext()) {
-            Record record = result.next();
-            System.out.println(record.get("title").asString() + " " + record.get("name").asString());
+        try {
+            while (result.hasNext()) {
+                Record record = result.next();
+                System.out.println(record.get("title").asString() + " " + record.get("name").asString());
+            }
+        } catch (ClientException e) {
+            //TODO schö machen
+            System.err.println("IHRE Eingabe ist falsch! SIE ARSCHLOCH #hoefflich");
         }
 
         session.close();
