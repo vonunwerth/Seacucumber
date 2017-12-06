@@ -1,9 +1,6 @@
 package matcher;
 import graph.Vertex;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Label;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.ResourceIterator;
+import org.neo4j.graphdb.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +22,13 @@ public abstract class Matcher {
      * @return
      */
     List<Node> previousNodes(Node node) {
-        return null;
+        List<Node> result = new ArrayList<>();
+        Iterable<Relationship> rel = node.getRelationships(Direction.INCOMING);
+        for (Relationship r : rel
+                ) {
+            result.add(r.getStartNode());
+        }
+        return result;
     }
 
     /**
@@ -34,7 +37,17 @@ public abstract class Matcher {
      * @return
      */
     List<Node> successingNodes(Node node) {
-        return null;
+        List<Node> result = new ArrayList<>();
+        Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING);
+        for (Relationship r : rel
+                ) {
+            result.add(r.getEndNode());
+        }
+        return result;
+    }
+
+    Boolean compare(Vertex a, Node b) {
+        return true;
     }
 
     /**

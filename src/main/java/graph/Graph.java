@@ -19,5 +19,9 @@ public class Graph {
         return null;
     }
 
+    public void printGraph(Graph g) {
+        //TODO gesamten Graph grafisch ausgeben lassen
+    }
+
 
 }

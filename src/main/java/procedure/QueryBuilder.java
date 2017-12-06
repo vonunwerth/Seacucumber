@@ -5,7 +5,7 @@ import graph.Graph;
 import graph.Vertex;
 
 public class QueryBuilder {
-    static String query;
+    private static String query;
 
     public QueryBuilder(String query) {
         QueryBuilder.query = query;
