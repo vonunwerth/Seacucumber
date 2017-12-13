@@ -1,19 +1,28 @@
 package matcher;
+
+import graph.Graph;
 import graph.Vertex;
 import org.neo4j.graphdb.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Matcher {
     GraphDatabaseService db;
+    Graph graph;
 
     /**
      * Constructor um an die Datenbank zu kommen
      * @param database
      */
-    public Matcher(GraphDatabaseService database){
+    public Matcher(GraphDatabaseService database, Graph graph) {
         this.db = database;
+        this.graph = graph;
+    }
+
+    public Matcher() {
+        this.db = null;
     }
 
     /**
@@ -47,8 +56,20 @@ public abstract class Matcher {
     }
 
     Boolean compare(Vertex a, Node b) {
-        return true;
+        for (Label c : b.getLabels()
+                ) {
+            if (c.name().equals(a.getLabel())) {
+                return true;
+            }
+        }
+        return false;
     }
+
+    Boolean compare(Node a, Node b) {
+        return a.getLabels() == b.getLabels();
+    }
+
+
 
     /**
      * Returns all nodes that are similar to the vertex from the query graph.
@@ -65,7 +86,5 @@ public abstract class Matcher {
         return nodes;
     }
 
-    abstract List<Node> matchingAlgorithm();
-
-
+    abstract Map<Integer, List<Node>> matchingAlgorithm();
 }

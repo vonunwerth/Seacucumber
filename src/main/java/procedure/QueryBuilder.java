@@ -52,6 +52,7 @@ public class QueryBuilder {
         Vertex first = null;
 
         //loop that goes through the whole query
+        int idCounter = 0;
         for (int x = 0; x < query.length(); x++) {
             String pointString = "";
             String edgeString = "";
@@ -77,17 +78,20 @@ public class QueryBuilder {
                  */
                 if (pointString.contains(":")) {
                     if (g.checkLabel(point[0]) == null) {
-                        n = new Vertex(point[0], point[1], g);
+                        n = new Vertex(point[0], point[1], g, idCounter);
+                        idCounter++;
                         System.out.println("Created Node! (" + point[0] + ":" + point[1] + ")");
                     } else if (g.checkLabel(point[0]).getLabel().equals("")) {
-                        n = new Vertex(point[0], point[1], g);
+                        n = new Vertex(point[0], point[1], g, idCounter);
+                        idCounter++;
                         System.out.println("Created Node! (" + point[0] + ":" + point[1] + ")");
                     } else {
                         n = g.checkLabel(point[0]);
                     }
                 } else {
                     if (g.checkLabel(pointString) == null) {
-                        n = new Vertex(pointString, "#", g);
+                        n = new Vertex(pointString, "#", g, idCounter);
+                        idCounter++;
                         System.out.println("Created Node! (" + pointString + ":" + "#)");
                     } else {
                         n = g.checkLabel(pointString);

@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static graph.Graph.vertices;
 
@@ -9,23 +10,25 @@ public class Vertex {
     //Bezeichnung des Knoten
     private String label;
     private String identifier;
+    private Integer id;
 
     //Liste der ausgehenden bzw eingehenden Kanten
-    private ArrayList<Edge> incomingEdges = new ArrayList<>();
-    private ArrayList<Edge> outgoingEdges = new ArrayList<>();
+    private List<Edge> incomingEdges = new ArrayList<>();
+    private List<Edge> outgoingEdges = new ArrayList<>();
 
-    public Vertex(String label, String identifier, Graph graph) {
+    public Vertex(String label, String identifier, Graph graph, Integer id) {
         this.label = label;
         this.identifier = identifier;
+        this.id = id;
         vertices.add(this);
     }
 
     public static void main(String[] args) {
         Graph g = new Graph();
-        Vertex a = new Vertex("BasicVertex", "A", g);
-        Vertex b = new Vertex("BasicVertex", "B", g);
-        Vertex c = new Vertex("BasicVertex", "C", g);
-        Vertex d = new Vertex("BasicVertex", "D", g);
+        Vertex a = new Vertex("BasicVertex", "A", g, 1);
+        Vertex b = new Vertex("BasicVertex", "B", g, 2);
+        Vertex c = new Vertex("BasicVertex", "C", g, 3);
+        /*Vertex d = new Vertex("BasicVertex", "D", g);
         Vertex e = new Vertex("BasicVertex", "E", g);
         Vertex f = new Vertex("BasicVertex", "F", g);
         Vertex j = new Vertex("BasicVertex", "G", g);
@@ -41,7 +44,7 @@ public class Vertex {
         j.addEdge(f, "Kante", g);
         j.addEdge(e, "Kante", g);
         a.printVertex();
-        f.printVertex();
+        f.printVertex(); */
     }
 
     @Override
@@ -61,6 +64,18 @@ public class Vertex {
 
     public String getIdentifier() {
         return identifier;
+    }
+
+    public List<Edge> getIncomingEdges() {
+        return incomingEdges;
+    }
+
+    public List<Edge> getOutgoingEdges() {
+        return outgoingEdges;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     /*
