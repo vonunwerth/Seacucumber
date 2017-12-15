@@ -4,9 +4,8 @@ import graph.Graph;
 import graph.Vertex;
 import org.neo4j.graphdb.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
 
 public abstract class Matcher {
     GraphDatabaseService db;
@@ -86,5 +85,19 @@ public abstract class Matcher {
         return nodes;
     }
 
-    abstract Map<Integer, List<Node>> matchingAlgorithm();
+    public Stream<Node> simulate() {
+        Map<Integer, List<Node>> map = matchingAlgorithm();
+        List<Node> list = new LinkedList<>();
+        Set<Node> set = new HashSet<>();
+        for (Map.Entry<Integer, List<Node>> entry : map.entrySet()) {
+            for (Node n : entry.getValue()
+                    ) {
+                set.add(n);
+            }
+        }
+        Stream<Node> stream = set.stream();
+        return stream;
+    }
+
+    public abstract Map<Integer, List<Node>> matchingAlgorithm();
 }
