@@ -9,19 +9,22 @@ import static org.neo4j.driver.v1.Values.parameters;
  */
 public class NeoTest {
     public static void main(String[] args) {
-        //Felix war hier
+
         Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("trump", "password"));
         Session session = driver.session();
-        StatementResult result = session.run("CALL graph.extractQuery(\'MATCH  {name: \"Tom Hanks\"})-[:ACTED_IN]->(tomHanksMovies) RETURN tom,tomHanksMovies\')",  //TODO Query isnt working
+        StatementResult result = session.run("CALL graph.extractQuery(\"MATCH (tom:Person {name: \'Tom Hanks\'})-[:ACTED_IN]->(tomHanksMovies) RETURN tom, tomHanksMovies\")",
                 parameters("name", "Arthur"));
+        //Test Fehlermeldung
+        //StatementResult result = session.run("CALL graph.extractQuery(\"MATCH {name: \'Tom Hanks\'})-[:ACTED_IN]->(tomHanksMovies) RETURN tom, tomHanksMovies\")");
+
         try {
             while (result.hasNext()) {
                 Record record = result.next();
                 System.out.println(record.get("title").asString() + " " + record.get("name").asString());
             }
         } catch (ClientException e) {
-            //TODO schö machen
-            System.err.println("IHRE Eingabe ist falsch! SIE ARSCHLOCH #hoefflich");
+            System.err.println("In Ihrer Query befindet sich ein Fehler. Bitte beheben Sie diesen.");
+            System.err.println(e.getMessage());
         }
 
         session.close();
