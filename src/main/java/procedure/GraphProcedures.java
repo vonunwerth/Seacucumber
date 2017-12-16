@@ -21,9 +21,9 @@ public class GraphProcedures {
     @Context
     public Log log;
 
-    @Procedure(value = "graph.extractQuery", mode = Mode.WRITE)
+    @Procedure(value = "graph.extractQuery", mode = Mode.READ)
     @Description("Wir wollen die Query")
-    public Stream<Node> extractQuery(@Name("query") String query) {
+    public Stream<NodeResult> extractQuery(@Name("query") String query) {
         query = query.trim().replaceAll("\n", " ");
 
         TimeUnit tu = TimeUnit.MILLISECONDS;
@@ -33,8 +33,8 @@ public class GraphProcedures {
         QueryBuilder qb = new QueryBuilder(query);
         Graph graph = build();
         DualSimMatcher dsim = new DualSimMatcher(db, graph);
-        Stream<Node> stream = dsim.simulate();
-        return stream;
+        return dsim.simulate().stream().map(NodeResult::new);
+
 
         //Kurzer kleiner Test!!
         //SearchHit hit1 = new SearchHit("Geht doch, du dich.");
@@ -43,5 +43,13 @@ public class GraphProcedures {
         /*List<SearchHit> list2 = new ArrayList<>();
         list2.add(new SearchHit(result+""));
         return list2.stream(); */
+    }
+    public class NodeResult {
+
+        public Node node;
+
+        public NodeResult(Node node) {
+            this.node = node;
+        }
     }
 }

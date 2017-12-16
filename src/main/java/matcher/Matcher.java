@@ -85,9 +85,8 @@ public abstract class Matcher {
         return nodes;
     }
 
-    public Stream<Node> simulate() {
+    public Set<Node> simulate() {
         Map<Integer, List<Node>> map = matchingAlgorithm();
-        List<Node> list = new LinkedList<>();
         Set<Node> set = new HashSet<>();
         for (Map.Entry<Integer, List<Node>> entry : map.entrySet()) {
             for (Node n : entry.getValue()
@@ -95,8 +94,7 @@ public abstract class Matcher {
                 set.add(n);
             }
         }
-        Stream<Node> stream = set.stream();
-        return stream;
+        return set;
     }
 
     public abstract Map<Integer, List<Node>> matchingAlgorithm();
