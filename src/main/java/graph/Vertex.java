@@ -3,8 +3,6 @@ package graph;
 import java.util.ArrayList;
 import java.util.List;
 
-import static graph.Graph.vertices;
-
 public class Vertex {
 
     //Bezeichnung des Knoten
@@ -16,35 +14,10 @@ public class Vertex {
     private List<Edge> incomingEdges = new ArrayList<>();
     private List<Edge> outgoingEdges = new ArrayList<>();
 
-    public Vertex(String label, String identifier, Graph graph, Integer id) {
+    public Vertex(String label, String identifier, Integer id) {
         this.label = label;
         this.identifier = identifier;
         this.id = id;
-        vertices.add(this);
-    }
-
-    public static void main(String[] args) {
-        Graph g = new Graph();
-        Vertex a = new Vertex("BasicVertex", "A", g, 1);
-        Vertex b = new Vertex("BasicVertex", "B", g, 2);
-        Vertex c = new Vertex("BasicVertex", "C", g, 3);
-        /*Vertex d = new Vertex("BasicVertex", "D", g);
-        Vertex e = new Vertex("BasicVertex", "E", g);
-        Vertex f = new Vertex("BasicVertex", "F", g);
-        Vertex j = new Vertex("BasicVertex", "G", g);
-        Vertex h = new Vertex("BasicVertex", "H", g);
-        Vertex i = new Vertex("BasicVertex", "I", g);
-
-        a.addEdge(b, "Coole Verbindung von A nach B", g);
-        a.addEdge(d, "Kante", g);
-        e.addEdge(a, "Kante", g);
-        f.addEdge(a, "Test", g);
-        a.addEdge(j, "Kante", g);
-        a.addEdge(i, "Kante", g);
-        j.addEdge(f, "Kante", g);
-        j.addEdge(e, "Kante", g);
-        a.printVertex();
-        f.printVertex(); */
     }
 
     @Override
@@ -52,8 +25,8 @@ public class Vertex {
         return "" + label + ":" + identifier;
     }
 
-    public void addEdge(Vertex vertex, String relationLabel, Graph graph) {
-        Edge edge = new Edge(this, vertex, relationLabel, graph);
+    public void addEdge(Vertex vertex, String relationLabel) {
+        Edge edge = new Edge(this, vertex, relationLabel);
         outgoingEdges.add(edge);
         vertex.incomingEdges.add(edge);
     }
@@ -186,11 +159,11 @@ public class Vertex {
     *gibt ein quadratisches Array auf der Konsole aus
      */
     private void printArray(String[][] array) {
-        for (int x = 0; x < array.length; x++) {
+        for (String[] single_array : array) {
             for (int y = 0; y < array.length; y++) {
                 try {
-                    if (array[x][y] != null) {
-                        System.out.print(array[x][y]);
+                    if (single_array[y] != null) {
+                        System.out.print(single_array[y]);
                     } else {
                         System.out.print("   ");
                     }

@@ -3,19 +3,16 @@ package graph;
 import java.util.LinkedList;
 import java.util.List;
 
-import static graph.Graph.edges;
-
 public class Edge {
 
     private Vertex start;
     private String relation;
     private Vertex target;
 
-    public Edge(Vertex start, Vertex target, String relationLabel, Graph graph) {
+    public Edge(Vertex start, Vertex target, String relationLabel) {
         this.start = start;
         this.target = target;
         this.relation = relationLabel;
-        edges.add(this);
     }
 
     @Override

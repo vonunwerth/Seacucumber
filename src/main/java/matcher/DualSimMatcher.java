@@ -21,13 +21,13 @@ public class DualSimMatcher extends Matcher {
     public Map<Integer, List<Node>> matchingAlgorithm() {
         Boolean changes = true;
         Map<Integer, List<Node>> sim = new HashMap<>();
-        for (Vertex v : Graph.vertices
+        for (Vertex v : graph.getVertices()
                 ) {
             sim.put(v.getId(), findeNodes(v));
         }
 
         while (changes) {
-            for (Vertex v : Graph.vertices
+            for (Vertex v : graph.getVertices()
                     ) {
                 for (Edge e : v.getOutgoingEdges()
                         ) {
@@ -45,7 +45,7 @@ public class DualSimMatcher extends Matcher {
                 }
             }
 
-            for (Vertex v : Graph.vertices
+            for (Vertex v : graph.getVertices()
                     ) {
                 for (Edge e : v.getIncomingEdges()
                         ) {
