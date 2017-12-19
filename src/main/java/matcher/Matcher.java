@@ -75,12 +75,24 @@ public abstract class Matcher {
      * @return
      */
     List<Node> findeNodes(Vertex vertex) {
-        Label lb = Label.label(vertex.getLabel());
+
+
+        Label lb =  Label.label(vertex.getIdentifier());
+        System.out.println(lb.name());
         ResourceIterator<Node> iterator = db.findNodes(lb);
         List<Node> nodes = new ArrayList<>();
-        while (iterator.next() != null){
-            nodes.add(iterator.next());
+        while (iterator.hasNext() != false){
+            try {
+                nodes.add(iterator.next());
+            }catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
+        for (Node n: nodes
+             ) {
+            System.out.println(n.getId());
+        }
+        System.out.println("nächste");
         return nodes;
     }
 

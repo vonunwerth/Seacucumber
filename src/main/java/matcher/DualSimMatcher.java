@@ -19,27 +19,37 @@ public class DualSimMatcher extends Matcher {
 
     @Override
     public Map<Integer, List<Node>> matchingAlgorithm() {
-        Boolean changes = true;
+
+        Boolean changes = false;
         Map<Integer, List<Node>> sim = new HashMap<>();
         for (Vertex v : graph.getVertices()
                 ) {
             sim.put(v.getId(), findeNodes(v));
+            System.out.println(v.getLabel());
         }
 
-        while (changes) {
+        do{
+
+            changes = false;
             for (Vertex v : graph.getVertices()
                     ) {
                 for (Edge e : v.getOutgoingEdges()
                         ) {
+                    System.out.println("Hallo");
+                    System.out.println(e.toString());
                     for (Node n : sim.get(v.getId())
                             ) {
                         Boolean exists = false;
+
                         for (Node n2 : successingNodes(n)
                                 ) {
                             exists = compare(n, n2);
                         }
                         if (!(exists)) {
                             sim.get(v.getId()).remove(n);
+                            changes = true;
+
+
                         }
                     }
                 }
@@ -58,10 +68,22 @@ public class DualSimMatcher extends Matcher {
                         }
                         if (!(exists)) {
                             sim.get(v.getId()).remove(n);
+                            changes = true;
                         }
                     }
                 }
             }
+        } while (changes);
+        for (Integer s: sim.keySet()
+             ) {
+            int counter = 0;
+            for (Node n: sim.get(s)
+                 ) {
+                System.out.print(n.getId()+" ");
+                System.out.println(n.getLabels().iterator().next().name());
+                counter++;
+            }
+            System.out.println(counter);
         }
         return sim;
     }

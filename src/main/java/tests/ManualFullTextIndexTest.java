@@ -34,11 +34,6 @@ public class ManualFullTextIndexTest {
             System.out.println("TEST: Query gestartet");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );
             int counter = 0;
-            while (counter < 60000) {
-                counter++;
-                Thread.sleep(1000);
-                System.out.println("TEST: " + counter + " Sekunden gewartet. ");
-            }
             /*while(sr.hasNext()) {
                 System.out.println(sr.single());
                 sr.next();
