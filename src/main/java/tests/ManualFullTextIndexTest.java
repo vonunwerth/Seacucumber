@@ -2,10 +2,7 @@ package tests;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.neo4j.driver.v1.Config;
-import org.neo4j.driver.v1.Driver;
-import org.neo4j.driver.v1.GraphDatabase;
-import org.neo4j.driver.v1.Session;
+import org.neo4j.driver.v1.*;
 import org.neo4j.harness.junit.Neo4jRule;
 import procedure.GraphProcedures;
 
@@ -33,8 +30,13 @@ public class ManualFullTextIndexTest {
             //session.run( "CALL example.index({id}, ['name'])", parameters( "id", nodeId ) );
 
             // Then I can search for that node with lucene query syntax
-            session.run("CALL graph.extractQuery(\" MATCH (tom:Person) RETURN tom \")");
+            StatementResult sr  = session.run("CALL graph.extractQuery(\" MATCH (tom:Person) RETURN tom \")");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );
+
+            while(sr.hasNext()) {
+                System.out.println(sr.single());
+                sr.next();
+            }
         }
     }
 }
