@@ -12,21 +12,21 @@ public abstract class Matcher {
 
     /**
      * Constructor um an die Datenbank zu kommen
-     * @param database
+     * @param database Datenbank
      */
     public Matcher(GraphDatabaseService database, Graph graph) {
         this.db = database;
         this.graph = graph;
     }
 
-    public Matcher() {
+    Matcher() {
         this.db = null;
     }
 
     /**
      * Returns all predecessors of the given node.
-     * @param node
-     * @return
+     * @param node Knoten
+     * @return Vorgängerknoten
      */
     List<Node> previousNodes(Node node) {
         List<Node> result = new ArrayList<>();
@@ -40,8 +40,8 @@ public abstract class Matcher {
 
     /**
      * Returns all sucessors of the given node.
-     * @param node
-     * @return
+     * @param node Knoten
+     * @return Nachfolgeknoten
      */
     List<Node> successingNodes(Node node) {
         List<Node> result = new ArrayList<>();
@@ -73,8 +73,8 @@ public abstract class Matcher {
 
     /**
      * Returns all nodes that are similar to the vertex from the query graph.
-     * @param vertex
-     * @return
+     * @param vertex Vertex
+     * @return Nodes for Vortex
      */
     List<Node> findeNodes(Vertex vertex) {
 

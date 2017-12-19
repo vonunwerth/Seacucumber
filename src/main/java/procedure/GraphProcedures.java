@@ -15,7 +15,7 @@ public class GraphProcedures {
 
     //Zugriff auf unsere Datenbank
     @Context
-    public GraphDatabaseService db;
+    private GraphDatabaseService db;
 
     @Context
     public Log log;
@@ -43,9 +43,9 @@ public class GraphProcedures {
     }
     public class NodeResult {
 
-        public Node node;
+        Node node;
 
-        public NodeResult(Node node) {
+        NodeResult(Node node) {
             this.node = node;
         }
     }

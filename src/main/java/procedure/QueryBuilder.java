@@ -3,7 +3,7 @@ package procedure;
 import graph.Graph;
 import graph.Vertex;
 
-public class QueryBuilder {
+class QueryBuilder {
     private String query;
 
     QueryBuilder(String queryParam) {
@@ -35,7 +35,7 @@ public class QueryBuilder {
      *
      * @return the built graph
      */
-    public Graph build() {
+    Graph build() {
         Graph g = new Graph();
 
         //not needed (same query preprocessing as in GraphProcedures)
@@ -45,7 +45,7 @@ public class QueryBuilder {
         System.out.println(query);
 
         //vars
-        String[] point = new String[2];
+        String[] point;
         String[] edge = new String[2];
         int direction = 0;
         Vertex first = null;

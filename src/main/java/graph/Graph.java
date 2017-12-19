@@ -9,10 +9,6 @@ public class Graph {
 
     private List<Edge> edges = new ArrayList<>();
 
-    public void addVertex(String label, String identifier, Graph graph, Integer id) {
-        vertices.add(new Vertex(label, identifier, id));
-    }
-
     public void addVertex(Vertex v) {
         vertices.add(v);
     }
@@ -20,10 +16,6 @@ public class Graph {
     public void addEdge(Vertex start, Vertex target, String relationLabel) {
         //Create new Edge
         edges.add(new Edge(start, target, relationLabel));
-    }
-
-    public void addEdge(Edge e) {
-        edges.add(e);
     }
 
     public Vertex checkLabel(String label) {
@@ -42,15 +34,15 @@ public class Graph {
 
     @Override
     public String toString() {
-        String ret = "Edges:\n";
+        StringBuilder ret = new StringBuilder("Edges:\n");
         for (Edge edge : edges) {
-            ret += edge.toString() + "\n";
+            ret.append(edge.toString()).append("\n");
         }
-        ret += "\nVertices:\n";
+        ret.append("\nVertices:\n");
         for (Vertex vertex : vertices) {
-            ret += vertex.toString() + "\n";
+            ret.append(vertex.toString()).append("\n");
         }
-        return ret;
+        return ret.toString();
     }
 
     public List<Vertex> getVertices() {
