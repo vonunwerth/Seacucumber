@@ -45,9 +45,11 @@ public abstract class Matcher {
      */
     List<Node> successingNodes(Node node) {
         List<Node> result = new ArrayList<>();
+
         Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING);
         for (Relationship r : rel
                 ) {
+            System.out.println(r.toString());
             result.add(r.getEndNode());
         }
         return result;
@@ -81,18 +83,13 @@ public abstract class Matcher {
         System.out.println(lb.name());
         ResourceIterator<Node> iterator = db.findNodes(lb);
         List<Node> nodes = new ArrayList<>();
-        while (iterator.hasNext() != false){
+        while (iterator.hasNext()){
             try {
                 nodes.add(iterator.next());
             }catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
-        for (Node n: nodes
-             ) {
-            System.out.println(n.getId());
-        }
-        System.out.println("nächste");
         return nodes;
     }
 

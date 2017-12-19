@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Edge {
 
-    private Vertex start;
-    private String relation;
-    private Vertex target;
+    public Vertex start;
+    public String relation;
+    public Vertex target;
 
     public Edge(Vertex start, Vertex target, String relationLabel) {
         this.start = start;

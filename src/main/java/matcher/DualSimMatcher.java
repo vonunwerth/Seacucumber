@@ -7,6 +7,7 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class DualSimMatcher extends Matcher {
     @Override
     public Map<Integer, List<Node>> matchingAlgorithm() {
 
-        Boolean changes = false;
+        Boolean changes;
         Map<Integer, List<Node>> sim = new HashMap<>();
         for (Vertex v : graph.getVertices()
                 ) {
@@ -35,42 +36,61 @@ public class DualSimMatcher extends Matcher {
                     ) {
                 for (Edge e : v.getOutgoingEdges()
                         ) {
-                    System.out.println("Hallo");
-                    System.out.println(e.toString());
-                    for (Node n : sim.get(v.getId())
-                            ) {
-                        Boolean exists = false;
-
-                        for (Node n2 : successingNodes(n)
+                    try {
+                        List<Node> removeList = new LinkedList<>();
+                        for (Node n : sim.get(v.getId())
                                 ) {
-                            exists = compare(n, n2);
+                            Boolean exists = false;
+                            for (Node n2 : successingNodes(n)
+                                    ) {
+                                    exists = sim.get(e.target.getId()).contains(n2);
+                            }
+                            if (!(exists)) {
+                                removeList.add(n);
+                                changes = true;
+
+
+                            }
                         }
-                        if (!(exists)) {
-                            sim.get(v.getId()).remove(n);
-                            changes = true;
-
-
+                        sim.get(v.getId()).removeAll(removeList);
+                    } catch (Exception ex){
+                        System.out.println(ex.toString());
+                        System.out.println("Fehler");
+                        for (Node n: sim.get(v.getId())
+                             ) {
+                            System.out.println(n);
                         }
                     }
-                }
-            }
 
-            for (Vertex v : graph.getVertices()
-                    ) {
+                }
+                System.out.println("Mitte");
                 for (Edge e : v.getIncomingEdges()
                         ) {
-                    for (Node n : sim.get(v.getId())
-                            ) {
-                        Boolean exists = false;
-                        for (Node n2 : previousNodes(n)
+                    System.out.println(e.toString());
+                    try{
+                        List<Node> removeList = new LinkedList<>();
+                        for (Node n : sim.get(v.getId())
                                 ) {
-                            exists = compare(n, n2);
+                            Boolean exists = false;
+                            for (Node n2 : previousNodes(n)
+                                    ) {
+
+                                exists = sim.get(e.start.getId()).contains(n2);
+                            }
+                            if (!(exists)) {
+                                removeList.add(n);
+                                changes = true;
+                            }
                         }
-                        if (!(exists)) {
-                            sim.get(v.getId()).remove(n);
-                            changes = true;
+                        sim.get(v.getId()).removeAll(removeList);
+                    } catch (Exception ex){
+                        System.out.println("Fehler");
+                        for (Node n: sim.get(v.getId())
+                                ) {
+                            System.out.println(n);
                         }
                     }
+
                 }
             }
         } while (changes);
