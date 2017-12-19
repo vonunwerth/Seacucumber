@@ -1,4 +1,4 @@
-package procedure;
+package tests;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -7,6 +7,7 @@ import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
 import org.neo4j.driver.v1.Session;
 import org.neo4j.harness.junit.Neo4jRule;
+import procedure.GraphProcedures;
 
 import static constants.Constants.CREATE_TESTQUERY;
 
