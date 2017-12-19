@@ -6,8 +6,8 @@ import graph.Vertex;
 public class QueryBuilder {
     private String query;
 
-    QueryBuilder(String query) {
-        query = query;
+    QueryBuilder(String queryParam) {
+        query = queryParam;
     }
 
     /*public static void main(String[] args) {

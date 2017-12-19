@@ -22,22 +22,22 @@ public class ManualFullTextIndexTest {
             // Given I've started Neo4j with the FullTextIndex procedure class
             //       which my 'neo4j' rule above does.
             Session session = driver.session();
-            System.out.println("Datenbank wurde initialisiert");
+            System.out.println("TEST: Datenbank wurde initialisiert");
             // And given I have a node in the database
             session.run(CREATE_TESTQUERY);
-            System.out.println("Testdatensätze wurden erstellt.");
+            System.out.println("TEST: Testdatensätze wurden erstellt.");
             // When I use the index procedure to index a node
             //session.run( "CALL example.index({id}, ['name'])", parameters( "id", nodeId ) );
 
             // Then I can search for that node with lucene query syntax
             StatementResult sr  = session.run("CALL graph.extractQuery(\" MATCH (tom:Person) RETURN tom \")");
-            System.out.println("Query erfolgreich ausgeführt.");
+            System.out.println("TEST: Query gestartet");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );
             int counter = 0;
-            while (counter < 100) {
+            while (counter < 60000) {
                 counter++;
                 Thread.sleep(1000);
-                System.out.println(sr.hasNext());
+                System.out.println("TEST: " + counter + " Sekunden gewartet. ");
             }
             /*while(sr.hasNext()) {
                 System.out.println(sr.single());
