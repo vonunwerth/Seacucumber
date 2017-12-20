@@ -34,10 +34,10 @@ public class ManualFullTextIndexTest {
             System.out.println("TEST: Query gestartet");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );
             int counter = 0;
-            /*while(sr.hasNext()) {
-                System.out.println(sr.single());
+            while(sr.hasNext()) {
+                System.out.println(sr.peek());
                 sr.next();
-            }*/
+            }
         }
     }
 }
