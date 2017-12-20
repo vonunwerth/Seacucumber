@@ -14,14 +14,18 @@ import java.util.stream.Stream;
 public class GraphProcedures {
 
     //Zugriff auf unsere Datenbank
+    //Muss public sein
     @Context
-    private GraphDatabaseService db;
+    @SuppressWarnings("WeakerAccess")
+    public GraphDatabaseService db;
 
     @Context
+    @SuppressWarnings({"WeakerAccess", "unused"})
     public Log log;
 
     @Procedure(value = "graph.extractQuery", mode = Mode.READ)
     @Description("Wir wollen die Query")
+    @SuppressWarnings("unused")
     public Stream<NodeResult> extractQuery(@Name("query") String query) {
         System.out.println("EXTRACT QUERY: extractQuery startet");
         query = query.trim().replaceAll("\n", " ");
@@ -41,11 +45,24 @@ public class GraphProcedures {
         Set<Node> simulated = dsim.simulate();
         return simulated.stream().map(NodeResult::new);
     }
+
+    /**
+     * Ergebniskonstrukt für NEO4J Prozeduren
+     */
     public class NodeResult {
+        /**
+         * Knoten der Ergebnisse, Muss public sein für NEO4J
+         */
+        @SuppressWarnings("WeakerAccess")
+        public Node node;
 
-        Node node;
-
-        NodeResult(Node node) {
+        /**
+         * Ergebnis der Query, Muss public sein für NEO4J
+         *
+         * @param node Knoten
+         */
+        @SuppressWarnings("WeakerAccess")
+        public NodeResult(Node node) {
             this.node = node;
         }
     }

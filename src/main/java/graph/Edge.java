@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Edge {
 
-    public Vertex start;
-    public String relation;
-    public Vertex target;
+    private Vertex start;
+    private String relation;
+    private Vertex target;
 
     Edge(Vertex start, Vertex target, String relationLabel) {
         this.start = start;
@@ -27,4 +27,21 @@ public class Edge {
         return list;
     }
 
+    /**
+     * Gibt den Zielknoten aus
+     *
+     * @return Knoten, auf den die Kante zeigt
+     */
+    public Vertex getTarget() {
+        return target;
+    }
+
+    /**
+     * Gibt den Startknoten aus
+     *
+     * @return Knoten, von dem diese Kante ausgeht
+     */
+    public Vertex getStart() {
+        return start;
+    }
 }

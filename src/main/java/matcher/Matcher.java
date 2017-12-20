@@ -13,12 +13,16 @@ public abstract class Matcher {
     /**
      * Constructor um an die Datenbank zu kommen
      * @param database Datenbank
+     * @param graph Graph
      */
     public Matcher(GraphDatabaseService database, Graph graph) {
         this.db = database;
         this.graph = graph;
     }
 
+    /**
+     * Default Matcher
+     */
     Matcher() {
         this.db = null;
     }

@@ -35,9 +35,7 @@ public class Graph {
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder("Edges:\n");
-        for (Edge edge : edges) {
-            ret.append(edge.toString()).append("\n");
-        }
+        for (Edge edge : edges) ret.append(edge.toString()).append("\n");
         ret.append("\nVertices:\n");
         for (Vertex vertex : vertices) {
             ret.append(vertex.toString()).append("\n");

@@ -33,7 +33,6 @@ public class ManualFullTextIndexTest {
             StatementResult sr  = session.run("CALL graph.extractQuery(\" MATCH (tom:Person)-->(m:Movie) RETURN tom \")");
             System.out.println("TEST: Query gestartet");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );
-            int counter = 0;
             while(sr.hasNext()) {
                 System.out.println(sr.peek());
                 sr.next();

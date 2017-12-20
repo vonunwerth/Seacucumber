@@ -13,11 +13,21 @@ import java.util.Map;
 
 public class DualSimMatcher extends Matcher {
 
+    /**
+     * Neuer Dual Simulation Matcher
+     *
+     * @param db    Datenbank, die genutzt werden soll
+     * @param graph Graph
+     */
     public DualSimMatcher(GraphDatabaseService db, Graph graph) {
         this.db = db;
         this.graph = graph;
     }
 
+    /**
+     * Zu nutzender Matching Algorithmus
+     * @return Simulation
+     */
     @Override
     public Map<Integer, List<Node>> matchingAlgorithm() {
 
@@ -43,7 +53,7 @@ public class DualSimMatcher extends Matcher {
                             Boolean exists = false;
                             for (Node n2 : successingNodes(n)
                                     ) {
-                                    exists = sim.get(e.target.getId()).contains(n2);
+                                exists = sim.get(e.getTarget().getId()).contains(n2);
                             }
                             if (!(exists)) {
                                 removeList.add(n);
@@ -57,7 +67,7 @@ public class DualSimMatcher extends Matcher {
                         System.out.println(ex.toString());
                         System.out.println("Fehler");
                         for (Node n: sim.get(v.getId())
-                             ) {
+                                ) {
                             System.out.println(n);
                         }
                     }
@@ -75,7 +85,7 @@ public class DualSimMatcher extends Matcher {
                             for (Node n2 : previousNodes(n)
                                     ) {
 
-                                exists = sim.get(e.start.getId()).contains(n2);
+                                exists = sim.get(e.getStart().getId()).contains(n2);
                             }
                             if (!(exists)) {
                                 removeList.add(n);
@@ -95,10 +105,10 @@ public class DualSimMatcher extends Matcher {
             }
         } while (changes);
         for (Integer s: sim.keySet()
-             ) {
+                ) {
             int counter = 0;
             for (Node n: sim.get(s)
-                 ) {
+                    ) {
                 System.out.print(n.getId()+" ");
                 System.out.println(n.getLabels().iterator().next().name());
                 counter++;
