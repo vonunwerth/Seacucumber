@@ -34,7 +34,7 @@ public class ManualFullTextIndexTest {
             System.out.println("TEST: Query gestartet");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );
             while(sr.hasNext()) {
-                System.out.println(sr.peek());
+                System.out.println("RESULT" + sr.peek());
                 sr.next();
             }
         }
