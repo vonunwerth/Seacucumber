@@ -6,9 +6,10 @@ import java.util.List;
 public class Edge {
 
     private Vertex start;
-    private String relation;
-    private Vertex target;
 
+    private String relation;
+
+    private Vertex target;
     Edge(Vertex start, Vertex target, String relationLabel) {
         this.start = start;
         this.target = target;
@@ -43,5 +44,9 @@ public class Edge {
      */
     public Vertex getStart() {
         return start;
+    }
+
+    public String getRelation() {
+        return relation;
     }
 }

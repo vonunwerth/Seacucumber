@@ -1,5 +1,6 @@
 package graph;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,13 +31,25 @@ public class Graph {
 
     private String START = "digraph G { \n";
     private String VERTEX = "{0} [label='{1}']; \n";
-    private String EDGE = "{0} -> {1}; \n";
+    private String EDGE = "{0} -> {1} [label='{2}']; \n";
     private String END = "} \n";
 
-
-    public String graphToDOT(){
+    public String graphToDOT() {
         StringBuffer sb = new StringBuffer();
         sb.append(START);
+
+
+        for (Vertex vertex : vertices){
+            //Add every Vertex to file
+            sb.append(MessageFormat.format(VERTEX, vertex.getId(), vertex.getIdentifier()));
+        }
+
+        for (Vertex vertex : vertices){
+            //Add every outgoing edge from every vertex to file
+            for (Edge out : vertex.getOutgoingEdges()) {
+                sb.append(MessageFormat.format(EDGE, vertex.getId(), out.getTarget().getId(), out.getRelation()));
+            }
+        }
 
         sb.append(END);
         return sb.toString();
@@ -49,7 +62,9 @@ public class Graph {
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder("Edges:\n");
-        for (Edge edge : edges) ret.append(edge.toString()).append("\n");
+        for (Edge edge : edges) {
+            ret.append(edge.toString()).append("\n");
+        }
         ret.append("\nVertices:\n");
         for (Vertex vertex : vertices) {
             ret.append(vertex.toString()).append("\n");
