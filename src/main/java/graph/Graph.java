@@ -28,7 +28,21 @@ public class Graph {
         return null;
     }
 
-    public void printGraph(Graph g) {
+    private String START = "digraph G { \n";
+    private String VERTEX = "{0} [label='{1}']; \n";
+    private String EDGE = "{0} -> {1}; \n";
+    private String END = "} \n";
+
+
+    public String graphToDOT(){
+        StringBuffer sb = new StringBuffer();
+        sb.append(START);
+
+        sb.append(END);
+        return sb.toString();
+    }
+
+    public void printGraph() {
         //TODO gesamten Graph grafisch ausgeben lassen
     }
 
