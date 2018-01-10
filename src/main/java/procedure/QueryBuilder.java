@@ -106,12 +106,12 @@ class QueryBuilder {
                 if (first != null) {
                     if (direction == 1) {
                         g.addEdge(first, n, edge[1]);
-                        System.out.println("Created Edge! (" + first.getLabel() + ":" + first.getIdentifier() + ")---" + edge[1] + "-->(" + n.getLabel() + ":" + n.getIdentifier() + ")");
+                        System.out.println("Created Edge! (" + first.getLabel() + ":" + first.getIdentifier() + ")---[" + edge[1] + "]-->(" + n.getLabel() + ":" + n.getIdentifier() + ")");
                         first.addEdge(n, edge[1]);
                     }
                     if (direction == 2) {
                         g.addEdge(n, first, edge[1]);
-                        System.out.println("Created Edge! (" + n.getLabel() + ":" + n.getIdentifier() + ")---" + edge[1] + "-->(" + first.getLabel() + ":" + first.getIdentifier() + ")");
+                        System.out.println("Created Edge! (" + n.getLabel() + ":" + n.getIdentifier() + ")---[" + edge[1] + "]-->(" + first.getLabel() + ":" + first.getIdentifier() + ")");
                         n.addEdge(first, edge[1]);
                     }
                 }

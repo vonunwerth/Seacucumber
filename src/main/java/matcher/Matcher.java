@@ -43,37 +43,72 @@ public abstract class Matcher {
     }
 
     /**
-     * Returns all sucessors of the given node.
+     * Returns all predecessors of the given node which have a given label.
+     * @param node Knoten
+     * @param label Label der Relationship
+     * @return Vorgängerknoten
+     */
+    List<Node> previousNodes(Node node, String label) {
+        List<Node> result = new ArrayList<>();
+        RelationshipType rt = RelationshipType.withName(label);
+        Iterable<Relationship> rel = node.getRelationships(Direction.INCOMING,rt);
+        for (Relationship r : rel
+                ) {
+            result.add(r.getStartNode());
+        }
+        return result;
+    }
+
+    /**
+     * Returns all successors of the given node.
      * @param node Knoten
      * @return Nachfolgeknoten
      */
     List<Node> successingNodes(Node node) {
         List<Node> result = new ArrayList<>();
-
         Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING);
         for (Relationship r : rel
                 ) {
-            System.out.println(r.toString());
             result.add(r.getEndNode());
         }
         return result;
     }
 
-    Boolean compare(Vertex a, Node b) {
-        for (Label c : b.getLabels()
+    /**
+     * Returns all successors of the given node which have a given label.
+     * @param node Knoten
+     * @param label Label der Relationship
+     * @return Vorgängerknoten
+     */
+    List<Node> successingNodes(Node node, String label) {
+        List<Node> result = new ArrayList<>();
+        RelationshipType rt = RelationshipType.withName(label);
+        Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING,rt);
+        for (Relationship r : rel
                 ) {
-            if (c.name().equals(a.getLabel())) {
-                return true;
-            }
+            result.add(r.getEndNode());
         }
-        return false;
+        return result;
     }
 
+    /**
+     * Compares the labels of two given nodes.
+     * @param a first node
+     * @param b secon node
+     * @return returns true if the nodes have the same label
+     */
     Boolean compare(Node a, Node b) {
         return a.getLabels() == b.getLabels();
     }
 
-
+    /**
+     * Returns the relationships of the given node.
+     * @param node the node you want the relationships from
+     * @return list of the relationships
+     */
+    Iterable<Relationship> getRelationships(Node node) {
+        return node.getRelationships();
+    }
 
     /**
      * Returns all nodes that are similar to the vertex from the query graph.
@@ -81,8 +116,6 @@ public abstract class Matcher {
      * @return Nodes for Vortex
      */
     List<Node> findeNodes(Vertex vertex) {
-
-
         Label lb =  Label.label(vertex.getIdentifier());
         System.out.println(lb.name());
         ResourceIterator<Node> iterator = db.findNodes(lb);

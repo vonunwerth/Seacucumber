@@ -51,7 +51,7 @@ public class DualSimMatcher extends Matcher {
                         for (Node n : sim.get(v.getId())
                                 ) {
                             Boolean exists = false;
-                            for (Node n2 : successingNodes(n)
+                            for (Node n2 : successingNodes(n,e.getRelation())
                                     ) {
                                 exists = sim.get(e.getTarget().getId()).contains(n2);
                             }
@@ -82,7 +82,7 @@ public class DualSimMatcher extends Matcher {
                         for (Node n : sim.get(v.getId())
                                 ) {
                             Boolean exists = false;
-                            for (Node n2 : previousNodes(n)
+                            for (Node n2 : previousNodes(n,e.getRelation())
                                     ) {
 
                                 exists = sim.get(e.getStart().getId()).contains(n2);

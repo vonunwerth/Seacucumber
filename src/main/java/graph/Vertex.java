@@ -1,5 +1,8 @@
 package graph;
 
+import org.neo4j.graphdb.Label;
+import org.neo4j.graphdb.Node;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +104,21 @@ public class Vertex {
      */
     public Integer getId() {
         return id;
+    }
+
+    /**
+     * Vergleicht Neo4J Knoten mit Vertex
+     * @param b Knoten, mit dem verglichen werden soll
+     * @return true wenn gleich, false wenn nicht gleich
+     */
+    Boolean equals(Node b) {
+        for (Label c : b.getLabels()
+                ) {
+            if (c.name().equals(this.getLabel())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
