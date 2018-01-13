@@ -3,6 +3,9 @@ package graph;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Repräsentiert Knoten in einem Graphen
+ */
 public class Vertex {
 
     /**
@@ -110,10 +113,10 @@ public class Vertex {
     public void printVertex() { //TODO Besser programmieren
         String[][] field = new String[5][5];
         field[2][2] = "[" + this.identifier.charAt(0) + "]";
-        String right = " → ";
-        String left = " ← ";
-        String up = " ↑ ";
-        String down = " ↓ ";
+        String right = " \u2192 ";
+        String left = " \u2190 ";
+        String up = " \u2191 ";
+        String down = " \u2193 ";
 
         //geht durch die Liste der ausgehenden Kanten
         for (int x = 0; x < this.outgoingEdges.size(); x++) {
@@ -124,7 +127,7 @@ public class Vertex {
                 continue;
             }
             if (field[3][3] == null) {
-                field[3][3] = " ↘ ";
+                field[3][3] = " \u2198 ";
                 field[4][4] = "(" + outgoingEdges.get(x).getVertex().get(1).getIdentifier().charAt(0) + ")";
                 continue;
             }
@@ -134,7 +137,7 @@ public class Vertex {
                 continue;
             }
             if (field[1][3] == null) {
-                field[1][3] = " ↗ ";
+                field[1][3] = " \u2197 ";
                 field[0][4] = "(" + outgoingEdges.get(x).getVertex().get(1).getIdentifier().charAt(0) + ")";
                 continue;
             }
@@ -144,7 +147,7 @@ public class Vertex {
                 continue;
             }
             if (field[1][1] == null) {
-                field[1][1] = " ↖ ";
+                field[1][1] = " \u2196 ";
                 field[0][0] = "(" + outgoingEdges.get(x).getVertex().get(1).getIdentifier().charAt(0) + ")";
                 continue;
             }
@@ -154,7 +157,7 @@ public class Vertex {
                 continue;
             }
             if (field[3][1] == null) {
-                field[3][1] = " ↙ ";
+                field[3][1] = " \u2199 ";
                 field[4][0] = "(" + outgoingEdges.get(x).getVertex().get(1).getIdentifier().charAt(0) + ")";
             }
         }
@@ -169,7 +172,7 @@ public class Vertex {
                 continue;
             }
             if (field[3][3] == null) {
-                field[3][3] = " ↖ ";
+                field[3][3] = " \u2196 ";
                 field[4][4] = "(" + incomingEdges.get(x).getVertex().get(0).getIdentifier().charAt(0) + ")";
                 continue;
             }
@@ -179,7 +182,7 @@ public class Vertex {
                 continue;
             }
             if (field[1][3] == null) {
-                field[1][3] = " ↙ ";
+                field[1][3] = " \u2199 ";
                 field[0][4] = "(" + incomingEdges.get(x).getVertex().get(0).getIdentifier().charAt(0) + ")";
                 continue;
             }
@@ -189,7 +192,7 @@ public class Vertex {
                 continue;
             }
             if (field[1][1] == null) {
-                field[1][1] = " ↘ ";
+                field[1][1] = " \u2198 ";
                 field[0][0] = "(" + incomingEdges.get(x).getVertex().get(0).getIdentifier().charAt(0) + ")";
                 continue;
             }
@@ -199,7 +202,7 @@ public class Vertex {
                 continue;
             }
             if (field[3][1] == null) {
-                field[3][1] = " ↗ ";
+                field[3][1] = " \u2197 ";
                 field[4][0] = "(" + incomingEdges.get(x).getVertex().get(0).getIdentifier().charAt(0) + ")";
             }
         }

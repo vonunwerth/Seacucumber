@@ -9,20 +9,21 @@
     <version>1.0</version>
 
     <properties>
-        <neo4j.version>3.3.1</neo4j.version>
+        <neo4j.version>3.2.6</neo4j.version>
     </properties>
 
+    <!-- 3.3.1 works -->
     <dependencies>
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j</artifactId>
-            <version>3.3.1</version>
+            <version>3.2.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.neo4j.test</groupId>
             <artifactId>neo4j-harness</artifactId>
-            <version>3.3.1</version>
+            <version>3.2.6</version>
         </dependency>
 
         <dependency>

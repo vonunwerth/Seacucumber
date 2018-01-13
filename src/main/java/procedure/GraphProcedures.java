@@ -13,16 +13,28 @@ import java.util.stream.Stream;
 
 public class GraphProcedures {
 
-    //Zugriff auf unsere Datenbank
-    //Muss public sein
+    /**
+     * Zugriff auf unsere Datenbank
+     * Muss für NEO4J public sein
+     */
     @Context
     @SuppressWarnings("WeakerAccess")
     public GraphDatabaseService db;
 
+    /**
+     * Log
+     */
     @Context
     @SuppressWarnings({"WeakerAccess", "unused"})
     public Log log;
 
+    /**
+     * NEO4J Procedure
+     * Die übergebene Query wird mit dieser NEO4J Procedure bearbeitet und es wird ein Resultset zurückgegeben
+     *
+     * @param query Auszuführende Query
+     * @return Stream aus NodeResults, wobei jeder NodeResult nur einen Node enthält, nämlich den, den er im Ergebnisset darstellt
+     */
     @Procedure(value = "graph.extractQuery", mode = Mode.READ)
     @Description("Wir wollen die Query")
     @SuppressWarnings("unused")

@@ -8,12 +8,26 @@ import procedure.GraphProcedures;
 
 import static constants.Constants.CREATE_TESTQUERY;
 
+/**
+ * Beispielausführung einer Procedure in einer Klasse als Test
+ * Mit session.run(String query) kann eine Query in NEO4J geladen und ausgeführt werden
+ * Die Ergebnisse können in einem StatementResult sr gespeichert und einzeln mit sr.peek() angezeigt werden
+ */
 public class ManualFullTextIndexTest {
 
+    /**
+     * NEO4J Regel
+     */
     @Rule
     public final Neo4jRule neo4j = new Neo4jRule()
             .withProcedure(GraphProcedures.class);
 
+    /**
+     * NEO4J Test
+     * Es wird eine neue Datenbank mit Testdatensätzen aus den Constants ({@link constants.Constants#CREATE_TESTQUERY}) geladen und dann eine Procedure {@link GraphProcedures#extractQuery(String)} ausgeführt und die Funktionalität getestet.
+     *
+     * @throws Throwable Gegebenenfalls auftretende Fehler
+     */
     @Test
     public void shouldAllowIndexingAndFindingANode() throws Throwable {
         // In a try-block, to make sure we close the driver after the test
@@ -34,7 +48,7 @@ public class ManualFullTextIndexTest {
             System.out.println("TEST: Query gestartet");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );
             while(sr.hasNext()) {
-                System.out.println("RESULT" + sr.peek());
+                System.out.println("RESULT: " + sr.peek());
                 sr.next();
             }
         }

@@ -11,6 +11,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Beispielmatcher, welche die abstrakte Klasse {@link Matcher} erweitert
+ */
 public class DualSimMatcher extends Matcher {
 
     /**
@@ -25,7 +28,7 @@ public class DualSimMatcher extends Matcher {
     }
 
     /**
-     * Zu nutzender Matching Algorithmus
+     * Zu nutzender Matching Algorithmus, hier Dual Simulation
      * @return Simulation
      */
     @Override

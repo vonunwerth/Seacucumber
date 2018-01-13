@@ -6,12 +6,23 @@ import org.neo4j.graphdb.*;
 
 import java.util.*;
 
+/**
+ * Jeder neue Matcher muss die abstrakte Klasse Matcher erweitern. Der Matcher stellt bereits viele Funktionalitäten zu Verfügung, die genutzt, aber auch überschrieben werden können
+ */
 public abstract class Matcher {
+
+    /**
+     * Verwaltung der Datenbank
+     */
     GraphDatabaseService db;
+
+    /**
+     * Graph, auf dem der Matcher arbeiten soll
+     */
     Graph graph;
 
     /**
-     * Constructor um an die Datenbank zu kommen
+     * Konstructor um an die Datenbank zu kommen
      * @param database Datenbank
      * @param graph Graph
      */
@@ -28,7 +39,7 @@ public abstract class Matcher {
     }
 
     /**
-     * Returns all predecessors of the given node.
+     * Gibt alle Vorgänger eines Knoten zurück
      * @param node Knoten
      * @return Vorgängerknoten
      */
@@ -43,7 +54,7 @@ public abstract class Matcher {
     }
 
     /**
-     * Returns all sucessors of the given node.
+     * Gibt alle Nachfolger eines Knotens zurück
      * @param node Knoten
      * @return Nachfolgeknoten
      */
@@ -59,6 +70,13 @@ public abstract class Matcher {
         return result;
     }
 
+    /**
+     * Vergleicht einen Vertex a mit einem Node b auf die Gleichheit ihrer Namen
+     *
+     * @param a Vertex
+     * @param b Node
+     * @return Stimmten die Label überein
+     */
     Boolean compare(Vertex a, Node b) {
         for (Label c : b.getLabels()
                 ) {
@@ -69,14 +87,20 @@ public abstract class Matcher {
         return false;
     }
 
+    /**
+     * Vergleicht die Labels zweier Node
+     *
+     * @param a Node 1
+     * @param b Node 2
+     * @return Stimmen die Labels überein wird wahr zurückgegeben
+     */
     Boolean compare(Node a, Node b) {
         return a.getLabels() == b.getLabels();
     }
 
 
-
     /**
-     * Returns all nodes that are similar to the vertex from the query graph.
+     * Gibt alle Knoten zurück, die ähnlich zum Knoten des Query Graphen sind
      * @param vertex Vertex
      * @return Nodes for Vortex
      */
@@ -97,6 +121,11 @@ public abstract class Matcher {
         return nodes;
     }
 
+    /**
+     * Der Matcher startet
+     *
+     * @return Ergebnisset
+     */
     public Set<Node> simulate() {
         Map<Integer, List<Node>> map = matchingAlgorithm();
         Set<Node> set = new HashSet<>();
@@ -106,5 +135,9 @@ public abstract class Matcher {
         return set;
     }
 
+    /**
+     * Diese Methode soll mit dem zu implementierenden Matching Algorithmus überschrieben werden.
+     * @return Sie soll eine Map aus Integer, List von Nodes zurückgeben
+     */
     public abstract Map<Integer, List<Node>> matchingAlgorithm();
 }

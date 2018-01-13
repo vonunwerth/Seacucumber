@@ -3,37 +3,23 @@ package procedure;
 import graph.Graph;
 import graph.Vertex;
 
+/**
+ * Baut einen Graphen aus einer Query
+ */
 class QueryBuilder {
+
+    /**
+     * Query, aus der der Graph gebaut werden soll
+     */
     private String query;
 
     QueryBuilder(String queryParam) {
         query = queryParam;
     }
 
-    /*public static void main(String[] args) {
-        //query = "MATCH(marvelMovies:TAG)-[]-(marvelMovies:Avengers)"; //{name:'Marvel'})<-[:HAS_TAG]-(movie)";
-        query = "MATCH\n" +
-                "(:Actor {name: \"Wes Studi\"})-[:ACTS_IN]->(m:Movie)<-[:ACTS_IN]-(:Actor {name: \"Matt Gerald\"}),\n" +
-                "(m)<-[:DIRECTED]-(d)-[:DIRECTED]->(others)\n" +
-                "RETURN m.title, d.name, collect(others.title) AS productions\n" +
-                "LIMIT 1";
-        //query = "MATCH \"(:Actor {name: \"Wes Studi\"})-[:ACTS_IN]->(m:Movie)<-[:ACTS_IN]-(:Actor {name: \"Matt Gerald\"})";
-        /*query = "MATCH(thor:CHARACTER {name:'Thor'}),\n" +
-                "     (hulk:CHARACTER {name:'The Hulk'}),\n" +
-                "     (marvelMovies:TAG {name:'Marvel'}),\n" +
-                "     (newRelease:TAG {name:'New Release'})-[:HAS_TAG]-(movie)\n" +
-                "WHERE (marvelMovies)-[:HAS_TAG]-(movie)\n" +
-                "  AND (movie)-[:PERFORMS_IN]-(hulk)\n" +
-                "  AND (movie)-[:PERFORMS_IN]-(thor)\n" +
-                "RETURN movie.name";
-        Graph g = build();
-    }*/
-
-
     /**
-     * Builds a graph from the given query
-     *
-     * @return the built graph
+     * Baut einen Graphen aus einer Query
+     * @return Der gebaute Graph
      */
     Graph build() {
         Graph g = new Graph();
