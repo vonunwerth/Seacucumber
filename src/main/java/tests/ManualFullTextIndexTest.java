@@ -33,6 +33,7 @@ public class ManualFullTextIndexTest {
         // In a try-block, to make sure we close the driver after the test
         try (Driver driver = GraphDatabase.driver(neo4j.boltURI(), Config.build().toConfig())) {
 
+
             // Given I've started Neo4j with the FullTextIndex procedure class
             //       which my 'neo4j' rule above does.
             Session session = driver.session();
