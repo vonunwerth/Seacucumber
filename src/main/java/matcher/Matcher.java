@@ -6,23 +6,12 @@ import org.neo4j.graphdb.*;
 
 import java.util.*;
 
-/**
- * Jeder neue Matcher muss die abstrakte Klasse Matcher erweitern. Der Matcher stellt bereits viele Funktionalitäten zu Verfügung, die genutzt, aber auch überschrieben werden können
- */
 public abstract class Matcher {
-
-    /**
-     * Verwaltung der Datenbank
-     */
     GraphDatabaseService db;
-
-    /**
-     * Graph, auf dem der Matcher arbeiten soll
-     */
     Graph graph;
 
     /**
-     * Konstructor um an die Datenbank zu kommen
+     * Constructor um an die Datenbank zu kommen
      * @param database Datenbank
      * @param graph Graph
      */
@@ -39,7 +28,7 @@ public abstract class Matcher {
     }
 
     /**
-     * Gibt alle Vorgänger eines Knoten zurück
+     * Returns all predecessors of the given node.
      * @param node Knoten
      * @return Vorgängerknoten
      */
@@ -54,59 +43,79 @@ public abstract class Matcher {
     }
 
     /**
-     * Gibt alle Nachfolger eines Knotens zurück
+     * Returns all predecessors of the given node which have a given label.
+     * @param node Knoten
+     * @param label Label der Relationship
+     * @return Vorgängerknoten
+     */
+    List<Node> previousNodes(Node node, String label) {
+        List<Node> result = new ArrayList<>();
+        RelationshipType rt = RelationshipType.withName(label);
+        Iterable<Relationship> rel = node.getRelationships(Direction.INCOMING,rt);
+        for (Relationship r : rel
+                ) {
+            result.add(r.getStartNode());
+        }
+        return result;
+    }
+
+    /**
+     * Returns all successors of the given node.
      * @param node Knoten
      * @return Nachfolgeknoten
      */
     List<Node> successingNodes(Node node) {
         List<Node> result = new ArrayList<>();
-
         Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING);
         for (Relationship r : rel
                 ) {
-            System.out.println(r.toString());
             result.add(r.getEndNode());
         }
         return result;
     }
 
     /**
-     * Vergleicht einen Vertex a mit einem Node b auf die Gleichheit ihrer Namen
-     *
-     * @param a Vertex
-     * @param b Node
-     * @return Stimmten die Label überein
+     * Returns all successors of the given node which have a given label.
+     * @param node Knoten
+     * @param label Label der Relationship
+     * @return Vorgängerknoten
      */
-    Boolean compare(Vertex a, Node b) {
-        for (Label c : b.getLabels()
+    List<Node> successingNodes(Node node, String label) {
+        List<Node> result = new ArrayList<>();
+        RelationshipType rt = RelationshipType.withName(label);
+        Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING,rt);
+        for (Relationship r : rel
                 ) {
-            if (c.name().equals(a.getLabel())) {
-                return true;
-            }
+            result.add(r.getEndNode());
         }
-        return false;
+        return result;
     }
 
     /**
-     * Vergleicht die Labels zweier Node
-     *
-     * @param a Node 1
-     * @param b Node 2
-     * @return Stimmen die Labels überein wird wahr zurückgegeben
+     * Compares the labels of two given nodes.
+     * @param a first node
+     * @param b secon node
+     * @return returns true if the nodes have the same label
      */
     Boolean compare(Node a, Node b) {
         return a.getLabels() == b.getLabels();
     }
 
+    /**
+     * Returns the relationships of the given node.
+     * @param node the node you want the relationships from
+     * @return list of the relationships
+     */
+    Iterable<Relationship> getRelationships(Node node) {
+        return node.getRelationships();
+    }
 
     /**
-     * Gibt alle Knoten zurück, die ähnlich zum Knoten des Query Graphen sind
+     * Returns all nodes that are similar to the vertex from the query graph.
      * @param vertex Vertex
      * @return Nodes for Vortex
      */
     List<Node> findeNodes(Vertex vertex) {
-
-
         Label lb =  Label.label(vertex.getIdentifier());
         System.out.println(lb.name());
         ResourceIterator<Node> iterator = db.findNodes(lb);
@@ -121,11 +130,6 @@ public abstract class Matcher {
         return nodes;
     }
 
-    /**
-     * Der Matcher startet
-     *
-     * @return Ergebnisset
-     */
     public Set<Node> simulate() {
         Map<Integer, List<Node>> map = matchingAlgorithm();
         Set<Node> set = new HashSet<>();
@@ -135,9 +139,5 @@ public abstract class Matcher {
         return set;
     }
 
-    /**
-     * Diese Methode soll mit dem zu implementierenden Matching Algorithmus überschrieben werden.
-     * @return Sie soll eine Map aus Integer, List von Nodes zurückgeben
-     */
     public abstract Map<Integer, List<Node>> matchingAlgorithm();
 }

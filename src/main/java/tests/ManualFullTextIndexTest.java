@@ -44,7 +44,7 @@ public class ManualFullTextIndexTest {
             //session.run( "CALL example.index({id}, ['name'])", parameters( "id", nodeId ) );
 
             // Then I can search for that node with lucene query syntax
-            StatementResult sr  = session.run("CALL graph.extractQuery(\" MATCH (tom:Person)-->(m:Movie) RETURN tom \")");
+            StatementResult sr  = session.run("CALL graph.extractQuery(\" MATCH (tom:Person)-[:DIRECTED]->(m:Movie) RETURN tom \")");
             System.out.println("TEST: Query gestartet");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );
             while(sr.hasNext()) {
