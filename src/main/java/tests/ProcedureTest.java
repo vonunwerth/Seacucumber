@@ -13,7 +13,7 @@ import static constants.Constants.CREATE_TESTQUERY;
  * Mit session.run(String query) kann eine Query in NEO4J geladen und ausgeführt werden
  * Die Ergebnisse können in einem StatementResult sr gespeichert und einzeln mit sr.peek() angezeigt werden
  */
-public class ManualFullTextIndexTest {
+public class ProcedureTest {
 
     /**
      * NEO4J Regel

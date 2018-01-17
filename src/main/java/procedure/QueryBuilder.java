@@ -2,18 +2,22 @@ package procedure;
 
 import graph.Graph;
 import graph.Vertex;
+import org.neo4j.cypher.internal.frontend.v2_3.ast.functions.Str;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Baut einen Graphen aus einer Query
  */
-class QueryBuilder {
+public class QueryBuilder {
 
     /**
      * Query, aus der der Graph gebaut werden soll
      */
     private String query;
 
-    QueryBuilder(String queryParam) {
+    public QueryBuilder(String queryParam) {
         query = queryParam;
     }
 
@@ -21,7 +25,7 @@ class QueryBuilder {
      * Baut einen Graphen aus einer Query
      * @return Der gebaute Graph
      */
-    Graph build() {
+    public Graph build() {
         Graph g = new Graph();
 
         //not needed (same query preprocessing as in GraphProcedures)
@@ -41,6 +45,8 @@ class QueryBuilder {
         for (int x = 0; x < query.length(); x++) {
             StringBuilder pointString = new StringBuilder();
             StringBuilder edgeString = new StringBuilder();
+            StringBuilder attString = new StringBuilder();
+            Map<String,String> map = new HashMap<>();
             if (query.charAt(x) == ',') first = null;
             if (query.charAt(x) == '>') direction = 1;
             if (query.charAt(x) == '<') direction = 2;
@@ -54,6 +60,13 @@ class QueryBuilder {
                     pointString.append(query.charAt(x));
                     x++;
                 }
+                if (query.charAt(x) == '{'){
+                    while (query.charAt(x) != ')'){
+                        attString.append(query.charAt(x));
+                        x++;
+                    }
+                    map = forgeProperties(attString);
+                }
                 point = pointString.toString().split(":");
                 Vertex n;
 
@@ -63,12 +76,12 @@ class QueryBuilder {
                  */
                 if (pointString.toString().contains(":")) {
                     if (g.checkLabel(point[0]) == null) {
-                        n = new Vertex(point[0], point[1], idCounter);
+                        n = new Vertex(point[0], point[1], idCounter,map);
                         g.addVertex(n);
                         idCounter++;
                         System.out.println("Created Node! (" + point[0] + ":" + point[1] + ")");
                     } else if (g.checkLabel(point[0]).getLabel().equals("")) {
-                        n = new Vertex(point[0], point[1], idCounter);
+                        n = new Vertex(point[0], point[1], idCounter,map);
                         g.addVertex(n);
                         idCounter++;
                         System.out.println("Created Node! (" + point[0] + ":" + point[1] + ")");
@@ -77,7 +90,7 @@ class QueryBuilder {
                     }
                 } else {
                     if (g.checkLabel(pointString.toString()) == null) {
-                        n = new Vertex(pointString.toString(), "#", idCounter);
+                        n = new Vertex(pointString.toString(), "#", idCounter,map);
                         g.addVertex(n);
                         idCounter++;
                         System.out.println("Created Node! (" + pointString + ":" + "#)");
@@ -121,5 +134,16 @@ class QueryBuilder {
             v.printVertex();
         }
         return g;
+    }
+    private Map<String,String> forgeProperties(StringBuilder attString){
+        Map<String,String> map = new HashMap<>();
+        String[] attributes = attString.toString().split(",");
+        for(int i = 0; i < attributes.length; i++){
+            attributes[i] = attributes[i].replaceAll("[^a-zA-Z0-9:]","");
+            String[] keyitem = attributes[i].split(":");
+            map.put(keyitem[0],keyitem[1]);
+        }
+        return map;
+
     }
 }

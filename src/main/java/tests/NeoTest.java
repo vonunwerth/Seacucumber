@@ -1,7 +1,11 @@
 package tests;
 
+import graph.Graph;
+import graph.Vertex;
 import org.neo4j.driver.v1.*;
-import org.neo4j.driver.v1.exceptions.ClientException;
+import procedure.QueryBuilder;
+
+import java.util.List;
 
 import static org.neo4j.driver.v1.Values.parameters;
 
@@ -16,26 +20,14 @@ public class NeoTest {
      * @param args Programmparameter
      */
     public static void main(String[] args) {
-
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("trump", "password"));
-        Session session = driver.session();
-        StatementResult result = session.run("CALL graph.extractQuery(\"MATCH (tom:Person {name: \'Tom Hanks\'})-[:ACTED_IN]->(tomHanksMovies) RETURN tom, tomHanksMovies\")",
-                parameters("name", "Arthur"));
-        //Test Fehlermeldung
-        //StatementResult result = session.run("CALL graph.extractQuery(\"MATCH {name: \'Tom Hanks\'})-[:ACTED_IN]->(tomHanksMovies) RETURN tom, tomHanksMovies\")");
-
-        try {
-            while (result.hasNext()) {
-                Record record = result.next();
-                System.out.println(record.get("title").asString() + " " + record.get("name").asString());
-            }
-        } catch (ClientException e) {
-            System.err.println("In Ihrer Query befindet sich ein Fehler. Bitte beheben Sie diesen.");
-            System.err.println(e.getMessage());
+        QueryBuilder qb = new QueryBuilder("MATCH (tom:Person { number:'10'},{name:'hans'})-[:DIRECTED]->(m:Movie {director: 'Franz'}) RETURN tom");
+        Graph graph = qb.build();
+        List<Vertex> list = graph.getVertices();
+        for (Vertex v: list
+             ) {
+            System.out.println(v.getProperties().values());
         }
 
-        session.close();
-        driver.close();
     }
 
     /**

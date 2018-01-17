@@ -5,6 +5,7 @@ import org.neo4j.graphdb.Node;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Repräsentiert Knoten in einem Graphen
@@ -25,7 +26,7 @@ public class Vertex {
      * Id des Knoten
      */
     private Integer id;
-
+    private Map<String,String> properties;
     /**
      * Liste der ausgehenden bzw eingehenden Kanten
      */
@@ -42,11 +43,13 @@ public class Vertex {
      * @param label      Label des Knoten
      * @param identifier Identifier des Knoten
      * @param id         Id des Knoten
+     * @param attributes the attributes of the vertex
      */
-    public Vertex(String label, String identifier, Integer id) {
+    public Vertex(String label, String identifier, Integer id,Map<String,String> attributes) {
         this.label = label;
         this.identifier = identifier;
         this.id = id;
+        this.properties = attributes;
     }
 
     /**
@@ -86,6 +89,11 @@ public class Vertex {
     }
 
     /**
+     * Returns the map of attributes.
+     * @return map of attributes
+     */
+    public Map<String,String> getProperties() {return properties; }
+    /**
      * Gibt die eingehenden Kanten zurück
      * @return Alle Kanten die in den Knoten gehen
      */
@@ -114,7 +122,7 @@ public class Vertex {
      * @param b Knoten, mit dem verglichen werden soll
      * @return true wenn gleich, false wenn nicht gleich
      */
-    Boolean equals(Node b) {
+    public Boolean equals(Node b) {
         for (Label c : b.getLabels()
                 ) {
             if (c.name().equals(this.getLabel())) {
@@ -122,6 +130,26 @@ public class Vertex {
             }
         }
         return false;
+    }
+    public Boolean equalsProp(Node b) {
+        Boolean equ = false;
+        for (Label c : b.getLabels()
+                ) {
+            if (c.name().equals(this.getLabel())) {
+                equ = true;
+            }
+        }
+        for (String s: this.properties.keySet()
+             ) {
+            if (b.getProperty(s).toString().equals(this.properties.get(s)) ){
+                equ = true;
+            } else{
+                equ = false;
+                break;
+            }
+
+        }
+        return equ;
     }
 
     /**

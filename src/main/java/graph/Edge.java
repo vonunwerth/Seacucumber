@@ -79,7 +79,7 @@ public class Edge {
      *
      * @return Name des Übergangs
      */
-    String getRelation() {
+    public String getRelation() {
         return relation;
     }
 }

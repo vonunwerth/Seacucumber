@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Beispielmatcher, welche die abstrakte Klasse {@link Matcher} erweitert
  */
-public class DualSimMatcher extends Matcher {
+public class DualSimMatcherProp extends Matcher {
 
     /**
      * Neuer Dual Simulation Matcher
@@ -22,7 +22,7 @@ public class DualSimMatcher extends Matcher {
      * @param db    Datenbank, die genutzt werden soll
      * @param graph Graph
      */
-    public DualSimMatcher(GraphDatabaseService db, Graph graph) {
+    public DualSimMatcherProp(GraphDatabaseService db, Graph graph) {
         this.db = db;
         this.graph = graph;
     }
@@ -38,7 +38,7 @@ public class DualSimMatcher extends Matcher {
         Map<Integer, List<Node>> sim = new HashMap<>();
         for (Vertex v : graph.getVertices()
                 ) {
-            sim.put(v.getId(), findNodes(v));
+            sim.put(v.getId(), findNodesProp(v));
             System.out.println(v.getLabel());
         }
 

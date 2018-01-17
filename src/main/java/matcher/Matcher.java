@@ -104,6 +104,24 @@ public abstract class Matcher {
     /**
      * Returns the relationships of the given node.
      * @param node the node you want the relationships from
+     * @param dir direction of the relationship
+     * @return list of the relationships
+     */
+    Iterable<Relationship> getRelationships(Node node,Direction dir) {
+        return node.getRelationships(dir);
+    }
+    /**
+     * Returns the relationships of the given node.
+     * @param node the node you want the relationships from
+     * @param rel type of the relationship
+     * @return list of the relationships
+     */
+    Iterable<Relationship> getRelationships(Node node,RelationshipType rel) {
+        return node.getRelationships(rel);
+    }
+    /**
+     * Returns the relationships of the given node.
+     * @param node the node you want the relationships from
      * @return list of the relationships
      */
     Iterable<Relationship> getRelationships(Node node) {
@@ -111,20 +129,30 @@ public abstract class Matcher {
     }
 
     /**
-     * Returns all nodes that are similar to the vertex from the query graph.
+     * Returns all nodes that have the same label as the vertex from the query graph.
      * @param vertex Vertex
      * @return Nodes for Vortex
      */
-    List<Node> findeNodes(Vertex vertex) {
+    List<Node> findNodes(Vertex vertex) {
         Label lb =  Label.label(vertex.getIdentifier());
-        System.out.println(lb.name());
         ResourceIterator<Node> iterator = db.findNodes(lb);
-        List<Node> nodes = new ArrayList<>();
+        List<Node> nodes = new LinkedList<>();
         while (iterator.hasNext()){
             try {
                 nodes.add(iterator.next());
             }catch (Exception e) {
                 System.out.println(e.getMessage());
+            }
+        }
+        return nodes;
+    }
+    List<Node> findNodesProp(Vertex vertex) {
+        ResourceIterable<Node> list = db.getAllNodes();
+        List<Node> nodes = new LinkedList<>();
+        for (Node n: list
+             ) {
+            if (vertex.equalsProp(n)){
+                nodes.add(n);
             }
         }
         return nodes;
@@ -139,5 +167,9 @@ public abstract class Matcher {
         return set;
     }
 
+    /**
+     * This function must be overridden with the matchin algorithm
+     * @return the result of the algorithm
+     */
     public abstract Map<Integer, List<Node>> matchingAlgorithm();
 }

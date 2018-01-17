@@ -2,6 +2,7 @@ package procedure;
 
 import graph.Graph;
 import matcher.DualSimMatcher;
+import matcher.DualSimMatcherProp;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.logging.Log;
@@ -52,7 +53,7 @@ public class GraphProcedures {
         Graph graph = qb.build();
         System.out.println("EXTRACT QUERY: Graph gebaut.");
         System.out.println(graph);
-        DualSimMatcher dsim = new DualSimMatcher(db, graph);
+        DualSimMatcherProp dsim = new DualSimMatcherProp(db, graph);
         System.out.println("EXTRACT QUERY: Query beendet.");
         Set<Node> simulated = dsim.simulate();
         return simulated.stream().map(NodeResult::new);
