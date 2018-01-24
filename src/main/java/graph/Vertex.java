@@ -26,7 +26,12 @@ public class Vertex {
      * Id des Knoten
      */
     private Integer id;
+
+    /**
+     * Eine Map mit Attributen des Knotens
+     */
     private Map<String,String> properties;
+
     /**
      * Liste der ausgehenden bzw eingehenden Kanten
      */
@@ -45,7 +50,7 @@ public class Vertex {
      * @param id         Id des Knoten
      * @param attributes the attributes of the vertex
      */
-    public Vertex(String label, String identifier, Integer id,Map<String,String> attributes) {
+    public Vertex(String label, String identifier, Integer id, Map<String,String> attributes) {
         this.label = label;
         this.identifier = identifier;
         this.id = id;
@@ -131,6 +136,12 @@ public class Vertex {
         }
         return false;
     }
+
+    /**
+     * Vergleicht Neo4J Knoten mit Vertex unter Berücksichtigung der properties
+     * @param b Knoten, mit dem verglichen werden soll
+     * @return true wenn gleich, false wenn nicht gleich
+     */
     public Boolean equalsProp(Node b) {
         Boolean equ = false;
         for (Label c : b.getLabels()
@@ -155,6 +166,7 @@ public class Vertex {
     /**
      * Baut ein Feld in dem die einzelnen Knoten und Kanten eingetragen werden.
      * Gibt auf der Konsole einen Knoten mit allen verbundenen Knoten graphisch aus
+     * @deprecated Wegen Fabse und so
      */
     public void printVertex() { //TODO Besser programmieren
         String[][] field = new String[5][5];
@@ -259,6 +271,7 @@ public class Vertex {
     /**
      * Gibt ein quadratisches Array auf der Konsole aus
      * @param array Quadratisches Array ausgeben
+     * @deprecated Wegen Fabse again
      */
     private void printArray(String[][] array) { //TODO was soll das sein und wofür bitte?
         for (String[] single_array : array) {

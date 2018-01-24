@@ -17,6 +17,9 @@ public class QueryBuilder {
      */
     private String query;
 
+    /**
+     * Default Constructor
+     */
     public QueryBuilder(String queryParam) {
         query = queryParam;
     }
@@ -135,6 +138,11 @@ public class QueryBuilder {
         }
         return g;
     }
+
+    /**
+     * Baut die properties
+     * @return Map mit den properties
+     */
     private Map<String,String> forgeProperties(StringBuilder attString){
         Map<String,String> map = new HashMap<>();
         String[] attributes = attString.toString().split(",");

@@ -24,7 +24,7 @@ public class Edge {
     private Vertex target;
 
     /**
-     * Hiermit kann eine neue Kante erstellt werden
+     * Erstellt eine neue Kante
      *
      * @param start         Startknoten
      * @param target        Endknoten
@@ -39,7 +39,7 @@ public class Edge {
     /**
      * Ausgabe der Kante als formatierter String
      *
-     * @return Startknoten + Endknoten + Relationsname
+     * @return formatierter String, Format: Startknoten + Endknoten + Relationsname
      */
     @Override
     public String toString() {
@@ -49,9 +49,9 @@ public class Edge {
     /**
      * Die Funktion gibt den Startknoten {@link Edge#start} und den Zielknoten {@link Edge#target} in einer Liste von Knoten zurück
      *
-     * @return Liste mit Start, sowie -Endknoten
+     * @return Liste mit Start- und Endknoten
      */
-    List<Vertex> getVertex() {
+    public List<Vertex> getVertex() {
         List<Vertex> list = new LinkedList<>();
         list.add(start);
         list.add(target);
@@ -60,6 +60,7 @@ public class Edge {
 
     /**
      * Gibt den Zielknoten aus
+     *
      * @return Knoten, auf den die Kante zeigt
      */
     public Vertex getTarget() {
@@ -68,6 +69,7 @@ public class Edge {
 
     /**
      * Gibt den Startknoten aus
+     *
      * @return Knoten, von dem diese Kante ausgeht
      */
     public Vertex getStart() {

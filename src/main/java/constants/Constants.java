@@ -6,7 +6,7 @@ package constants;
 public class Constants {
 
     /**
-     * Datenbankbefüllung
+     * Füllt eine Datenbank mit Testdaten
      */
     public static final String CREATE_TESTQUERY = "CREATE (TheMatrix:Movie {title:'The Matrix', released:1999, tagline:'Welcome to the Real World'})\n" +
             "CREATE (Keanu:Person {name:'Keanu Reeves', born:1964})\n" +

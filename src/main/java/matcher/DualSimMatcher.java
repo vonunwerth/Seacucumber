@@ -17,7 +17,7 @@ import java.util.Map;
 public class DualSimMatcher extends Matcher {
 
     /**
-     * Neuer Dual Simulation Matcher
+     * Erstellt neuen Dual Simulation Matcher
      *
      * @param db    Datenbank, die genutzt werden soll
      * @param graph Graph

@@ -17,7 +17,7 @@ import java.util.Map;
 public class DualSimMatcherProp extends Matcher {
 
     /**
-     * Neuer Dual Simulation Matcher
+     * Erstellt neuen Dual Simulation Matcher mit Berücksichtigung der properties
      *
      * @param db    Datenbank, die genutzt werden soll
      * @param graph Graph
@@ -28,7 +28,7 @@ public class DualSimMatcherProp extends Matcher {
     }
 
     /**
-     * Zu nutzender Matching Algorithmus, hier Dual Simulation
+     * Zu nutzender Matching Algorithmus, hier Dual Simulation mit Berücksichtigung der properties
      * @return Simulation
      */
     @Override

@@ -10,7 +10,7 @@ import java.util.List;
 public class Graph {
 
     /**
-     * Liste alle Knoten des Graphen
+     * Liste aller Knoten des Graphen
      */
     private List<Vertex> vertices = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class Graph {
     }
 
     /**
-     * Mit dieser Methode kann eine neue Kante zwischen zwei Knoten gezogen werden. Diese erhält außerdem einen Namen, das relationLabel
+     * Mit dieser Methode kann eine neue Kante zwischen zwei Knoten definiert werden. Diese erhält außerdem einen Namen, das relationLabel
      *
      * @param start         Startknoten
      * @param target        Zielknoten

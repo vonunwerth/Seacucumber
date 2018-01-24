@@ -30,7 +30,12 @@ public class GraphProcedures {
     public Log log;
 
     /**
-     * NEO4J Procedure
+     * NEO4J Procedure, die in der Datenbank ausgeführt werden kann
+     *
+     * Zuerst wird die Query in einen Graphen umgewandelt
+     * Dann wird der Matching Algorithmus ausgeführt
+     * Das Ergenis wird zurückgegeben
+     *
      * Die übergebene Query wird mit dieser NEO4J Procedure bearbeitet und es wird ein Resultset zurückgegeben
      *
      * @param query Auszuführende Query
@@ -53,9 +58,9 @@ public class GraphProcedures {
         Graph graph = qb.build();
         System.out.println("EXTRACT QUERY: Graph gebaut.");
         System.out.println(graph);
-        DualSimMatcherProp dsim = new DualSimMatcherProp(db, graph);
+        DualSimMatcherProp matcher = new DualSimMatcherProp(db, graph);
         System.out.println("EXTRACT QUERY: Query beendet.");
-        Set<Node> simulated = dsim.simulate();
+        Set<Node> simulated = matcher.simulate();
         return simulated.stream().map(NodeResult::new);
     }
 

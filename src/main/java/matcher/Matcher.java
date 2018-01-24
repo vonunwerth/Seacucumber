@@ -110,6 +110,7 @@ public abstract class Matcher {
     Iterable<Relationship> getRelationships(Node node,Direction dir) {
         return node.getRelationships(dir);
     }
+
     /**
      * Returns the relationships of the given node.
      * @param node the node you want the relationships from
@@ -119,6 +120,7 @@ public abstract class Matcher {
     Iterable<Relationship> getRelationships(Node node,RelationshipType rel) {
         return node.getRelationships(rel);
     }
+
     /**
      * Returns the relationships of the given node.
      * @param node the node you want the relationships from
@@ -146,6 +148,12 @@ public abstract class Matcher {
         }
         return nodes;
     }
+
+    /**
+     * Returns all nodes that have the same label as the vertex from the query graph. (Berücksichtigung properties)
+     * @param vertex Vertex
+     * @return Nodes for Vortex
+     */
     List<Node> findNodesProp(Vertex vertex) {
         ResourceIterable<Node> list = db.getAllNodes();
         List<Node> nodes = new LinkedList<>();
@@ -158,6 +166,10 @@ public abstract class Matcher {
         return nodes;
     }
 
+    /**
+     * Führt Matching Algorithmus aus und formatiert das Ergebnis für NEO4J
+     * @return Ergebnisset
+     */
     public Set<Node> simulate() {
         Map<Integer, List<Node>> map = matchingAlgorithm();
         Set<Node> set = new HashSet<>();
