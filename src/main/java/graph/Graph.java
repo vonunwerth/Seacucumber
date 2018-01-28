@@ -3,6 +3,7 @@ package graph;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Repräsentiert die Datenstruktur eines Graphen
@@ -31,13 +32,10 @@ public class Graph {
     /**
      * Mit dieser Methode kann eine neue Kante zwischen zwei Knoten gezogen werden. Diese erhält außerdem einen Namen, das relationLabel
      *
-     * @param start         Startknoten
-     * @param target        Zielknoten
-     * @param relationLabel Name des Übergangs
+     * @param edge         Kante
      */
-    public void addEdge(Vertex start, Vertex target, String relationLabel) {
-        //Create new Edge
-        edges.add(new Edge(start, target, relationLabel));
+    public void addEdge(Edge edge) {
+        edges.add(edge);
     }
 
     /**
@@ -86,7 +84,7 @@ public class Graph {
       Kante für Ausgabe des Graphen
      */
                 String EDGE = "{0} -> {1} [label='{2}']; \n";
-                sb.append(MessageFormat.format(EDGE, vertex.getId(), out.getTarget().getId(), out.getRelation()));
+                sb.append(MessageFormat.format(EDGE, vertex.getId(), out.getTarget().getId(), out.getLabel()));
             }
         }
 
@@ -123,5 +121,13 @@ public class Graph {
      */
     public List<Vertex> getVertices() {
         return vertices;
+    }
+
+    /**
+     * Diese Methode gibt alle Kanten des Graphen zurück
+     * @return Kanten des Graphen aus {@link Graph#vertices}
+     */
+    public List<Edge> getEdges() {
+        return edges;
     }
 }

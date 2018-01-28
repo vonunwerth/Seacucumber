@@ -1,5 +1,6 @@
 package tests;
 
+import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
 import org.neo4j.driver.v1.*;
@@ -20,11 +21,12 @@ public class NeoTest {
      * @param args Programmparameter
      */
     public static void main(String[] args) {
-        QueryBuilder qb = new QueryBuilder("MATCH (tom:Person { number:'10'},{name:'hans'})-[:DIRECTED]->(m:Movie {director: 'Franz'}) RETURN tom");
+        QueryBuilder qb = new QueryBuilder("MATCH (tom:Person { number:'10'},{name:'hans'})-[:DIRECTED {name :'10'}]->(m:Movie {director: 'Franz'})-[:DIRECTED {name :'333'}]->(m:Movie {director: 'Franz'}) RETURN tom");
         Graph graph = qb.build();
-        List<Vertex> list = graph.getVertices();
-        for (Vertex v: list
+        List<Edge> list = graph.getEdges();
+        for (Edge v: list
              ) {
+            System.out.println(v.getLabel());
             System.out.println(v.getProperties().values());
         }
 

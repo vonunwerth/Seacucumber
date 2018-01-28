@@ -64,10 +64,9 @@ public class Vertex {
     /**
      * Fügt eine Kante zum Knoten hinzu
      * @param vertex Zu welchem Knoten soll die Kante von diesem Knoten aus gehen?
-     * @param relationLabel Label der Beziehung
+     * @param edge Kante die hinzugefügt wird
      */
-    public void addEdge(Vertex vertex, String relationLabel) {
-        Edge edge = new Edge(this, vertex, relationLabel);
+    public void addEdge(Vertex vertex, Edge edge) {
         outgoingEdges.add(edge);
         vertex.incomingEdges.add(edge);
     }
