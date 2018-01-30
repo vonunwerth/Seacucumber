@@ -1,12 +1,12 @@
 package constants;
 
 /**
- * Konstanten, die das Projekt nutzen kann
+ * Constants used by the project
  */
 public class Constants {
 
     /**
-     * Füllt eine Datenbank mit Testdaten
+     * Fills a database with a test record (example data).
      */
     public static final String CREATE_TESTQUERY = "CREATE (TheMatrix:Movie {title:'The Matrix', released:1999, tagline:'Welcome to the Real World'})\n" +
             "CREATE (Keanu:Person {name:'Keanu Reeves', born:1964})\n" +

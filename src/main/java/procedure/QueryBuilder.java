@@ -9,25 +9,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Baut einen Graphen aus einer Query
+ * Builds a graph from a query.
  */
 public class QueryBuilder {
 
     /**
-     * Query, aus der der Graph gebaut werden soll
+     * Query from which the graph is built.
      */
     private String query;
 
     /**
-     * Default Constructor
+     * Default Constructor.
      */
     public QueryBuilder(String queryParam) {
         query = queryParam;
     }
 
     /**
-     * Baut einen Graphen aus einer Query
-     * @return Der gebaute Graph
+     * This method builds a graph from a query.
+     *
+     * @return The built graph.
      */
     public Graph build() {
         Graph g = new Graph();
@@ -151,8 +152,9 @@ public class QueryBuilder {
     }
 
     /**
-     * Baut die properties
-     * @return Map mit den properties
+     * This method builds the properties.
+     *
+     * @return The map of the properties
      */
     private Map<String,String> forgeProperties(StringBuilder attString){
         Map<String,String> map = new HashMap<>();
@@ -163,6 +165,6 @@ public class QueryBuilder {
             map.put(keyitem[0],keyitem[1]);
         }
         return map;
-
     }
+
 }

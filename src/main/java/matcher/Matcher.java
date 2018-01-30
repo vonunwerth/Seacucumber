@@ -7,14 +7,18 @@ import org.neo4j.graphdb.*;
 
 import java.util.*;
 
+/**
+ * Abstract matcher class
+ */
 public abstract class Matcher {
     GraphDatabaseService db;
     Graph graph;
 
     /**
-     * Constructor um an die Datenbank zu kommen
-     * @param database Datenbank
-     * @param graph Graph
+     * Constructor to get to the database
+     *
+     * @param database The database
+     * @param graph The graph
      */
     public Matcher(GraphDatabaseService database, Graph graph) {
         this.db = database;
@@ -30,8 +34,9 @@ public abstract class Matcher {
 
     /**
      * Returns all predecessors of the given node.
-     * @param node Knoten
-     * @return Vorgängerknoten
+     *
+     * @param node The given node
+     * @return A list of all previous nodes
      */
     List<Node> previousNodes(Node node) {
         List<Node> result = new ArrayList<>();
@@ -45,9 +50,10 @@ public abstract class Matcher {
 
     /**
      * Returns all predecessors of the given node which have a given label.
-     * @param node Knoten
-     * @param label Label der Relationship
-     * @return Vorgängerknoten
+     *
+     * @param node The given node
+     * @param label The given label of the relationship
+     * @return A list of all previous nodes
      */
     List<Node> previousNodes(Node node, String label) {
         List<Node> result = new ArrayList<>();
@@ -59,11 +65,13 @@ public abstract class Matcher {
         }
         return result;
     }
+
     /**
-     * Returns all predecessors of the given node which have a given label.
-     * @param node Knoten
-     * @param edge Edge from the Query Graph
-     * @return Vorgängerknoten
+     * Returns all predecessors of the given node which have a given label with consideration of the properties.
+     *
+     * @param node The given node
+     * @param edge The given edge from the query graph
+     * @return A list of all previous nodes
      */
     List<Node> previousNodesProp(Node node, Edge edge) {
         List<Node> result = new ArrayList<>();
@@ -79,8 +87,9 @@ public abstract class Matcher {
 
     /**
      * Returns all successors of the given node.
-     * @param node Knoten
-     * @return Nachfolgeknoten
+     *
+     * @param node The given node
+     * @return A list of all successing nodes
      */
     List<Node> successingNodes(Node node) {
         List<Node> result = new ArrayList<>();
@@ -94,9 +103,10 @@ public abstract class Matcher {
 
     /**
      * Returns all successors of the given node which have a given label.
-     * @param node Knoten
-     * @param label Label der Relationship
-     * @return Vorgängerknoten
+     *
+     * @param node The given node
+     * @param label The given label of the relationship
+     * @return A list of all successing nodes
      */
     List<Node> successingNodes(Node node, String label) {
         List<Node> result = new ArrayList<>();
@@ -109,10 +119,11 @@ public abstract class Matcher {
         return result;
     }
     /**
-     * Returns all successors of the given node which have a given label.
-     * @param node Knoten
-     * @param edge Edge from the Query Graph
-     * @return Vorgängerknoten
+     * Returns all successors of the given node which have a given label with consideration of the properties.
+     *
+     * @param node The given node
+     * @param edge The given edge from the query graph
+     * @return A list of all successing nodes
      */
     List<Node> successingNodesProp(Node node, Edge edge) {
         List<Node> result = new ArrayList<>();
@@ -128,9 +139,10 @@ public abstract class Matcher {
 
     /**
      * Compares the labels of two given nodes.
-     * @param a first node
-     * @param b secon node
-     * @return returns true if the nodes have the same label
+     *
+     * @param a The first node
+     * @param b The second node
+     * @return Returns true if the nodes have the same label otherwise false
      */
     Boolean compare(Node a, Node b) {
         return a.getLabels() == b.getLabels();
@@ -138,9 +150,10 @@ public abstract class Matcher {
 
     /**
      * Returns the relationships of the given node.
-     * @param node the node you want the relationships from
-     * @param dir direction of the relationship
-     * @return list of the relationships
+     *
+     * @param node The node you want the relationships from
+     * @param dir The direction of the relationship
+     * @return The list of the relationships
      */
     Iterable<Relationship> getRelationships(Node node,Direction dir) {
         return node.getRelationships(dir);
@@ -148,9 +161,10 @@ public abstract class Matcher {
 
     /**
      * Returns the relationships of the given node.
-     * @param node the node you want the relationships from
-     * @param rel type of the relationship
-     * @return list of the relationships
+     *
+     * @param node The node you want the relationships from
+     * @param rel The type of the relationship
+     * @return The list of the relationships
      */
     Iterable<Relationship> getRelationships(Node node,RelationshipType rel) {
         return node.getRelationships(rel);
@@ -158,8 +172,9 @@ public abstract class Matcher {
 
     /**
      * Returns the relationships of the given node.
-     * @param node the node you want the relationships from
-     * @return list of the relationships
+     *
+     * @param node The node you want the relationships from
+     * @return The list of the relationships
      */
     Iterable<Relationship> getRelationships(Node node) {
         return node.getRelationships();
@@ -167,7 +182,8 @@ public abstract class Matcher {
 
     /**
      * Returns all nodes that have the same label as the vertex from the query graph.
-     * @param vertex Vertex
+     *
+     * @param vertex The given Vertex
      * @return Nodes for Vortex
      */
     List<Node> findNodes(Vertex vertex) {
@@ -185,8 +201,9 @@ public abstract class Matcher {
     }
 
     /**
-     * Returns all nodes that have the same label as the vertex from the query graph. (Berücksichtigung properties)
-     * @param vertex Vertex
+     * Returns all nodes that have the same label as the vertex from the query graph with consideration of the properties.
+     *
+     * @param vertex The given Vertex
      * @return Nodes for Vortex
      */
     List<Node> findNodesProp(Vertex vertex) {
@@ -202,8 +219,9 @@ public abstract class Matcher {
     }
 
     /**
-     * Führt Matching Algorithmus aus und formatiert das Ergebnis für NEO4J
-     * @return Ergebnisset
+     * This method executes the matching algorithm and formats the result for NEO4J.
+     *
+     * @return The result set
      */
     public Set<Node> simulate() {
         Map<Integer, List<Node>> map = matchingAlgorithm();
@@ -215,8 +233,9 @@ public abstract class Matcher {
     }
 
     /**
-     * This function must be overridden with the matchin algorithm
-     * @return the result of the algorithm
+     * This function must be overridden with the matching algorithm
+     *
+     * @return The result of the algorithm
      */
     public abstract Map<Integer, List<Node>> matchingAlgorithm();
 }

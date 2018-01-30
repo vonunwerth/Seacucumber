@@ -12,15 +12,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Beispielmatcher, welche die abstrakte Klasse {@link Matcher} erweitert
+ * Sample matcher that extends the abstract class {@link Matcher}.
  */
 public class DualSimMatcher extends Matcher {
 
     /**
-     * Erstellt neuen Dual Simulation Matcher
+     * This method creates a new dual simulation matcher.
      *
-     * @param db    Datenbank, die genutzt werden soll
-     * @param graph Graph
+     * @param db The database to be used
+     * @param graph The graph to be used
      */
     public DualSimMatcher(GraphDatabaseService db, Graph graph) {
         this.db = db;
@@ -28,8 +28,9 @@ public class DualSimMatcher extends Matcher {
     }
 
     /**
-     * Zu nutzender Matching Algorithmus, hier Dual Simulation
-     * @return Simulation
+     * The matching algorithm to be used. (Currently: Dual simulation)
+     *
+     * @return The simulation
      */
     @Override
     public Map<Integer, List<Node>> matchingAlgorithm() {
@@ -68,7 +69,7 @@ public class DualSimMatcher extends Matcher {
                         sim.get(v.getId()).removeAll(removeList);
                     } catch (Exception ex){
                         System.out.println(ex.toString());
-                        System.out.println("Fehler");
+                        System.out.println("error");
                         for (Node n: sim.get(v.getId())
                                 ) {
                             System.out.println(n);
@@ -76,7 +77,7 @@ public class DualSimMatcher extends Matcher {
                     }
 
                 }
-                System.out.println("Mitte");
+                System.out.println("middle");
                 for (Edge e : v.getIncomingEdges()
                         ) {
                     System.out.println(e.toString());
@@ -97,7 +98,7 @@ public class DualSimMatcher extends Matcher {
                         }
                         sim.get(v.getId()).removeAll(removeList);
                     } catch (Exception ex){
-                        System.out.println("Fehler");
+                        System.out.println("error");
                         for (Node n: sim.get(v.getId())
                                 ) {
                             System.out.println(n);

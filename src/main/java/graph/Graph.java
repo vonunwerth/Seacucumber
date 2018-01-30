@@ -6,43 +6,44 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Repräsentiert die Datenstruktur eines Graphen
+ * Represents the data structure in a graph
  */
 public class Graph {
 
     /**
-     * Liste aller Knoten des Graphen
+     * List of all nodes in the graph
      */
     private List<Vertex> vertices = new ArrayList<>();
 
     /**
-     * Liste aller Kanten des Graphen
+     * List of all edges in the graph
      */
     private List<Edge> edges = new ArrayList<>();
 
     /**
-     * Mit dieser Methode kann ein neuer Knoten in den Graphen eingefügt werden (in die Liste der Knoten {@link Graph#vertices}. Dieser besitzt noch keine Kanten.
+     * With this method a new node can be inserted in the graph. (Into the list of nodes {@link Graph#vertices}.)
+     * This node still has no edges.
      *
-     * @param v Neuer Knoten
+     * @param v New node
      */
     public void addVertex(Vertex v) {
         vertices.add(v);
     }
 
     /**
-     * Mit dieser Methode kann eine neue Kante zwischen zwei Knoten definiert werden. Diese erhält außerdem einen Namen, das relationLabel
+     * With this method a new edge between two nodes can be defined. The new edge gets a name (relation label).
      *
-     * @param edge         Kante
+     * @param edge The new edge
      */
     public void addEdge(Edge edge) {
         edges.add(edge);
     }
 
     /**
-     * Diese Methode überprüft, ob ein Knoten aus der Liste aller Knoten {@link Graph#vertices} das eingegebene Label hat und gibt den ersten gefundenen mit eben solchem aus.
+     * This method checks whether a node from the list of all {@link Graph#vertices} nodes has the given label and returns the first match.
      *
-     * @param label Label, nachdem gesucht werden soll
-     * @return Knoten, der als erstes mit genau diesem Label gefunden wurde. Wird kein Knoten gefunden, wird null zurückgegeben
+     * @param label Label to be searched for
+     * @return The node that was found first with the given label. If no node is found, null is returned.
      */
     public Vertex checkLabel(String label) {
         for (Vertex v : vertices
@@ -55,9 +56,9 @@ public class Graph {
     }
 
     /**
-     * Diese Methode wandelt einen Graphen zu einer DOT-Grafik um, welche angezeigt werden kann
+     * This method converts a graph to a DOT graph, which can be displayed.
      *
-     * @return String des Graphen
+     * @return String of the DOT graph
      */
     private String graphToDOT() {
         StringBuilder sb = new StringBuilder();
@@ -98,8 +99,9 @@ public class Graph {
     }
 
     /**
-     * Ausgabe des Graphen als String, dabei wird {@link Graph#printGraph()} aufgerufen
-     * @return Alle Knoten und Kanten
+     * This method outputs the graph as a string, by calling {@link Graph#printGraph()}.
+     *
+     * @return All nodes and edges
      */
     @Override
     public String toString() {
@@ -116,16 +118,18 @@ public class Graph {
     }
 
     /**
-     * Diese Methode gibt alle Knoten des Graphen zurück
-     * @return Knoten des Graphen aus {@link Graph#vertices}
+     * This method returns all nodes of the graph.
+     *
+     * @return Nodes of the graph from {@link Graph#vertices}
      */
     public List<Vertex> getVertices() {
         return vertices;
     }
 
     /**
-     * Diese Methode gibt alle Kanten des Graphen zurück
-     * @return Kanten des Graphen aus {@link Graph#vertices}
+     * This method returns all edges of the graph.
+     *
+     * @return Edges of the graph from {@link Graph#vertices}
      */
     public List<Edge> getEdges() {
         return edges;

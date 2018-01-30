@@ -15,8 +15,7 @@ import java.util.stream.Stream;
 public class GraphProcedures {
 
     /**
-     * Zugriff auf unsere Datenbank
-     * Muss für NEO4J public sein
+     * Access to the database. (Must be public for NEO4J!)
      */
     @Context
     @SuppressWarnings("WeakerAccess")
@@ -30,54 +29,54 @@ public class GraphProcedures {
     public Log log;
 
     /**
-     * NEO4J Procedure, die in der Datenbank ausgeführt werden kann
+     * NEO4J Procedure that can be executed in the database.
      *
-     * Zuerst wird die Query in einen Graphen umgewandelt
-     * Dann wird der Matching Algorithmus ausgeführt
-     * Das Ergenis wird zurückgegeben
+     * First, the query is converted to a graph.
+     * Then the matching algorithm is executed.
+     * Finally, the result is returned.
      *
-     * Die übergebene Query wird mit dieser NEO4J Procedure bearbeitet und es wird ein Resultset zurückgegeben
+     * The passed query is processed with this NEO4J procedure and a result set is returned.
      *
-     * @param query Auszuführende Query
-     * @return Stream aus NodeResults, wobei jeder NodeResult nur einen Node enthält, nämlich den, den er im Ergebnisset darstellt
+     * @param query The given query to execute
+     * @return Stream of NodeResults. Each NodeResult contains only one node, the one it represents in the result set.
      */
     @Procedure(value = "graph.extractQuery", mode = Mode.READ)
-    @Description("Wir wollen die Query")
+    @Description("Get the query from NEO4J")
     @SuppressWarnings("unused")
     public Stream<NodeResult> extractQuery(@Name("query") String query) {
-        System.out.println("EXTRACT QUERY: extractQuery startet");
+        System.out.println("EXTRACT QUERY: extractQuery starting...");
         query = query.trim().replaceAll("\n", " ");
-        System.out.println("EXTRACT QUERY: \\n replaced Replaced.");
+        System.out.println("EXTRACT QUERY: \\n replaced Replaced...");
         TimeUnit tu = TimeUnit.MILLISECONDS;
-        //Prueft ob die Query korrekt ist. Bei falscher Eingabe Fehlermeldung in Neo4j
+        //Check if the query is correct. If entered incorrectly, error message appears in Neo4j!
         db.execute(query, 5, tu);
-        System.out.println("EXTRACT QUERY: Query ist korrekt");
+        System.out.println("EXTRACT QUERY: Query is correct...");
 
         QueryBuilder qb = new QueryBuilder(query);
-        System.out.println("EXTRACT QUERY: Query gebaut.");
+        System.out.println("EXTRACT QUERY: Query built...");
         Graph graph = qb.build();
-        System.out.println("EXTRACT QUERY: Graph gebaut.");
+        System.out.println("EXTRACT QUERY: Graph built...");
         System.out.println(graph);
         DualSimMatcherProp matcher = new DualSimMatcherProp(db, graph);
-        System.out.println("EXTRACT QUERY: Query beendet.");
+        System.out.println("EXTRACT QUERY: Query finished...");
         Set<Node> simulated = matcher.simulate();
         return simulated.stream().map(NodeResult::new);
     }
 
     /**
-     * Ergebniskonstrukt für NEO4J Prozeduren
+     * Result constructor for NEO4J procedures.
      */
     public class NodeResult {
         /**
-         * Knoten der Ergebnisse, Muss public sein für NEO4J
+         * Node of results. (Must be public for NEO4J!)
          */
         @SuppressWarnings("WeakerAccess")
         public Node node;
 
         /**
-         * Ergebnis der Query, Muss public sein für NEO4J
+         * Result of the query. (Must be public for NEO4J!)
          *
-         * @param node Knoten
+         * @param node The given node
          */
         @SuppressWarnings("WeakerAccess")
         public NodeResult(Node node) {

@@ -8,46 +8,46 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Repräsentiert Knoten in einem Graphen
+ * Represents vertieces in a graph
  */
 public class Vertex {
 
     /**
-     * Label des Knoten
+     * Label of the vertex
      */
     private String label;
 
     /**
-     * Identifier des Knoten
+     * Identifier of the vertex
      */
     private String identifier;
 
     /**
-     * Id des Knoten
+     * Id of the vertex
      */
     private Integer id;
 
     /**
-     * Eine Map mit Attributen des Knotens
+     * A map with attributes of the vertex
      */
     private Map<String,String> properties;
 
     /**
-     * Liste der ausgehenden bzw eingehenden Kanten
+     * List of incoming edges
      */
     private List<Edge> incomingEdges = new ArrayList<>();
 
     /**
-     * Liste der ausgehenden Kanten
+     * List of outgoing edges
      */
     private List<Edge> outgoingEdges = new ArrayList<>();
 
     /**
-     * Erstellt einen Knoten
+     * This method creates a new vertex.
      *
-     * @param label      Label des Knoten
-     * @param identifier Identifier des Knoten
-     * @param id         Id des Knoten
+     * @param label      Label of the vertex
+     * @param identifier Identifier of the vertex
+     * @param id         Id of the vertex
      * @param attributes the attributes of the vertex
      */
     public Vertex(String label, String identifier, Integer id, Map<String,String> attributes) {
@@ -58,8 +58,9 @@ public class Vertex {
     }
 
     /**
-     * Ausgabe des Knotens als String
-     * @return Label und Identifier
+     * Returns the vertex as a formatted string
+     *
+     * @return Formatted string [format: label:identifier]
      */
     @Override
     public String toString() {
@@ -67,9 +68,10 @@ public class Vertex {
     }
 
     /**
-     * Fügt eine Kante zum Knoten hinzu
-     * @param vertex Zu welchem Knoten soll die Kante von diesem Knoten aus gehen?
-     * @param edge Kante die hinzugefügt wird
+     * This method adds an edge between this and another vertex
+     *
+     * @param vertex The vertex the added edge points to
+     * @param edge The added edge
      */
     public void addEdge(Vertex vertex, Edge edge) {
         outgoingEdges.add(edge);
@@ -77,54 +79,62 @@ public class Vertex {
     }
 
     /**
-     * Gibt des Label des Knoten zurück
-     * @return Knoten
+     * Returns the label of the vertex.
+     *
+     * @return The label
      */
     public String getLabel() {
         return label;
     }
 
     /**
-     * Gibt den Identifier des Knoten zurück
-     * @return Identifier
+     * Returns the identifier of the vertex.
+     *
+     * @return The identifier
      */
     public String getIdentifier() {
         return identifier;
     }
 
     /**
-     * Returns the map of attributes.
-     * @return map of attributes
+     * Returns the map of attributes of the vertex.
+     *
+     * @return The map of attributes
      */
     public Map<String,String> getProperties() {return properties; }
+
     /**
-     * Gibt die eingehenden Kanten zurück
-     * @return Alle Kanten die in den Knoten gehen
+     * Returns the incoming edges of the vertex.
+     *
+     * @return The list of the incoming edges
      */
     public List<Edge> getIncomingEdges() {
         return incomingEdges;
     }
 
     /**
-     * Gibt alle ausgehenden Kanten zurück
-     * @return Alle Kanten, die von diesem Knoten ausgehen
+     * Returns the outgoing edges of the vertex.
+     *
+     * @return The list of the outgoing edges
      */
     public List<Edge> getOutgoingEdges() {
         return outgoingEdges;
     }
 
     /**
-     * Gibt die ID des Knoten zurück
-     * @return Id des Knoten
+     * Returns the Id of the vertex.
+     *
+     * @return The Id
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * Vergleicht Neo4J Knoten mit Vertex
-     * @param b Knoten, mit dem verglichen werden soll
-     * @return true wenn gleich, false wenn nicht gleich
+     * This method compares Neo4J-node with node.
+     *
+     * @param b The node for the comparison
+     * @return true if equal, false if not equal
      */
     public Boolean equals(Node b) {
         for (Label c : b.getLabels()
@@ -137,9 +147,10 @@ public class Vertex {
     }
 
     /**
-     * Vergleicht Neo4J Knoten mit Vertex unter Berücksichtigung der properties
-     * @param b Knoten, mit dem verglichen werden soll
-     * @return true wenn gleich, false wenn nicht gleich
+     * This method compares Neo4J-node with node considering the properties.
+     *
+     * @param b The node for the comparison
+     * @return true if equal, false if not equal
      */
     public Boolean equalsProp(Node b) {
         Boolean equ = false;
@@ -163,11 +174,12 @@ public class Vertex {
     }
 
     /**
-     * Baut ein Feld in dem die einzelnen Knoten und Kanten eingetragen werden.
-     * Gibt auf der Konsole einen Knoten mit allen verbundenen Knoten graphisch aus
-     * @deprecated Wegen Fabse und so
+     * This method builds a field in which all nodes and edges are entered.
+     * And prints a node with all connected nodes on the console.
+     *
+     * @deprecated Old debugging method
      */
-    public void printVertex() { //TODO Besser programmieren
+    public void printVertex() {
         String[][] field = new String[5][5];
         field[2][2] = "[" + this.identifier.charAt(0) + "]";
         String right = " \u2192 ";
@@ -175,7 +187,7 @@ public class Vertex {
         String up = " \u2191 ";
         String down = " \u2193 ";
 
-        //geht durch die Liste der ausgehenden Kanten
+        //Iterated by the list of the outgoing edges
         for (int x = 0; x < this.outgoingEdges.size(); x++) {
             if (this.outgoingEdges.size() == 0) break;
             if (field[2][3] == null) {
@@ -220,7 +232,7 @@ public class Vertex {
         }
 
 
-        //----------------------------------alle eingehenden Kanten-----------------------------------
+        //----------------------------------all incoming edges-----------------------------------
         for (int x = 0; x < this.incomingEdges.size(); x++) {
             if (this.incomingEdges.size() == 0) break;
             if (field[2][3] == null) {
@@ -268,11 +280,12 @@ public class Vertex {
 
 
     /**
-     * Gibt ein quadratisches Array auf der Konsole aus
-     * @param array Quadratisches Array ausgeben
-     * @deprecated Wegen Fabse again
+     * Returns a square array on the console.
+     *
+     * @param array Square array
+     * @deprecated Old debugging method
      */
-    private void printArray(String[][] array) { //TODO was soll das sein und wofür bitte?
+    private void printArray(String[][] array) {
         for (String[] single_array : array) {
             for (int y = 0; y < array.length; y++) {
                 try {
@@ -282,7 +295,7 @@ public class Vertex {
                         System.out.print("   ");
                     }
                 } catch (Exception e) {
-                    System.out.println("Größe des Array muss quadratisch sein");
+                    System.out.println("array must be square!");
                     break;
                 }
             }
