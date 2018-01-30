@@ -1,7 +1,12 @@
 package graph;
 
+import org.neo4j.graphdb.Label;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.RelationshipType;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Repräsentation einer gerichteten Kante eines Graphen
@@ -16,12 +21,16 @@ public class Edge {
     /**
      * Name der Relation
      */
-    private String relation;
+    private String label;
 
     /**
      * Zielknoten
      */
     private Vertex target;
+    /**
+     * Properties
+     */
+    private Map<String,String> properties;
 
     /**
      * Erstellt eine neue Kante
@@ -30,10 +39,11 @@ public class Edge {
      * @param target        Endknoten
      * @param relationLabel Name der Übergangsrelation
      */
-    Edge(Vertex start, Vertex target, String relationLabel) {
+    public Edge(Vertex start, Vertex target, String relationLabel, Map<String,String> attributes) {
         this.start = start;
         this.target = target;
-        this.relation = relationLabel;
+        this.label = relationLabel;
+        this.properties = attributes;
     }
 
     /**
@@ -43,7 +53,7 @@ public class Edge {
      */
     @Override
     public String toString() {
-        return start + " " + target + " " + relation;
+        return start + " " + target + " " + label;
     }
 
     /**
@@ -81,7 +91,35 @@ public class Edge {
      *
      * @return Name des Übergangs
      */
-    public String getRelation() {
-        return relation;
+    public String getLabel() {
+        return label;
+    }
+    /**
+     * Returns the map of attributes.
+     * @return map of attributes
+     */
+    public Map<String,String> getProperties() {return properties; }
+
+    /**
+     * Compares edges with Neo4J Realtionships
+     * @param rel relatinoship to compare to
+     * @return true if both have the same properties and name
+     */
+    public Boolean equalsProp(Relationship rel){
+        Boolean equ = false;
+        if (this.getLabel().equals(rel.getType().name())){
+            equ = true;
+        }
+        for (String s: this.properties.keySet()
+                ) {
+            if (rel.getProperty(s).toString().equals(this.properties.get(s)) ){
+                equ = true;
+            } else{
+                equ = false;
+                break;
+            }
+
+        }
+        return equ;
     }
 }

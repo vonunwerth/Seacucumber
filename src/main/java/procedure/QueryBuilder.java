@@ -1,5 +1,6 @@
 package procedure;
 
+import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
 import org.neo4j.cypher.internal.frontend.v2_3.ast.functions.Str;
@@ -42,13 +43,14 @@ public class QueryBuilder {
         String[] edge = new String[2];
         int direction = 0;
         Vertex first = null;
-
+        Map<String,String> mapEdge = new HashMap<>();
         //loop that goes through the whole query
         int idCounter = 0;
         for (int x = 0; x < query.length(); x++) {
             StringBuilder pointString = new StringBuilder();
             StringBuilder edgeString = new StringBuilder();
             StringBuilder attString = new StringBuilder();
+            StringBuilder attStringEdge = new StringBuilder();
             Map<String,String> map = new HashMap<>();
             if (query.charAt(x) == ',') first = null;
             if (query.charAt(x) == '>') direction = 1;
@@ -107,14 +109,16 @@ public class QueryBuilder {
                  */
                 if (first != null) {
                     if (direction == 1) {
-                        g.addEdge(first, n, edge[1]);
+                        Edge e = new Edge(first, n, edge[1],mapEdge);
+                        g.addEdge(e);
                         System.out.println("Created Edge! (" + first.getLabel() + ":" + first.getIdentifier() + ")---[" + edge[1] + "]-->(" + n.getLabel() + ":" + n.getIdentifier() + ")");
-                        first.addEdge(n, edge[1]);
+                        first.addEdge(n, e);
                     }
                     if (direction == 2) {
-                        g.addEdge(n, first, edge[1]);
+                        Edge e = new Edge(first, n, edge[1],mapEdge);
+                        g.addEdge(e);
                         System.out.println("Created Edge! (" + n.getLabel() + ":" + n.getIdentifier() + ")---[" + edge[1] + "]-->(" + first.getLabel() + ":" + first.getIdentifier() + ")");
-                        n.addEdge(first, edge[1]);
+                        n.addEdge(first, e);
                     }
                 }
                 first = n;
@@ -126,6 +130,13 @@ public class QueryBuilder {
                 while (query.charAt(x) != ']' && query.charAt(x) != '{') {
                     edgeString.append(query.charAt(x));
                     x++;
+                }
+                if (query.charAt(x) == '{'){
+                    while (query.charAt(x) != ']'){
+                        attStringEdge.append(query.charAt(x));
+                        x++;
+                    }
+                    mapEdge = forgeProperties(attStringEdge);
                 }
                 edge = edgeString.toString().split(":");
             }

@@ -1,5 +1,6 @@
 package matcher;
 
+import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
 import org.neo4j.graphdb.*;
@@ -58,6 +59,23 @@ public abstract class Matcher {
         }
         return result;
     }
+    /**
+     * Returns all predecessors of the given node which have a given label.
+     * @param node Knoten
+     * @param edge Edge from the Query Graph
+     * @return Vorgängerknoten
+     */
+    List<Node> previousNodesProp(Node node, Edge edge) {
+        List<Node> result = new ArrayList<>();
+        Iterable<Relationship> rel = node.getRelationships(Direction.INCOMING);
+        for (Relationship r : rel
+                ) {
+            if (edge.equalsProp(r)){
+                result.add(r.getStartNode());
+            }
+        }
+        return result;
+    }
 
     /**
      * Returns all successors of the given node.
@@ -87,6 +105,23 @@ public abstract class Matcher {
         for (Relationship r : rel
                 ) {
             result.add(r.getEndNode());
+        }
+        return result;
+    }
+    /**
+     * Returns all successors of the given node which have a given label.
+     * @param node Knoten
+     * @param edge Edge from the Query Graph
+     * @return Vorgängerknoten
+     */
+    List<Node> successingNodesProp(Node node, Edge edge) {
+        List<Node> result = new ArrayList<>();
+        Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING);
+        for (Relationship r : rel
+                ) {
+            if (edge.equalsProp(r)){
+                result.add(r.getStartNode());
+            }
         }
         return result;
     }
