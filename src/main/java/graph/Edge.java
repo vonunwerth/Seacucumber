@@ -1,27 +1,68 @@
 package graph;
 
+import org.neo4j.graphdb.Label;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.RelationshipType;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * Representation of a directed edge in a graph
+ */
 public class Edge {
 
+    /**
+     * Starting node
+     */
     private Vertex start;
 
-    private String relation;
+    /**
+     * Name of the relation
+     */
+    private String label;
 
+    /**
+     * Destination node
+     */
     private Vertex target;
-    Edge(Vertex start, Vertex target, String relationLabel) {
+
+    /**
+     * Properties
+     */
+    private Map<String,String> properties;
+
+    /**
+     * Create a new edge.
+     *
+     * @param start         Starting node
+     * @param target        Destination node
+     * @param relationLabel Name of the transitional relation
+     */
+    public Edge(Vertex start, Vertex target, String relationLabel, Map<String,String> attributes) {
         this.start = start;
         this.target = target;
-        this.relation = relationLabel;
+        this.label = relationLabel;
+        this.properties = attributes;
     }
 
+    /**
+     * Output of the edge as a formatted string.
+     *
+     * @return Formatted string [format: Starting node + Destination node + Name of the relation]
+     */
     @Override
     public String toString() {
-        return start + " " + target + " " + relation;
+        return start + " " + target + " " + label;
     }
 
-    List<Vertex> getVertex() {
+    /**
+     * The function returns the starting node {@link Edge#start} and the destination node {@link Edge#target} in a list of nodes.
+     *
+     * @return List with start and end nodes
+     */
+    public List<Vertex> getVertex() {
         List<Vertex> list = new LinkedList<>();
         list.add(start);
         list.add(target);
@@ -29,24 +70,60 @@ public class Edge {
     }
 
     /**
-     * Gibt den Zielknoten aus
+     * Returns the destination node.
      *
-     * @return Knoten, auf den die Kante zeigt
+     * @return The node the edge points to
      */
     public Vertex getTarget() {
         return target;
     }
 
     /**
-     * Gibt den Startknoten aus
+     * Returns the starting node.
      *
-     * @return Knoten, von dem diese Kante ausgeht
+     * @return The node from which the edge originates
      */
     public Vertex getStart() {
         return start;
     }
 
-    public String getRelation() {
-        return relation;
+    /**
+     * Returns the name of the relation.
+     *
+     * @return The name of the transition
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * Returns the map of attributes.
+     *
+     * @return The map of attributes
+     */
+    public Map<String,String> getProperties() {return properties; }
+
+    /**
+     * Compares edges with Neo4J Realtionships.
+     *
+     * @param rel relatinoship to compare to
+     * @return true if both have the same properties and name, otherwise false
+     */
+    public Boolean equalsProp(Relationship rel){
+        Boolean equ = false;
+        if (this.getLabel().equals(rel.getType().name())){
+            equ = true;
+        }
+        for (String s: this.properties.keySet()
+                ) {
+            if (rel.getProperty(s).toString().equals(this.properties.get(s)) ){
+                equ = true;
+            } else{
+                equ = false;
+                break;
+            }
+
+        }
+        return equ;
     }
 }

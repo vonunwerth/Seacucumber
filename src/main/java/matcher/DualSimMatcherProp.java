@@ -14,21 +14,21 @@ import java.util.Map;
 /**
  * Sample matcher that extends the abstract class {@link Matcher}.
  */
-public class DualSimMatcher extends Matcher {
+public class DualSimMatcherProp extends Matcher {
 
     /**
-     * This method creates a new dual simulation matcher.
+     * This method creates a new dual simulation matcher with consideration of the properties.
      *
      * @param db The database to be used
      * @param graph The graph to be used
      */
-    public DualSimMatcher(GraphDatabaseService db, Graph graph) {
+    public DualSimMatcherProp(GraphDatabaseService db, Graph graph) {
         this.db = db;
         this.graph = graph;
     }
 
     /**
-     * The matching algorithm to be used. (Currently: Dual simulation)
+     * The matching algorithm to be used. (Currently: Dual simulation with consideration of the properties)
      *
      * @return The simulation
      */
@@ -39,7 +39,7 @@ public class DualSimMatcher extends Matcher {
         Map<Integer, List<Node>> sim = new HashMap<>();
         for (Vertex v : graph.getVertices()
                 ) {
-            sim.put(v.getId(), findNodes(v));
+            sim.put(v.getId(), findNodesProp(v));
             System.out.println(v.getLabel());
         }
 
@@ -55,7 +55,7 @@ public class DualSimMatcher extends Matcher {
                         for (Node n : sim.get(v.getId())
                                 ) {
                             Boolean exists = false;
-                            for (Node n2 : successingNodes(n,e.getLabel())
+                            for (Node n2 : successingNodesProp(n,e)
                                     ) {
                                 exists = sim.get(e.getTarget().getId()).contains(n2);
                             }
@@ -86,7 +86,7 @@ public class DualSimMatcher extends Matcher {
                         for (Node n : sim.get(v.getId())
                                 ) {
                             Boolean exists = false;
-                            for (Node n2 : previousNodes(n,e.getLabel())
+                            for (Node n2 : previousNodesProp(n,e)
                                     ) {
 
                                 exists = sim.get(e.getStart().getId()).contains(n2);

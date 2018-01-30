@@ -1,41 +1,36 @@
 package procedure;
 
+import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
+import org.neo4j.cypher.internal.frontend.v2_3.ast.functions.Str;
 
-class QueryBuilder {
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Builds a graph from a query.
+ */
+public class QueryBuilder {
+
+    /**
+     * Query from which the graph is built.
+     */
     private String query;
 
-    QueryBuilder(String queryParam) {
+    /**
+     * Default Constructor.
+     */
+    public QueryBuilder(String queryParam) {
         query = queryParam;
     }
 
-    /*public static void main(String[] args) {
-        //query = "MATCH(marvelMovies:TAG)-[]-(marvelMovies:Avengers)"; //{name:'Marvel'})<-[:HAS_TAG]-(movie)";
-        query = "MATCH\n" +
-                "(:Actor {name: \"Wes Studi\"})-[:ACTS_IN]->(m:Movie)<-[:ACTS_IN]-(:Actor {name: \"Matt Gerald\"}),\n" +
-                "(m)<-[:DIRECTED]-(d)-[:DIRECTED]->(others)\n" +
-                "RETURN m.title, d.name, collect(others.title) AS productions\n" +
-                "LIMIT 1";
-        //query = "MATCH \"(:Actor {name: \"Wes Studi\"})-[:ACTS_IN]->(m:Movie)<-[:ACTS_IN]-(:Actor {name: \"Matt Gerald\"})";
-        /*query = "MATCH(thor:CHARACTER {name:'Thor'}),\n" +
-                "     (hulk:CHARACTER {name:'The Hulk'}),\n" +
-                "     (marvelMovies:TAG {name:'Marvel'}),\n" +
-                "     (newRelease:TAG {name:'New Release'})-[:HAS_TAG]-(movie)\n" +
-                "WHERE (marvelMovies)-[:HAS_TAG]-(movie)\n" +
-                "  AND (movie)-[:PERFORMS_IN]-(hulk)\n" +
-                "  AND (movie)-[:PERFORMS_IN]-(thor)\n" +
-                "RETURN movie.name";
-        Graph g = build();
-    }*/
-
-
     /**
-     * Builds a graph from the given query
+     * This method builds a graph from a query.
      *
-     * @return the built graph
+     * @return The built graph.
      */
-    Graph build() {
+    public Graph build() {
         Graph g = new Graph();
 
         //not needed (same query preprocessing as in GraphProcedures)
@@ -49,12 +44,15 @@ class QueryBuilder {
         String[] edge = new String[2];
         int direction = 0;
         Vertex first = null;
-
+        Map<String,String> mapEdge = new HashMap<>();
         //loop that goes through the whole query
         int idCounter = 0;
         for (int x = 0; x < query.length(); x++) {
             StringBuilder pointString = new StringBuilder();
             StringBuilder edgeString = new StringBuilder();
+            StringBuilder attString = new StringBuilder();
+            StringBuilder attStringEdge = new StringBuilder();
+            Map<String,String> map = new HashMap<>();
             if (query.charAt(x) == ',') first = null;
             if (query.charAt(x) == '>') direction = 1;
             if (query.charAt(x) == '<') direction = 2;
@@ -68,6 +66,13 @@ class QueryBuilder {
                     pointString.append(query.charAt(x));
                     x++;
                 }
+                if (query.charAt(x) == '{'){
+                    while (query.charAt(x) != ')'){
+                        attString.append(query.charAt(x));
+                        x++;
+                    }
+                    map = forgeProperties(attString);
+                }
                 point = pointString.toString().split(":");
                 Vertex n;
 
@@ -77,12 +82,12 @@ class QueryBuilder {
                  */
                 if (pointString.toString().contains(":")) {
                     if (g.checkLabel(point[0]) == null) {
-                        n = new Vertex(point[0], point[1], idCounter);
+                        n = new Vertex(point[0], point[1], idCounter,map);
                         g.addVertex(n);
                         idCounter++;
                         System.out.println("Created Node! (" + point[0] + ":" + point[1] + ")");
                     } else if (g.checkLabel(point[0]).getLabel().equals("")) {
-                        n = new Vertex(point[0], point[1], idCounter);
+                        n = new Vertex(point[0], point[1], idCounter,map);
                         g.addVertex(n);
                         idCounter++;
                         System.out.println("Created Node! (" + point[0] + ":" + point[1] + ")");
@@ -91,7 +96,7 @@ class QueryBuilder {
                     }
                 } else {
                     if (g.checkLabel(pointString.toString()) == null) {
-                        n = new Vertex(pointString.toString(), "#", idCounter);
+                        n = new Vertex(pointString.toString(), "#", idCounter,map);
                         g.addVertex(n);
                         idCounter++;
                         System.out.println("Created Node! (" + pointString + ":" + "#)");
@@ -105,14 +110,16 @@ class QueryBuilder {
                  */
                 if (first != null) {
                     if (direction == 1) {
-                        g.addEdge(first, n, edge[1]);
+                        Edge e = new Edge(first, n, edge[1],mapEdge);
+                        g.addEdge(e);
                         System.out.println("Created Edge! (" + first.getLabel() + ":" + first.getIdentifier() + ")---[" + edge[1] + "]-->(" + n.getLabel() + ":" + n.getIdentifier() + ")");
-                        first.addEdge(n, edge[1]);
+                        first.addEdge(n, e);
                     }
                     if (direction == 2) {
-                        g.addEdge(n, first, edge[1]);
+                        Edge e = new Edge(first, n, edge[1],mapEdge);
+                        g.addEdge(e);
                         System.out.println("Created Edge! (" + n.getLabel() + ":" + n.getIdentifier() + ")---[" + edge[1] + "]-->(" + first.getLabel() + ":" + first.getIdentifier() + ")");
-                        n.addEdge(first, edge[1]);
+                        n.addEdge(first, e);
                     }
                 }
                 first = n;
@@ -125,6 +132,13 @@ class QueryBuilder {
                     edgeString.append(query.charAt(x));
                     x++;
                 }
+                if (query.charAt(x) == '{'){
+                    while (query.charAt(x) != ']'){
+                        attStringEdge.append(query.charAt(x));
+                        x++;
+                    }
+                    mapEdge = forgeProperties(attStringEdge);
+                }
                 edge = edgeString.toString().split(":");
             }
         }
@@ -136,4 +150,21 @@ class QueryBuilder {
         }
         return g;
     }
+
+    /**
+     * This method builds the properties.
+     *
+     * @return The map of the properties
+     */
+    private Map<String,String> forgeProperties(StringBuilder attString){
+        Map<String,String> map = new HashMap<>();
+        String[] attributes = attString.toString().split(",");
+        for(int i = 0; i < attributes.length; i++){
+            attributes[i] = attributes[i].replaceAll("[^a-zA-Z0-9:]","");
+            String[] keyitem = attributes[i].split(":");
+            map.put(keyitem[0],keyitem[1]);
+        }
+        return map;
+    }
+
 }
