@@ -1,0 +1,39 @@
+%Dies ist die Hauptseite des Dokumentes. Es werden u. a. alle Kapitel,
+%Einstellung im Header eingebunden.  Veränderungen müssen in folgenden Dateien
+%vorgenommen werden:
+      %- config.tex
+      %- einzelne Kapitel (evtl. erweitern)
+
+\input{common/layout.tex}           % Diese Datei enthält alle
+                                           % Layouteinstellungen
+\newcommand{\dokumentTitel}{Instructions for use}
+\input{common/config.tex}
+\usepackage{listings}
+
+%------Beginn des Gesamtdokumentes----------------------------------------------
+\begin{document}
+
+%------Eingebundene Seiten, Verzeichnisse bzw. Kapitel--------------------------
+\include{common/titelseite}                       % Titelseite
+
+%----Bearbeiterübersicht--------------------
+%Diese Tabelle ist eine Übersicht, wer welche Teile des Dokumentes verfasst hat. 
+%Sie ist vollständig zu bearbeiten.
+
+%\tableofcontents                           % Inhaltsverzeichnis wird automatisch
+                                           % generiert
+
+%----Kapitel des Feinentwurfs, die mit Inhalt zu füllen sind--------------------
+\include{Instructions/01_instructions}
+%\include{Pflichtenheft/01_zielbestimmung}
+%\include{Pflichtenheft/02_produkteinsatz}
+%\include{Pflichtenheft/03_produktuebersicht}
+%\include{Pflichtenheft/04_produktfunktionen}
+%\include{Pflichtenheft/05_produktdaten}
+%\include{Pflichtenheft/06_nichtfunktionaleanforderungen}
+%\include{Pflichtenheft/07_benutzeroberflaeche}
+%\include{Pflichtenheft/08_produktumgebung}
+%\include{Pflichtenheft/09_glossar}
+
+%------Ende des Dokumentes------------------------------------------------------
+\end{document}
