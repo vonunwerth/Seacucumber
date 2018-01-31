@@ -1,4 +1,5 @@
 \chapter{Instructions}\label{chap:zielbestimmung}
+\pagenumbering{arabic}
 Dear user,\\
 we are delighted that you use our Framework for Neo4j. For everything to run accordingly, you need Neo4j, Maven and Java for our functions and it runs on every normal operating system.
 If you have any questions, please do not hesitate to contact us on our \glqq Git Repository\grqq{}.
@@ -32,24 +33,20 @@ This step by step guide is created for using the software \glqq ItelliJ IDEA\grq
 	\item Please start the Neo4j - Software and create a new database. Neo4j will guide you through the creation process. One important thing is to know where the databse is stored. (By default the folder is called neo4j/default.graphdb). \\(Nice to know for login: by default the username and password is neo4j)
 	\item The plugin folder has to be created in the following directory(neo4j/default.graphdb/plugins). You need this for your \glqq  Neo4j - Procedures\grqq{}.
 	\newpage
-	\item After downloading and installing the Software \glqq ItelliJ IDEA\grqq{} opens and is ready for use. The following window opens. \\
+	\item After downloading and installing the Software \glqq IntelliJ IDEA\grqq{} opens and is ready for use. The following window opens. \\
 	\begin{center}
 		\includegraphics[width=4.2cm]{common/IntelliJstart.png}\setlength{\unitlength}{1mm}
 	\end{center}
 
-	\item You click on \glqq Check out from Version Control\grqq{} and a window with the name \glqq Clone Repository\grqq{} will open. \\
+	\item You click on \glqq Check out from Version Control - GitHub\grqq{} and a window with the name \glqq Clone Repository\grqq{} will open. \\
 	\textbf{Git Repository URL:} https://github.com/vonunwerth/neo4j.git \\
 	\textbf{Parent Directory:} The location where you want to save the project.  \\
 	\textbf{Directory Name:} For example Neo4j (You can choose whatever you want.)\\
 	\\
 	Click on Clone and IntelliJ will start to download the repository.
 	
-	\item --------------braucht man das? klappt auch ohne.-----------------
-	The Folder with our \glqq Git Repository\grqq{} is displayed at the \glqq IntelliJ\grqq{} window, but you only see \glqq readme\grqq{}and other data but not the Java files. \\
-	If you want see the Java files, open the Maven Tab on the right side. Click on the tab and on the circle on the left corner. You will be ask, if you want to \glqq import Maven Projects\grqq{} - click \glqq yes\grqq{}. The \glqq Maven Dependencies\grqq{} are now downloaded, this needs a while.
-	\begin{center}
-		\includegraphics[width=14.5cm]{common/MavenImport.png}\setlength{\unitlength}{1mm}
-	\end{center}
+	\item You get a at the right corner a notification to add the project as a Maven-project. If the notification doesn't appear look up the trouble shoot section \ref{sec:trouble}.
+	
 	\item All folders should be visible now. Open the src/main/java folder.
 	\item In the \glqq package matcher\grqq{} you can create a new Java file to create your algorithm.
 \end{itemize}
@@ -101,7 +98,7 @@ After you write your algorithm in your new class in the Java package matcher, yo
 	 You must paste the \glqq original-Neo4JMatchAlgFramework-1.0.jar\grqq{} to the previously created \glqq plugins\grqq{} Folder.
 	\item After doing this you can call your procedure in Neo4j. If you are ready, open the database with the Neo4j software.
 \end{itemize}
-\newpage
+
 \section{Work with Neo4j}\label{sec:takeneo4j}
 To test if your procedure works in Neo4j you can use the following example statements.
 \begin{itemize}
@@ -119,9 +116,19 @@ To test if your procedure works in Neo4j you can use the following example state
 	CALL graph.exampleQuery(
 	"MATCH (m:Movie)<-[:DIRECTED]-(p:Person)
 	RETURN m,p") 
-	yield node MATCH (m:Movie)<-[:DIRECTED]-(p:Person)
+	YIELD node MATCH (m:Movie)<-[:DIRECTED]-(p:Person)
 	RETURN m,p
 	\end{lstlisting}
 \end{itemize}
 At this point you know everything we know - So have fun and develop new good algorithms.
+\newpage
+\section{Trouble shooting} \label{sec:trouble}
 
+\begin{itemize}
+	\item 
+		The Folder with our \glqq Git Repository\grqq{} is displayed at the \glqq IntelliJ\grqq{} window, but you only see \glqq readme\grqq{}and other data but not the Java files. \\
+		If you want see the Java files, open the Maven Tab on the right side. Click on the tab and on the circle on the left corner. You will be ask, if you want to \glqq import Maven Projects\grqq{} - click \glqq yes\grqq{}. The \glqq Maven Dependencies\grqq{} are now downloaded, this needs a while.
+		\begin{center}
+			\includegraphics[width=10.3cm]{common/MavenImport.png}\setlength{\unitlength}{1mm}
+		\end{center}
+\end{itemize}

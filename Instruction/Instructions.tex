@@ -9,6 +9,23 @@
 \newcommand{\dokumentTitel}{User instructions}
 \input{common/config.tex}
 \usepackage{listings}
+\usepackage{color}
+
+\lstset{frame=tb,
+	language=Java,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
 
 %------Beginn des Gesamtdokumentes----------------------------------------------
 \begin{document}
@@ -21,7 +38,7 @@
 %Sie ist vollständig zu bearbeiten.
 
 %\tableofcontents                           % Inhaltsverzeichnis wird automatisch
-                                           % generiert
+\setcounter{footnote}{0}   
 
 %----Kapitel des Feinentwurfs, die mit Inhalt zu füllen sind--------------------
 \include{Instructions/01_instructions}

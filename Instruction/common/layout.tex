@@ -47,6 +47,9 @@
 %----Farben
 \definecolor{tubsRed}{cmyk}{0.1,1.0,0.8,0.0}
 \definecolor{tuRed}{cmyk}{0.1,1.0,0.8,0.0}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+%\definecolor{mauve}{rgb}{0.58,0,0.82}
 
 %------Kopfzeile----------------------------------------------------------------
 \setheadsepline{1pt}[\color{tuRed}]
@@ -120,3 +123,5 @@
 % Testfall
 \newcounter{testcasecount}
 \newenvironment{testcase}[2]{\clearpage\refsetcounter{testcasecount}{#1}\subsection{Testfall $\langle T#1\rangle$ - #2}\label{T#1}\begin{description}\setlength{\itemsep}{-5pt}}{\end{description}}
+
+
