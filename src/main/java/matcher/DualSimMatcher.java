@@ -19,7 +19,7 @@ public class DualSimMatcher extends Matcher {
     /**
      * This method creates a new dual simulation matcher.
      *
-     * @param db The database to be used
+     * @param db    The database to be used
      * @param graph The graph to be used
      */
     public DualSimMatcher(GraphDatabaseService db, Graph graph) {
@@ -37,14 +37,12 @@ public class DualSimMatcher extends Matcher {
 
         Boolean changes;
         Map<Integer, List<Node>> sim = new HashMap<>();
-        for (Vertex v : graph.getVertices()
-                ) {
+        for (Vertex v : graph.getVertices()) {
             sim.put(v.getId(), findNodes(v));
             System.out.println(v.getLabel());
         }
 
-        do{
-
+        do {
             changes = false;
             for (Vertex v : graph.getVertices()
                     ) {
@@ -55,7 +53,7 @@ public class DualSimMatcher extends Matcher {
                         for (Node n : sim.get(v.getId())
                                 ) {
                             Boolean exists = false;
-                            for (Node n2 : successingNodes(n,e.getLabel())
+                            for (Node n2 : successingNodes(n, e.getLabel())
                                     ) {
                                 exists = sim.get(e.getTarget().getId()).contains(n2);
                             }
@@ -63,14 +61,13 @@ public class DualSimMatcher extends Matcher {
                                 removeList.add(n);
                                 changes = true;
 
-
                             }
                         }
                         sim.get(v.getId()).removeAll(removeList);
-                    } catch (Exception ex){
+                    } catch (Exception ex) {
                         System.out.println(ex.toString());
                         System.out.println("error");
-                        for (Node n: sim.get(v.getId())
+                        for (Node n : sim.get(v.getId())
                                 ) {
                             System.out.println(n);
                         }
@@ -78,16 +75,13 @@ public class DualSimMatcher extends Matcher {
 
                 }
                 System.out.println("middle");
-                for (Edge e : v.getIncomingEdges()
-                        ) {
+                for (Edge e : v.getIncomingEdges()) {
                     System.out.println(e.toString());
-                    try{
+                    try {
                         List<Node> removeList = new LinkedList<>();
-                        for (Node n : sim.get(v.getId())
-                                ) {
+                        for (Node n : sim.get(v.getId())) {
                             Boolean exists = false;
-                            for (Node n2 : previousNodes(n,e.getLabel())
-                                    ) {
+                            for (Node n2 : previousNodes(n, e.getLabel())) {
 
                                 exists = sim.get(e.getStart().getId()).contains(n2);
                             }
@@ -97,9 +91,9 @@ public class DualSimMatcher extends Matcher {
                             }
                         }
                         sim.get(v.getId()).removeAll(removeList);
-                    } catch (Exception ex){
+                    } catch (Exception ex) {
                         System.out.println("error");
-                        for (Node n: sim.get(v.getId())
+                        for (Node n : sim.get(v.getId())
                                 ) {
                             System.out.println(n);
                         }
@@ -108,12 +102,10 @@ public class DualSimMatcher extends Matcher {
                 }
             }
         } while (changes);
-        for (Integer s: sim.keySet()
-                ) {
+        for (Integer s : sim.keySet()) {
             int counter = 0;
-            for (Node n: sim.get(s)
-                    ) {
-                System.out.print(n.getId()+" ");
+            for (Node n : sim.get(s)) {
+                System.out.print(n.getId() + " ");
                 System.out.println(n.getLabels().iterator().next().name());
                 counter++;
             }

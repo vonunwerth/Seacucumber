@@ -1,10 +1,8 @@
 package graph;
 
-import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.RelationshipType;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +61,7 @@ public class Edge {
      * @return List with start and end nodes
      */
     public List<Vertex> getVertex() {
-        List<Vertex> list = new LinkedList<>();
+        List<Vertex> list = new ArrayList<>(2);
         list.add(start);
         list.add(target);
         return list;
@@ -101,7 +99,9 @@ public class Edge {
      *
      * @return The map of attributes
      */
-    public Map<String,String> getProperties() {return properties; }
+    public Map<String, String> getProperties() {
+        return properties;
+    }
 
     /**
      * Compares edges with Neo4J Realtionships.
@@ -114,8 +114,7 @@ public class Edge {
         if (this.getLabel().equals(rel.getType().name())){
             equ = true;
         }
-        for (String s: this.properties.keySet()
-                ) {
+        for (String s : this.properties.keySet()) {
             if (rel.getProperty(s).toString().equals(this.properties.get(s)) ){
                 equ = true;
             } else{

@@ -6,6 +6,7 @@ import graph.Vertex;
 import org.neo4j.graphdb.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Abstract matcher class
@@ -18,7 +19,7 @@ public abstract class Matcher {
      * Constructor to get to the database
      *
      * @param database The database
-     * @param graph The graph
+     * @param graph    The graph
      */
     public Matcher(GraphDatabaseService database, Graph graph) {
         this.db = database;
@@ -41,8 +42,7 @@ public abstract class Matcher {
     List<Node> previousNodes(Node node) {
         List<Node> result = new ArrayList<>();
         Iterable<Relationship> rel = node.getRelationships(Direction.INCOMING);
-        for (Relationship r : rel
-                ) {
+        for (Relationship r : rel) {
             result.add(r.getStartNode());
         }
         return result;
@@ -51,16 +51,15 @@ public abstract class Matcher {
     /**
      * Returns all predecessors of the given node which have a given label.
      *
-     * @param node The given node
+     * @param node  The given node
      * @param label The given label of the relationship
      * @return A list of all previous nodes
      */
     List<Node> previousNodes(Node node, String label) {
         List<Node> result = new ArrayList<>();
         RelationshipType rt = RelationshipType.withName(label);
-        Iterable<Relationship> rel = node.getRelationships(Direction.INCOMING,rt);
-        for (Relationship r : rel
-                ) {
+        Iterable<Relationship> rel = node.getRelationships(Direction.INCOMING, rt);
+        for (Relationship r : rel) {
             result.add(r.getStartNode());
         }
         return result;
@@ -76,9 +75,8 @@ public abstract class Matcher {
     List<Node> previousNodesProp(Node node, Edge edge) {
         List<Node> result = new ArrayList<>();
         Iterable<Relationship> rel = node.getRelationships(Direction.INCOMING);
-        for (Relationship r : rel
-                ) {
-            if (edge.equalsProp(r)){
+        for (Relationship r : rel) {
+            if (edge.equalsProp(r)) {
                 result.add(r.getStartNode());
             }
         }
@@ -94,8 +92,7 @@ public abstract class Matcher {
     List<Node> successingNodes(Node node) {
         List<Node> result = new ArrayList<>();
         Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING);
-        for (Relationship r : rel
-                ) {
+        for (Relationship r : rel) {
             result.add(r.getEndNode());
         }
         return result;
@@ -104,20 +101,20 @@ public abstract class Matcher {
     /**
      * Returns all successors of the given node which have a given label.
      *
-     * @param node The given node
+     * @param node  The given node
      * @param label The given label of the relationship
      * @return A list of all successing nodes
      */
     List<Node> successingNodes(Node node, String label) {
         List<Node> result = new ArrayList<>();
         RelationshipType rt = RelationshipType.withName(label);
-        Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING,rt);
-        for (Relationship r : rel
-                ) {
+        Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING, rt);
+        for (Relationship r : rel) {
             result.add(r.getEndNode());
         }
         return result;
     }
+
     /**
      * Returns all successors of the given node which have a given label with consideration of the properties.
      *
@@ -128,9 +125,8 @@ public abstract class Matcher {
     List<Node> successingNodesProp(Node node, Edge edge) {
         List<Node> result = new ArrayList<>();
         Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING);
-        for (Relationship r : rel
-                ) {
-            if (edge.equalsProp(r)){
+        for (Relationship r : rel) {
+            if (edge.equalsProp(r)) {
                 result.add(r.getStartNode());
             }
         }
@@ -152,10 +148,10 @@ public abstract class Matcher {
      * Returns the relationships of the given node.
      *
      * @param node The node you want the relationships from
-     * @param dir The direction of the relationship
+     * @param dir  The direction of the relationship
      * @return The list of the relationships
      */
-    Iterable<Relationship> getRelationships(Node node,Direction dir) {
+    Iterable<Relationship> getRelationships(Node node, Direction dir) {
         return node.getRelationships(dir);
     }
 
@@ -163,10 +159,10 @@ public abstract class Matcher {
      * Returns the relationships of the given node.
      *
      * @param node The node you want the relationships from
-     * @param rel The type of the relationship
+     * @param rel  The type of the relationship
      * @return The list of the relationships
      */
-    Iterable<Relationship> getRelationships(Node node,RelationshipType rel) {
+    Iterable<Relationship> getRelationships(Node node, RelationshipType rel) {
         return node.getRelationships(rel);
     }
 
@@ -187,17 +183,10 @@ public abstract class Matcher {
      * @return Nodes for Vortex
      */
     List<Node> findNodes(Vertex vertex) {
-        Label lb =  Label.label(vertex.getIdentifier());
+        Label lb = Label.label(vertex.getIdentifier());
         ResourceIterator<Node> iterator = db.findNodes(lb);
-        List<Node> nodes = new LinkedList<>();
-        while (iterator.hasNext()){
-            try {
-                nodes.add(iterator.next());
-            }catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        return nodes;
+        //Simple way to collect an iterator into a List
+        return iterator.stream().collect(Collectors.toList());
     }
 
     /**
@@ -208,14 +197,8 @@ public abstract class Matcher {
      */
     List<Node> findNodesProp(Vertex vertex) {
         ResourceIterable<Node> list = db.getAllNodes();
-        List<Node> nodes = new LinkedList<>();
-        for (Node n: list
-             ) {
-            if (vertex.equalsProp(n)){
-                nodes.add(n);
-            }
-        }
-        return nodes;
+        //Filter out the nodes equal to the Vertex and collect into a List
+        return list.stream().filter(vertex::equals).collect(Collectors.toList());
     }
 
     /**
@@ -224,12 +207,11 @@ public abstract class Matcher {
      * @return The result set
      */
     public Set<Node> simulate() {
-        Map<Integer, List<Node>> map = matchingAlgorithm();
-        Set<Node> set = new HashSet<>();
-        for (Map.Entry<Integer, List<Node>> entry : map.entrySet()) {
-            set.addAll(entry.getValue());
-        }
-        return set;
+        Map<Integer, List<Node>> matched = matchingAlgorithm();
+        Set<Node> results = new HashSet<>();
+        //Collect all the Nodes from the individual results
+        matched.entrySet().stream().map(Map.Entry::getValue).forEach(results::addAll);
+        return results;
     }
 
     /**

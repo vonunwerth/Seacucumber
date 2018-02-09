@@ -3,7 +3,6 @@ package graph;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Represents the data structure in a graph
@@ -62,28 +61,22 @@ public class Graph {
      */
     private String graphToDOT() {
         StringBuilder sb = new StringBuilder();
-        /*
-      Start der Ausgabe des Graphen
-     */
+
+        //Start der Ausgabe des Graphen
         String START = "digraph G { \n";
         sb.append(START);
 
-
-        for (Vertex vertex : vertices){
+        for (Vertex vertex : vertices) {
             //Add every Vertex to file
-            /*
-      Knoten für Ausgabe des Graphen
-     */
+            //Knoten für Ausgabe des Graphen
             String VERTEX = "{0} [label='{1}']; \n";
             sb.append(MessageFormat.format(VERTEX, vertex.getId(), vertex.getIdentifier()));
         }
 
-        for (Vertex vertex : vertices){
+        for (Vertex vertex : vertices) {
             //Add every outgoing edge from every vertex to file
             for (Edge out : vertex.getOutgoingEdges()) {
-                /*
-      Kante für Ausgabe des Graphen
-     */
+                //Kante für Ausgabe des Graphen
                 String EDGE = "{0} -> {1} [label='{2}']; \n";
                 sb.append(MessageFormat.format(EDGE, vertex.getId(), out.getTarget().getId(), out.getLabel()));
             }

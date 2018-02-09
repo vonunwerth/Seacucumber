@@ -137,8 +137,7 @@ public class Vertex {
      * @return true if equal, false if not equal
      */
     public Boolean equals(Node b) {
-        for (Label c : b.getLabels()
-                ) {
+        for (Label c : b.getLabels()) {
             if (c.name().equals(this.getLabel())) {
                 return true;
             }
@@ -153,24 +152,22 @@ public class Vertex {
      * @return true if equal, false if not equal
      */
     public Boolean equalsProp(Node b) {
-        Boolean equ = false;
-        for (Label c : b.getLabels()
-                ) {
+        Boolean equal = false;
+        for (Label c : b.getLabels()) {
             if (c.name().equals(this.getLabel())) {
-                equ = true;
+                equal = true;
             }
         }
-        for (String s: this.properties.keySet()
-             ) {
+        for (String s : this.properties.keySet()) {
             if (b.getProperty(s).toString().equals(this.properties.get(s)) ){
-                equ = true;
+                equal = true;
             } else{
-                equ = false;
+                equal = false;
                 break;
             }
 
         }
-        return equ;
+        return equal;
     }
 
     /**
