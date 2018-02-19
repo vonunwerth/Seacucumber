@@ -28,7 +28,7 @@ public class DualSimMatcherProp extends Matcher {
     }
 
     /**
-     * The matching algorithm to be used. (Currently: Dual simulation with consideration of the properties)
+     * The dualSimulation algorithm to be used. (Currently: Dual simulation with consideration of the properties)
      *
      * @return The simulation
      */

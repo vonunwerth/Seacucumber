@@ -52,39 +52,43 @@ This step by step guide is created for using the software \glqq ItelliJ IDEA\grq
 \end{itemize}
 
 \section{Start coding}\label{sec:startProgramming}
-After checking out the repository you can start coding.
+After checking out the repository you can start coding. Ensure you use Java JDK1.8 or higher to compile the project. Otherwise some features of the given classes cannot be used.
 \begin{itemize}
-	\item The new class in the \glqq matcher - package \grqq{} must be abstract.
-	\item You have to write a constructor in your class. The constructor's name has to be the same as the classname. The following structure can be used: \\ %Felix anpassen
+	\item Create a new class for your new Matching-Algorithm in the matcher package and let your new class extends the abstract class \textit{matcher}.
+	\item Implement the \textit{matchingAlgorithm()-method} and import \textit{org.neo4j.graphdb} in order to use the Nodes of Neo4J. Also import the java.util.List instead of the suggested scale list. Last import java.util.Map to get a result map of your keys and lists of nodes in the end.
+		\lstset{language=Java}
+	\begin{lstlisting} 
+	@Override
+	public Map<Integer, List<Node>> matchingAlgorithm() {
+		//Your own matcher
+	}
+	\end{lstlisting} 
+	
+	\item You have to write a constructor in your class. The constructor's name has to be the same as the classname. The following structure can be used: 
 	\lstset{language=Java}
 	\begin{lstlisting}
-	public[AlgorithmsName](GraphDatabaseService db, Graph graph) {
-		this.db = db;
-		this.graph = graph;
+	public [AlgorithmsName] (org.neo4j.graphdb.GraphDatabaseService db, graph.Graph graph) {
+		this.db = db; //Describes your database
+		this.graph = graph; //Describes your graph
 	}
 	\end{lstlisting}
 	%\begin{center}
 	%	\includegraphics[width=10.5cm]{common/MatcherConstrutor.png}\setlength{\unitlength}{1mm}
 	%\end{center}
-	\item The next step is to implement the method \glqq matchingAlgorithm\grqq{}. Here you can implement your own algorithm. \\
-	\lstset{language=Java}
-	\begin{lstlisting} 
-	 @Override
-	public Map<Integer, List<Node>> matchingAlgorithm() {
-		//your code
+	A lot of prewritten methods can be found in the abstract \glqq Matcher\grqq{} class. Check our javadoc for more information.
+	\item Now you have to create a now procedure to access your matcher on your Neo4J database. Go to the \textit{procedure.GraphProcedures} class and e.g. copy one of the example procedures for Dual Simulation or Failures.
+	\begin{lstlisting}
+	@Procedure(value = "graph.[NAME]", mode = Mode.READ)
+	@Description("[DESCRIPTION]")
+	@SuppressWarnings("unused")
+	public Stream<NodeResult> [NAME](@Name("query") String 	query) {
+	Graph graph = prepareQuery(db, query);
+	[MATCHER] matcher = new [MATCHER](db, graph);
+	Set<Node> simulated = matcher.simulate();
+	return simulated.stream().map(NodeResult::new);
 	}
 	\end{lstlisting} 
-	A lot of prewritten methods can be found in the abstract \glqq Matcher\grqq{} class. Check our javadoc for more information.
-	\item After finishing your algorithm, you have to do two more things: \\ 
-	\begin{enumerate}
-		\item Change the name of the algorithm object.(GraphProcdures.java Line 56) \\
-		\item Change the procedures name - if you like. (GraphProcdures.java \\
-		Line 39) \\
-	See the red lines.
-	\end{enumerate}
-	\begin{center}
-		\includegraphics[width=9.0cm]{common/ChangeProcedures.png}\setlength{\unitlength}{1mm}
-	\end{center}
+	Replace [NAME] with the name of your new procedure and [MATCHER] with the name of your new matcher class.
 \end{itemize}
 
 \section{After coding}\label{sec:afterProgramming}

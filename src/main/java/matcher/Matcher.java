@@ -202,7 +202,7 @@ public abstract class Matcher {
     }
 
     /**
-     * This method executes the matching algorithm and formats the result for NEO4J.
+     * This method executes the dualSimulation algorithm and formats the result for NEO4J.
      *
      * @return The result set
      */
@@ -215,7 +215,7 @@ public abstract class Matcher {
     }
 
     /**
-     * This function must be overridden with the matching algorithm
+     * This function must be overridden with the dualSimulation algorithm
      *
      * @return The result of the algorithm
      */

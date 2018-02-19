@@ -3,7 +3,6 @@ package procedure;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
-import org.neo4j.cypher.internal.frontend.v2_3.ast.functions.Str;
 
 import java.util.HashMap;
 import java.util.Map;

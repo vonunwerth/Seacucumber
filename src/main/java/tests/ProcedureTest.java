@@ -24,12 +24,12 @@ public class ProcedureTest {
 
     /**
      * NEO4J Test
-     * Es wird eine neue Datenbank mit Testdatensätzen aus den Constants ({@link constants.Constants#CREATE_TESTQUERY}) geladen und dann eine Procedure {@link GraphProcedures#extractQuery(String)} ausgeführt und die Funktionalität getestet.
+     * Es wird eine neue Datenbank mit Testdatensätzen aus den Constants ({@link constants.Constants#CREATE_TESTQUERY}) geladen und dann eine Procedure ausgeführt und die Funktionalität getestet.
      *
      * @throws Throwable Gegebenenfalls auftretende Fehler
      */
     @Test
-    public void shouldAllowIndexingAndFindingANode() throws Throwable {
+    public void shouldAllowIndexingAndFindingANode() {
         // In a try-block, to make sure we close the driver after the test
         try (Driver driver = GraphDatabase.driver(neo4j.boltURI(), Config.build().toConfig())) {
 
@@ -45,7 +45,7 @@ public class ProcedureTest {
             //session.run( "CALL example.index({id}, ['name'])", parameters( "id", nodeId ) );
 
             // Then I can search for that node with lucene query syntax
-            StatementResult sr  = session.run("CALL graph.extractQuery(\" MATCH (tom:Person)-[:DIRECTED]->(m:Movie) RETURN tom \")");
+            StatementResult sr = session.run("CALL graph.dualSimulation(\" MATCH (tom:Person)-[:DIRECTED]->(m:Movie) RETURN tom \")");
             System.out.println("TEST: Query gestartet");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );
             while(sr.hasNext()) {
