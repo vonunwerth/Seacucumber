@@ -8,41 +8,37 @@
     <artifactId>Neo4JMatchAlgFramework</artifactId>
     <version>1.0</version>
 
-    <properties>
-        <neo4j.version>3.2.6</neo4j.version>
-    </properties>
-
     <!-- 3.3.1 works -->
     <dependencies>
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j</artifactId>
-            <version>3.3.1</version>
+            <version>LATEST</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.neo4j.test</groupId>
             <artifactId>neo4j-harness</artifactId>
-            <version>3.3.1</version>
+            <version>LATEST</version>
         </dependency>
 
         <dependency>
             <groupId>org.neo4j.driver</groupId>
             <artifactId>neo4j-java-driver</artifactId>
-            <version>1.5.0-beta03</version>
+            <version>LATEST</version>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>LATEST</version>
         </dependency>
 
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-graphdb-api</artifactId>
-            <version>3.3.1</version>
+            <version>LATEST</version>
         </dependency>
 
     </dependencies>

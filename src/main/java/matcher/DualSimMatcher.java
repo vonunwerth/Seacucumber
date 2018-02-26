@@ -28,8 +28,7 @@ public class DualSimMatcher extends Matcher {
     }
 
     /**
-     * The dualSimulation algorithm to be used. (Currently: Dual simulation)
-     *
+     * The dualSimulation algorithm to be used.
      * @return The simulation
      */
     @Override

@@ -96,4 +96,5 @@ public class GraphProcedures {
         Set<Node> simulated = matcher.simulate();
         return simulated.stream().map(NodeResult::new);
     }
+
 }

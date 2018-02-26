@@ -217,7 +217,7 @@ public abstract class Matcher {
     /**
      * This function must be overridden with the dualSimulation algorithm
      *
-     * @return The result of the algorithm
+     * @return The result of the algorithm TODO describe more
      */
     public abstract Map<Integer, List<Node>> matchingAlgorithm();
 }

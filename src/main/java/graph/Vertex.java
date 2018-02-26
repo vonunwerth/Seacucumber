@@ -174,7 +174,6 @@ public class Vertex {
      * This method builds a field in which all nodes and edges are entered.
      * And prints a node with all connected nodes on the console.
      *
-     * @deprecated Old debugging method
      */
     public void printVertex() {
         String[][] field = new String[5][5];
