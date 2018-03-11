@@ -6,7 +6,9 @@ import org.neo4j.driver.v1.*;
 import org.neo4j.harness.junit.Neo4jRule;
 import procedure.GraphProcedures;
 
-import static constants.Constants.CREATE_TESTQUERY;
+import java.util.Scanner;
+
+import static constants.Constants.CREATE_TESTQUERY_LITTLE;
 
 /**
  * Beispielausführung einer Procedure in einer Klasse als Test
@@ -39,16 +41,31 @@ public class ProcedureTest {
             Session session = driver.session();
             System.out.println("TEST: Datenbank wurde initialisiert");
             // And given I have a node in the database
-            session.run(CREATE_TESTQUERY);
+            System.out.println("Mit welcher Datenbank wollen Sie den Test ausführen\n (1) Große Datenbank > 100 Knoten + Beziehungen \n (2) Kleine Datenbank < 10 Knoten + Beziehungen");
+            Scanner sc = new Scanner(System.in);
+            int var = sc.nextInt();
+            switch (var) {
+                case 1:
+                    session.run(CREATE_TESTQUERY_LITTLE);
+                    break;
+                case 2:
+                    session.run(CREATE_TESTQUERY_LITTLE);
+                    break;
+                default:
+                    System.out.println("Zu dieser Wahl existiert kein Test. Der Test wird beendet.");
+                    System.exit(25);
+            }
+            session.run(CREATE_TESTQUERY_LITTLE);
             System.out.println("TEST: Testdatensätze wurden erstellt.");
             // When I use the index procedure to index a node
             //session.run( "CALL example.index({id}, ['name'])", parameters( "id", nodeId ) );
 
             // Then I can search for that node with lucene query syntax
-            StatementResult sr = session.run("CALL graph.dualSimulation(\" MATCH (tom:Person)-[:DIRECTED]->(m:Movie) RETURN tom \")");
+            //StatementResult sr = session.run("CALL graph.isomorphic(\" MATCH (tom:Person)-[:DIRECTED]->(m:Movie) RETURN tom \")");
+            StatementResult sr = session.run("CALL graph.isomorphic(\" MATCH (tom:Person) RETURN tom \")");
             System.out.println("TEST: Query gestartet");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );
-            while(sr.hasNext()) {
+            while (sr != null && sr.hasNext()) {
                 System.out.println("RESULT: " + sr.peek());
                 sr.next();
             }

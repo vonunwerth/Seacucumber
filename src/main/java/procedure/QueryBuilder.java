@@ -76,8 +76,8 @@ public class QueryBuilder {
                 Vertex n;
 
                 /*check for ':' and get the Label + Name of our node.
-                * Also checks if there is any label at all and creates a
-                * node with the label/name that is found
+                 * Also checks if there is any label at all and creates a
+                 * node with the label/name that is found
                  */
                 if (pointString.toString().contains(":")) {
                     if (g.checkLabel(point[0]) == null) {
@@ -105,7 +105,7 @@ public class QueryBuilder {
                 }
 
                 /*if a node is created earlier a new edge can be created depending
-                * on the edge parameters we find
+                 * on the edge parameters we find
                  */
                 if (first != null) {
                     if (direction == 1) {

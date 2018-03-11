@@ -6,7 +6,7 @@ package constants;
 public class Constants {
 
     /**
-     * Fills a database with a test record (example data).
+     * Fills a big database with a test record (example data).
      */
     public static final String CREATE_TESTQUERY = "CREATE (TheMatrix:Movie {title:'The Matrix', released:1999, tagline:'Welcome to the Real World'})\n" +
             "CREATE (Keanu:Person {name:'Keanu Reeves', born:1964})\n" +
@@ -516,5 +516,26 @@ public class Constants {
             "\n" +
             "WITH TomH as a\n" +
             "MATCH (a)-[:ACTED_IN]->(m)<-[:DIRECTED]-(d) RETURN a,m,d LIMIT 10\n" +
+            ";";
+
+    /**
+     * Fills a simple database with a test record (example data).
+     */
+    public static final String CREATE_TESTQUERY_LITTLE = "CREATE (TheMatrix:Movie {title:'The Matrix', released:1999, tagline:'Welcome to the Real World'})\n" +
+            "CREATE (Keanu:Person {name:'Keanu Reeves', born:1964})\n" +
+            "CREATE (Carrie:Person {name:'Carrie-Anne Moss', born:1967})\n" +
+            "CREATE (Laurence:Person {name:'Laurence Fishburne', born:1961})\n" +
+            "CREATE (Hugo:Person {name:'Hugo Weaving', born:1960})\n" +
+            "CREATE (LillyW:Person {name:'Lilly Wachowski', born:1967})\n" +
+            "CREATE (LanaW:Person {name:'Lana Wachowski', born:1965})\n" +
+            "CREATE (JoelS:Person {name:'Joel Silver', born:1952})\n" +
+            "CREATE\n" +
+            "  (Keanu)-[:ACTED_IN {roles:['Neo']}]->(TheMatrix),\n" +
+            "  (Carrie)-[:ACTED_IN {roles:['Trinity']}]->(TheMatrix),\n" +
+            "  (Laurence)-[:ACTED_IN {roles:['Morpheus']}]->(TheMatrix),\n" +
+            "  (Hugo)-[:ACTED_IN {roles:['Agent Smith']}]->(TheMatrix),\n" +
+            "  (LillyW)-[:DIRECTED]->(TheMatrix),\n" +
+            "  (LanaW)-[:DIRECTED]->(TheMatrix),\n" +
+            "  (JoelS)-[:PRODUCED]->(TheMatrix)\n" +
             ";";
 }

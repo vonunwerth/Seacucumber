@@ -210,14 +210,37 @@ public abstract class Matcher {
         Map<Integer, List<Node>> matched = matchingAlgorithm();
         Set<Node> results = new HashSet<>();
         //Collect all the Nodes from the individual results
-        matched.entrySet().stream().map(Map.Entry::getValue).forEach(results::addAll);
+        if (matched != null)
+            matched.entrySet().stream().map(Map.Entry::getValue).forEach(results::addAll);
         return results;
+    }
+
+    /**
+     * This method calculates the Power Set of a given Set
+     *
+     * @param originalSet Set to calculate Power Set about
+     * @return Power Set including empty set
+     */
+    public Set<Set<Node>> powerSet(Set<Node> originalSet) {
+        Set<Set<Node>> sets = new HashSet<>();
+        sets.add(new HashSet<>());
+        for (Node node : originalSet) {
+            Set<Set<Node>> newPs = new HashSet<>();
+            for (Set<Node> subset : sets) {
+                newPs.add(subset);
+                Set<Node> newSubset = new HashSet<>(subset);
+                newSubset.add(node);
+                newPs.add(newSubset);
+            }
+            sets = newPs;
+        }
+        return sets;
     }
 
     /**
      * This function must be overridden with the dualSimulation algorithm
      *
-     * @return The result of the algorithm TODO describe more
+     * @return The result of the algorithm
      */
     public abstract Map<Integer, List<Node>> matchingAlgorithm();
 }

@@ -2,7 +2,6 @@ package tests;
 
 import graph.Edge;
 import graph.Graph;
-import graph.Vertex;
 import org.neo4j.driver.v1.*;
 import procedure.QueryBuilder;
 
@@ -25,7 +24,7 @@ public class NeoTest {
         Graph graph = qb.build();
         List<Edge> list = graph.getEdges();
         for (Edge v: list
-             ) {
+                ) {
             System.out.println(v.getLabel());
             System.out.println(v.getProperties().values());
         }

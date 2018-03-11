@@ -146,6 +146,22 @@ public class Vertex {
     }
 
     /**
+     * This method compares Neo4J-node with node for isomorphic
+     *
+     * @param b The node for the comparison
+     * @return true if equal, false if not equal
+     */
+    public Boolean isomorph(Node b) {
+        for (Label c : b.getLabels()) {
+            if (c.name().equals(this.getLabel())) {
+                return true; //TODO equals auf Prop, Name, Relations etc. wenn im Pattern welche sind
+            }
+        }
+        return false;
+        //return true;
+    }
+
+    /**
      * This method compares Neo4J-node with node considering the properties.
      *
      * @param b The node for the comparison
