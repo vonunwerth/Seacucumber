@@ -237,7 +237,7 @@ public abstract class Matcher {
         Set<Node> results = new HashSet<>();
         //Collect all the Nodes from the individual results
         if (matched != null)
-            matched.entrySet().stream().map(Map.Entry::getValue).forEach(results::addAll);
+            matched.entrySet().stream().map(Map.Entry::getValue).forEach(results::addAll); //TODO Bei Trace kommen wieder ganze Strukturen nicht nur einzelne Knotn raus
         return results;
     }
 
@@ -262,7 +262,6 @@ public abstract class Matcher {
         }
         return sets;
     }
-
     /**
      * This function must be overridden with the dualSimulation algorithm
      *
