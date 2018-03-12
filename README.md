@@ -7,16 +7,16 @@ This project create an interface for your own algorithm and the Neo4j database. 
 You create with our project a procedure for Neo4j and the only thing you need is the idea for your algorithem. You will see we have a lot of helpful methods, this methods helps you create your algotithem with the Java syntax.
 So have fun and clone this project.
 
-#### Why you need this
+## Why you need this
 - A simple way to check your new algorithm.
 - You get a lot of helpful methods for generating algorithm.
 - You need no background knowledge, because the instruction and the good Javadocs.
 
 A framework for pros and rookies. So start your new coding experience or read our instruction.
 
-#### You must change in our code:
+## You must change in our code:
 
-In our frame work you only must change a few things:
+In our framework you only must change a few things:
 
 1. Create a new class for your new Matching-Algorithm in the matcher package and let your new class extends the abstract class matcher.
 2. Implement the matchingAlgorithm()-method and import org.neo4j.graphdb in order to use the Nodes of Neo4J. Also import the java.util.List instead of the suggested scale list. Last import java.util.Map to get a result map of your keys and lists of nodes in the end.
@@ -54,15 +54,15 @@ public Map<Integer, List<Node>> matchingAlgorithm() {
 ```
 Replace [NAME] with the name of your new procedure and [MATCHER] with the name of your new matcher class.
 
-#### Start with your procedure:
+## Start with your procedure:
 If you want to create your own procedure, you need maven. So your last step before you have a ready procedure is to call this in maven:
 
 `mvn clean package`
 
-This create a new target folder at your storage (at the place where you storage this project). At the folder is a .jar file and this is your procedure. The last step is to drag the file to your plugins folder at your database.
+This create a new target folder at your storage (at the place where you storage this project). In the folder is a .jar file and this is your procedure. The last step is to drag the file to your plugins folder at your database.
 If you have a problem with this step, please check [this](https://github.com/vonunwerth/Seacucumber/blob/master/Instruction/Instructions.pdf).
 
-#### Good to know: Procedures and User functions
+## Good to know: Procedures and User functions
 If you want more Knowledge about Neo4j Procedures and user functions you can read this:
 
 Procedures and UserFunctions should have a own Package for storage, this is for a better methods call.
