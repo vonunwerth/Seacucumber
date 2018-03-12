@@ -27,6 +27,18 @@ public class DualSimMatcher extends Matcher {
         this.graph = graph;
     }
 
+    static void count(Map<Integer, List<Node>> sim) {
+        for (Integer s : sim.keySet()) {
+            int counter = 0;
+            for (Node n : sim.get(s)) {
+                System.out.print(n.getId() + " ");
+                System.out.println(n.getLabels().iterator().next().name());
+                counter++;
+            }
+            System.out.println(counter);
+        }
+    }
+
     /**
      * The dualSimulation algorithm to be used.
      * @return The simulation
@@ -101,15 +113,7 @@ public class DualSimMatcher extends Matcher {
                 }
             }
         } while (changes);
-        for (Integer s : sim.keySet()) {
-            int counter = 0;
-            for (Node n : sim.get(s)) {
-                System.out.print(n.getId() + " ");
-                System.out.println(n.getLabels().iterator().next().name());
-                counter++;
-            }
-            System.out.println(counter);
-        }
+        count(sim);
         return sim;
     }
 }

@@ -6,8 +6,6 @@ import org.neo4j.driver.v1.*;
 import org.neo4j.harness.junit.Neo4jRule;
 import procedure.GraphProcedures;
 
-import java.util.Scanner;
-
 import static constants.Constants.CREATE_TESTQUERY_LITTLE;
 
 /**
@@ -28,7 +26,6 @@ public class ProcedureTest {
      * NEO4J Test
      * Es wird eine neue Datenbank mit Testdatensätzen aus den Constants ({@link constants.Constants#CREATE_TESTQUERY}) geladen und dann eine Procedure ausgeführt und die Funktionalität getestet.
      *
-     * @throws Throwable Gegebenenfalls auftretende Fehler
      */
     @Test
     public void shouldAllowIndexingAndFindingANode() {
@@ -41,7 +38,7 @@ public class ProcedureTest {
             Session session = driver.session();
             System.out.println("TEST: Datenbank wurde initialisiert");
             // And given I have a node in the database
-            System.out.println("Mit welcher Datenbank wollen Sie den Test ausführen\n (1) Große Datenbank > 100 Knoten + Beziehungen \n (2) Kleine Datenbank < 10 Knoten + Beziehungen");
+            /*System.out.println("Mit welcher Datenbank wollen Sie den Test ausführen\n (1) Große Datenbank > 100 Knoten + Beziehungen \n (2) Kleine Datenbank < 10 Knoten + Beziehungen");
             Scanner sc = new Scanner(System.in);
             int var = sc.nextInt();
             switch (var) {
@@ -54,7 +51,7 @@ public class ProcedureTest {
                 default:
                     System.out.println("Zu dieser Wahl existiert kein Test. Der Test wird beendet.");
                     System.exit(25);
-            }
+            }*/
             session.run(CREATE_TESTQUERY_LITTLE);
             System.out.println("TEST: Testdatensätze wurden erstellt.");
             // When I use the index procedure to index a node
@@ -62,7 +59,7 @@ public class ProcedureTest {
 
             // Then I can search for that node with lucene query syntax
             //StatementResult sr = session.run("CALL graph.isomorphic(\" MATCH (tom:Person)-[:DIRECTED]->(m:Movie) RETURN tom \")");
-            StatementResult sr = session.run("CALL graph.isomorphic(\" MATCH (tom:Person) RETURN tom \")");
+            StatementResult sr = session.run("CALL graph.dualSimProp(\" MATCH (tom:Person) RETURN tom \")");
             System.out.println("TEST: Query gestartet");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );
             while (sr != null && sr.hasNext()) {

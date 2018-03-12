@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * Represents the data structure in a graph
  */
+@SuppressWarnings("WeakerAccess")
 public class Graph {
 
     /**

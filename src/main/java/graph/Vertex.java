@@ -2,6 +2,7 @@ package graph;
 
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 /**
  * Represents vertieces in a graph
  */
+@SuppressWarnings({"WeakerAccess", "unused", "ConstantConditions"})
 public class Vertex {
 
     /**
@@ -30,7 +32,7 @@ public class Vertex {
     /**
      * A map with attributes of the vertex
      */
-    private Map<String,String> properties;
+    private Map<String, String> properties;
 
     /**
      * List of incoming edges
@@ -50,7 +52,7 @@ public class Vertex {
      * @param id         Id of the vertex
      * @param attributes the attributes of the vertex
      */
-    public Vertex(String label, String identifier, Integer id, Map<String,String> attributes) {
+    public Vertex(String label, String identifier, Integer id, Map<String, String> attributes) {
         this.label = label;
         this.identifier = identifier;
         this.id = id;
@@ -71,7 +73,7 @@ public class Vertex {
      * This method adds an edge between this and another vertex
      *
      * @param vertex The vertex the added edge points to
-     * @param edge The added edge
+     * @param edge   The added edge
      */
     public void addEdge(Vertex vertex, Edge edge) {
         outgoingEdges.add(edge);
@@ -101,7 +103,9 @@ public class Vertex {
      *
      * @return The map of attributes
      */
-    public Map<String,String> getProperties() {return properties; }
+    public Map<String, String> getProperties() {
+        return properties;
+    }
 
     /**
      * Returns the incoming edges of the vertex.
@@ -138,7 +142,7 @@ public class Vertex {
      */
     public Boolean equals(Node b) {
         for (Label c : b.getLabels()) {
-            if (c.name().equals(this.getLabel())) {
+            if (c.name().equals(this.getIdentifier())) {
                 return true;
             }
         }
@@ -151,15 +155,76 @@ public class Vertex {
      * @param b The node for the comparison
      * @return true if equal, false if not equal
      */
-    public Boolean isomorph(Node b) {
+    public Boolean isomorphWithoutProp(Node b) {
+        return isomorphRelationships(b) && isomorphLabels(b) && isomorphProps(b);
+    }
+
+    /**
+     * This method compares Neo4J-nodes properties
+     *
+     * @param b The node for the comparison
+     * @return true if equal, false if not equal
+     */
+    private boolean isomorphProps(Node b) {
+        Boolean equal = false;
+        for (String s : this.properties.keySet()) {
+            if (b.getProperty(s).toString().equals(this.properties.get(s))) {
+                equal = true;
+            } else {
+                equal = false;
+                break;
+            }
+
+        }
+        return equal;
+    }
+
+    /**
+     * This method compares Neo4J-node with node considering the properties.
+     *
+     * @param b The node for the comparison
+     * @return true if equal, false if not equal
+     */
+    private boolean isomorphLabels(Node b) {
         for (Label c : b.getLabels()) {
-            if (c.name().equals(this.getLabel())) {
-                return true; //TODO equals auf Prop, Name, Relations etc. wenn im Pattern welche sind
+            if (c.name().equals(this.getIdentifier())) {
+                return true; //Zu jeden Label des Datenbankknotens existiert Label im Patternknoten
             }
         }
         return false;
-        //return true;
     }
+
+    /**
+     * Checks if two Nodes are isomorph relating to relationsships of those node
+     *
+     * @param b Node to compare relationsships with to this Vertex
+     */
+    public Boolean isomorphRelationships(Node b) {
+        int relationships = 0;
+        int isomorphRelationshipsOne = 0;
+        int isomorphRelationshipsTwo = 0;
+        for (Relationship rel : b.getRelationships()) relationships++;
+        if (relationships == this.outgoingEdges.size()) {
+            for (Relationship rel : b.getRelationships()) { //Zu jeder Relation in Datenbank lässt sich Relation in Pattern finden
+                for (Edge edge : this.getOutgoingEdges()) {
+                    if (rel.getType().name().equals(edge.getLabel())) {
+                        isomorphRelationshipsOne++;
+                    }
+                }
+            }
+            for (Edge edge : this.getOutgoingEdges()) { //Zu jeder Relation in Pattern lässt sich Realtion in Datenbank finden
+                for (Relationship rel : b.getRelationships()) {
+                    if (rel.getType().name().equals(edge.getLabel())) {
+                        isomorphRelationshipsTwo++;
+                    }
+                }
+            }
+        } else { //Wenn Patternknoten nicht gleich viele Relationsships (Kanten) hat, sind Knoten nicht isomorph
+            return false;
+        }
+        return (relationships == isomorphRelationshipsOne && isomorphRelationshipsOne == isomorphRelationshipsTwo);
+    }
+
 
     /**
      * This method compares Neo4J-node with node considering the properties.
@@ -175,9 +240,9 @@ public class Vertex {
             }
         }
         for (String s : this.properties.keySet()) {
-            if (b.getProperty(s).toString().equals(this.properties.get(s)) ){
+            if (b.getProperty(s).toString().equals(this.properties.get(s))) {
                 equal = true;
-            } else{
+            } else {
                 equal = false;
                 break;
             }
@@ -189,7 +254,6 @@ public class Vertex {
     /**
      * This method builds a field in which all nodes and edges are entered.
      * And prints a node with all connected nodes on the console.
-     *
      */
     public void printVertex() {
         String[][] field = new String[5][5];
@@ -295,7 +359,6 @@ public class Vertex {
      * Returns a square array on the console.
      *
      * @param array Square array
-     * @deprecated Old debugging method
      */
     private void printArray(String[][] array) {
         for (String[] single_array : array) {

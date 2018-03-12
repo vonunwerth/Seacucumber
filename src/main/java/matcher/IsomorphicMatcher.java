@@ -17,7 +17,7 @@ public class IsomorphicMatcher extends Matcher {
     public Map<Integer, List<Node>> matchingAlgorithm() {
         Map<Integer, List<Node>> resultMap = new HashMap<>();
         int nodeCount = 0;
-        Set<Node> databaseNodes = new HashSet<Node>();
+        Set<Node> databaseNodes = new HashSet<>();
         for (Node node : db.getAllNodes()) {
             nodeCount++; //Anzahl der Knoten in der Datenbank
             databaseNodes.add(node);
@@ -34,7 +34,7 @@ public class IsomorphicMatcher extends Matcher {
                 int nodes = set.size();
                 int isomorphNodes = 0;
                 for (Node node : set) {
-                    if (vertex.isomorph(node)) {
+                    if (vertex.isomorphWithoutProp(node)) {
                         isomorphNodes++;
                     }
                 }

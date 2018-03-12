@@ -12,6 +12,7 @@ import static org.neo4j.driver.v1.Values.parameters;
 /**
  * In diesem Test werden einfache Methoden auf einer lokal gehosteten Datenbank aufgerufen
  */
+@SuppressWarnings("unused")
 public class NeoTest {
 
     /**

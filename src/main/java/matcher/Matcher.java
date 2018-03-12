@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 /**
  * Abstract matcher class
  */
+@SuppressWarnings({"unused", "WeakerAccess"})
 public abstract class Matcher {
     GraphDatabaseService db;
     Graph graph;

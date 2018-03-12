@@ -103,15 +103,7 @@ public class DualSimMatcherProp extends Matcher {
                 }
             }
         } while (changes);
-        for (Integer s : sim.keySet()) {
-            int counter = 0;
-            for (Node n : sim.get(s)) {
-                System.out.print(n.getId()+" ");
-                System.out.println(n.getLabels().iterator().next().name());
-                counter++;
-            }
-            System.out.println(counter);
-        }
+        DualSimMatcher.count(sim);
         return sim;
     }
 }
