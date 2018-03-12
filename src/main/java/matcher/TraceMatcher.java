@@ -29,8 +29,8 @@ public class TraceMatcher extends Matcher {
             ArrayList<String> trace = new ArrayList<>();
             Set<Integer> usedEdges = new HashSet<>(); //Merkt sich in jedem Rekursionsschritt, welche Kanten schon genutzt wurden, um nicht erneut eine Kante zu nutzen
 
-            ArrayList<String> simpleActualNode = new ArrayList<>(Collections.singleton(vertex.getIdentifier()));
-            if (!patternTraces.contains(simpleActualNode)) patternTraces.add(simpleActualNode);
+            //ArrayList<String> simpleActualNode = new ArrayList<>(Collections.singleton(vertex.getIdentifier()));
+            //if (!patternTraces.contains(simpleActualNode)) patternTraces.add(simpleActualNode);
 
             floodPattern(vertex, trace, usedEdges);
         }
@@ -45,12 +45,13 @@ public class TraceMatcher extends Matcher {
      * @param usedEdges  Bereits genutzte Kanten, Kreise sollen verhindert werden
      */
     private void floodPattern(Vertex actualNode, ArrayList<String> trace, Set<Integer> usedEdges) {
-        trace.add(actualNode.getIdentifier());
+        //trace.add(actualNode.getIdentifier());
         //TODO Testen, ob Algortihmus mit Kreisen in Pattern funktioniert
         if (!patternTraces.contains(trace))
             patternTraces.add(trace); //Bisher zurückgelegten Weg zu den Traces hinzufügen
         for (Edge edge : actualNode.getOutgoingEdges()) {
             if (!usedEdges.contains(edge.getId())) {
+                trace.add(edge.getLabel());
                 usedEdges.add(edge.getId()); //Sperre Kante für tiefere Aufrufe, um Kreise zu vermeiden
                 actualNode = edge.getTarget(); //Nutze Nachfolger als Startknoten
                 floodPattern(actualNode, trace, usedEdges); //Flute mit neuem Startknoten und aktuellem Weg
