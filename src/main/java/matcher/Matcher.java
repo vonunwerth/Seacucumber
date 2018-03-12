@@ -27,6 +27,31 @@ public abstract class Matcher {
         this.graph = graph;
     }
 
+    @Override
+    public final int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public final boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    protected final Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public final String toString() {
+        return super.toString();
+    }
+
+    @Override
+    protected final void finalize() throws Throwable {
+        super.finalize();
+    }
+
     /**
      * Default Matcher
      */
@@ -40,7 +65,7 @@ public abstract class Matcher {
      * @param node The given node
      * @return A list of all previous nodes
      */
-    List<Node> previousNodes(Node node) {
+    final List<Node> previousNodes(Node node) {
         List<Node> result = new ArrayList<>();
         Iterable<Relationship> rel = node.getRelationships(Direction.INCOMING);
         for (Relationship r : rel) {
@@ -56,7 +81,7 @@ public abstract class Matcher {
      * @param label The given label of the relationship
      * @return A list of all previous nodes
      */
-    List<Node> previousNodes(Node node, String label) {
+    final List<Node> previousNodes(Node node, String label) {
         List<Node> result = new ArrayList<>();
         RelationshipType rt = RelationshipType.withName(label);
         Iterable<Relationship> rel = node.getRelationships(Direction.INCOMING, rt);
@@ -73,7 +98,7 @@ public abstract class Matcher {
      * @param edge The given edge from the query graph
      * @return A list of all previous nodes
      */
-    List<Node> previousNodesProp(Node node, Edge edge) {
+    final List<Node> previousNodesProp(Node node, Edge edge) {
         List<Node> result = new ArrayList<>();
         Iterable<Relationship> rel = node.getRelationships(Direction.INCOMING);
         for (Relationship r : rel) {
@@ -90,7 +115,7 @@ public abstract class Matcher {
      * @param node The given node
      * @return A list of all successing nodes
      */
-    List<Node> successingNodes(Node node) {
+    final List<Node> successingNodes(Node node) {
         List<Node> result = new ArrayList<>();
         Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING);
         for (Relationship r : rel) {
@@ -106,7 +131,7 @@ public abstract class Matcher {
      * @param label The given label of the relationship
      * @return A list of all successing nodes
      */
-    List<Node> successingNodes(Node node, String label) {
+    final List<Node> successingNodes(Node node, String label) {
         List<Node> result = new ArrayList<>();
         RelationshipType rt = RelationshipType.withName(label);
         Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING, rt);
@@ -123,7 +148,7 @@ public abstract class Matcher {
      * @param edge The given edge from the query graph
      * @return A list of all successing nodes
      */
-    List<Node> successingNodesProp(Node node, Edge edge) {
+    final List<Node> successingNodesProp(Node node, Edge edge) {
         List<Node> result = new ArrayList<>();
         Iterable<Relationship> rel = node.getRelationships(Direction.OUTGOING);
         for (Relationship r : rel) {
@@ -141,9 +166,9 @@ public abstract class Matcher {
      * @param b The second node
      * @return Returns true if the nodes have the same label otherwise false
      */
-    Boolean compare(Node a, Node b) {
+    final Boolean compare(Node a, Node b) {
         return a.getLabels() == b.getLabels();
-    }
+    } //TODO compare richtig so
 
     /**
      * Returns the relationships of the given node.
@@ -152,7 +177,7 @@ public abstract class Matcher {
      * @param dir  The direction of the relationship
      * @return The list of the relationships
      */
-    Iterable<Relationship> getRelationships(Node node, Direction dir) {
+    final Iterable<Relationship> getRelationships(Node node, Direction dir) {
         return node.getRelationships(dir);
     }
 
@@ -163,7 +188,7 @@ public abstract class Matcher {
      * @param rel  The type of the relationship
      * @return The list of the relationships
      */
-    Iterable<Relationship> getRelationships(Node node, RelationshipType rel) {
+    final Iterable<Relationship> getRelationships(Node node, RelationshipType rel) {
         return node.getRelationships(rel);
     }
 
@@ -173,7 +198,7 @@ public abstract class Matcher {
      * @param node The node you want the relationships from
      * @return The list of the relationships
      */
-    Iterable<Relationship> getRelationships(Node node) {
+    final Iterable<Relationship> getRelationships(Node node) {
         return node.getRelationships();
     }
 
@@ -183,7 +208,7 @@ public abstract class Matcher {
      * @param vertex The given Vertex
      * @return Nodes for Vortex
      */
-    List<Node> findNodes(Vertex vertex) {
+    final List<Node> findNodes(Vertex vertex) {
         Label lb = Label.label(vertex.getIdentifier());
         ResourceIterator<Node> iterator = db.findNodes(lb);
         //Simple way to collect an iterator into a List
@@ -196,7 +221,7 @@ public abstract class Matcher {
      * @param vertex The given Vertex
      * @return Nodes for Vortex
      */
-    List<Node> findNodesProp(Vertex vertex) {
+    final List<Node> findNodesProp(Vertex vertex) {
         ResourceIterable<Node> list = db.getAllNodes();
         //Filter out the nodes equal to the Vertex and collect into a List
         return list.stream().filter(vertex::equals).collect(Collectors.toList());
@@ -207,7 +232,7 @@ public abstract class Matcher {
      *
      * @return The result set
      */
-    public Set<Node> simulate() {
+    public final Set<Node> simulate() {
         Map<Integer, List<Node>> matched = matchingAlgorithm();
         Set<Node> results = new HashSet<>();
         //Collect all the Nodes from the individual results
@@ -222,7 +247,7 @@ public abstract class Matcher {
      * @param originalSet Set to calculate Power Set about
      * @return Power Set including empty set
      */
-    public Set<Set<Node>> powerSet(Set<Node> originalSet) {
+    public final Set<Set<Node>> powerSet(Set<Node> originalSet) {
         Set<Set<Node>> sets = new HashSet<>();
         sets.add(new HashSet<>());
         for (Node node : originalSet) {

@@ -1,10 +1,7 @@
 package procedure;
 
 import graph.Graph;
-import matcher.DualSimMatcher;
-import matcher.DualSimMatcherProp;
-import matcher.FailureMatcher;
-import matcher.IsomorphicMatcher;
+import matcher.*;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.logging.Log;
@@ -120,4 +117,25 @@ public class GraphProcedures {
         return simulated.stream().map(NodeResult::new);
     }
 
+    /**
+     * NEO4J Procedure that can be executed in the database.
+     * <p>
+     * First, the query is converted to a graph.
+     * Then the matching algorithm is executed.
+     * Finally, the result is returned.
+     * <p>
+     * The passed query is processed with this NEO4J procedure and a result set is returned.
+     *
+     * @param query The given query to execute
+     * @return Stream of NodeResults. Each NodeResult contains only one node, the one it represents in the result set.
+     */
+    @Procedure(value = "graph.trace", mode = Mode.READ)
+    @Description("Trace matcher with properties")
+    @SuppressWarnings("unused")
+    public Stream<NodeResult> trace(@Name("query") String query) {
+        Graph graph = prepareQuery(db, query);
+        TraceMatcher matcher = new TraceMatcher(db, graph);
+        Set<Node> simulated = matcher.simulate();
+        return simulated.stream().map(NodeResult::new);
+    }
 }

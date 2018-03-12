@@ -38,7 +38,7 @@ public class IsomorphicMatcher extends Matcher {
                         isomorphNodes++;
                     }
                 }
-                if (nodes == isomorphNodes) {
+                if (nodes == isomorphNodes) { //Mappen erfolgreich
                     List<Node> tempList = new ArrayList<>(set);
                     resultMap.put(setCounter, tempList);
                 }

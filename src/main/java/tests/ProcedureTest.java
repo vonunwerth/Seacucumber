@@ -58,8 +58,9 @@ public class ProcedureTest {
             //session.run( "CALL example.index({id}, ['name'])", parameters( "id", nodeId ) );
 
             // Then I can search for that node with lucene query syntax
-            //StatementResult sr = session.run("CALL graph.isomorphic(\" MATCH (tom:Person)-[:DIRECTED]->(m:Movie) RETURN tom \")");
-            StatementResult sr = session.run("CALL graph.isomorphic(\" MATCH (tom:Person) RETURN tom \")");
+            StatementResult sr = session.run("CALL graph.trace(\" MATCH (tom:Person)-[:DIRECTED]->(m:Movie) RETURN tom \")");
+            //StatementResult sr = session.run("CALL graph.trace(\" MATCH (tom:Person) RETURN tom \")");
+
             System.out.println("TEST: Query gestartet");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );
             while (sr != null && sr.hasNext()) {

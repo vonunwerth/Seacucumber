@@ -32,6 +32,14 @@ public class Edge {
     private Map<String,String> properties;
 
     /**
+     * Visited variable for some special algorithms, which iterate over the edges of a graph
+     * false by default
+     */
+    private boolean visited = false;
+
+    private Integer id;
+
+    /**
      * Create a new edge.
      *
      * @param start         Starting node
@@ -43,6 +51,8 @@ public class Edge {
         this.target = target;
         this.label = relationLabel;
         this.properties = attributes;
+        String uniqueNumber = "" + start.getId() + "" + target.getId();
+        this.id = new Integer(uniqueNumber);
     }
 
     /**
@@ -124,5 +134,30 @@ public class Edge {
 
         }
         return equ;
+    }
+
+    /**
+     * Was this Edge used by an algorithm
+     *
+     * @return The actual state of the visited variable
+     */
+    public boolean isVisited() {
+        return visited;
+    }
+
+    /**
+     * Sets visited to true, can be useful for some special algorithms
+     */
+    public String visit() {
+        visited = true;
+        return this.label;
+    }
+
+    public boolean equals(Edge edge) {
+        return this.id.equals(edge.id);
+    }
+
+    public Integer getId() {
+        return id;
     }
 }

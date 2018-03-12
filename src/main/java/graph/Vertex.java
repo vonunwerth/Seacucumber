@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents vertieces in a graph
+ * Represents vertices in a graph
  */
 @SuppressWarnings({"WeakerAccess", "unused", "ConstantConditions"})
 public class Vertex {
@@ -43,6 +43,12 @@ public class Vertex {
      * List of outgoing edges
      */
     private List<Edge> outgoingEdges = new ArrayList<>();
+
+    /**
+     * Can be used for special algorithms, which iterate about all nodes of a graph
+     * false by default
+     */
+    private boolean visited = false;
 
     /**
      * This method creates a new vertex.
@@ -387,4 +393,21 @@ public class Vertex {
             System.out.println();
         }
     }
+
+    /**
+     * Was this vertex used by an algorithm
+     *
+     * @return The actual state of the visited variable
+     */
+    public boolean isVisited() {
+        return visited;
+    }
+
+    /**
+     * Sets visited to true, can be useful for some special algorithms
+     */
+    public void visit() {
+        visited = true;
+    }
+
 }
