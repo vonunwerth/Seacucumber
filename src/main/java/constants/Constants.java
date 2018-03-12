@@ -529,6 +529,7 @@ public class Constants {
             "CREATE (LillyW:Person {name:'Lilly Wachowski', born:1967})\n" +
             "CREATE (LanaW:Person {name:'Lana Wachowski', born:1965})\n" +
             "CREATE (JoelS:Person {name:'Joel Silver', born:1952})\n" +
+            "CREATE (Test:Person {name:'Testomat Lonely', born:1999})\n" +
             "CREATE\n" +
             "  (Keanu)-[:ACTED_IN {roles:['Neo']}]->(TheMatrix),\n" +
             "  (Carrie)-[:ACTED_IN {roles:['Trinity']}]->(TheMatrix),\n" +

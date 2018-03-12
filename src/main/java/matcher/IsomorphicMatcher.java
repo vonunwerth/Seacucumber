@@ -34,7 +34,7 @@ public class IsomorphicMatcher extends Matcher {
                 int nodes = set.size();
                 int isomorphNodes = 0;
                 for (Node node : set) {
-                    if (vertex.isomorphWithoutProp(node)) {
+                    if (vertex.isomorphic(node)) {
                         isomorphNodes++;
                     }
                 }

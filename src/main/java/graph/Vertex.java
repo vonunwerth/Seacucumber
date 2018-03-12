@@ -155,7 +155,17 @@ public class Vertex {
      * @param b The node for the comparison
      * @return true if equal, false if not equal
      */
-    public Boolean isomorphWithoutProp(Node b) {
+    public Boolean isomorphic(Node b) {
+        /*System.out.println("Identifier: " + this.identifier + " Label: " + this.label);
+        StringBuilder labelsOfNode = new StringBuilder();
+        for (Label label : b.getLabels()) labelsOfNode.append(label).append(" ");
+        System.out.println("Identifier: " + b.getId() + " Label: " + labelsOfNode);
+        boolean isomorphRelationships = isomorphRelationships(b);
+        System.out.println(isomorphRelationships);
+        boolean isomorphLabels = isomorphLabels(b);
+        System.out.println(isomorphLabels);
+        boolean isomorphProps = isomorphProps(b);
+        System.out.println(isomorphProps);*/
         return isomorphRelationships(b) && isomorphLabels(b) && isomorphProps(b);
     }
 
@@ -166,7 +176,7 @@ public class Vertex {
      * @return true if equal, false if not equal
      */
     private boolean isomorphProps(Node b) {
-        Boolean equal = false;
+        Boolean equal = true;
         for (String s : this.properties.keySet()) {
             if (b.getProperty(s).toString().equals(this.properties.get(s))) {
                 equal = true;
