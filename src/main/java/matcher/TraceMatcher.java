@@ -75,10 +75,11 @@ public class TraceMatcher extends Matcher {
     }
 
     private void trace(Set<Node> set) {
-        ArrayList<String> trace = new ArrayList<>();
-        Set<Relationship> usedEdges = new HashSet<>(); //Merkt sich in jedem Rekursionsschritt, welche Kanten schon genutzt wurden, um nicht erneut eine Kante zu nutzen
-        for (Node node : set)
-            floodDatabaseSubset(node, trace, usedEdges);
+        for (Node node : set) {
+            ArrayList<String> trace = new ArrayList<>();
+            Set<Relationship> usedEdges = new HashSet<>(); //Merkt sich in jedem Rekursionsschritt, welche Kanten schon genutzt wurden, um nicht erneut eine Kante zu nutzen
+            floodDatabaseSubset(node, trace, usedEdges, set);
+        }
     }
 
 
@@ -94,7 +95,7 @@ public class TraceMatcher extends Matcher {
         if (!patternTraces.containsAll(trace)) {
             patternTraces.add(trace); //Bisher zurückgelegten Weg zu den Traces hinzufügen
         }
-        for (Edge edge : actualNode.getOutgoingEdges()) {
+        for (Edge edge : actualNode.getOutgoingEdges()) { //TODO bei
             if (!usedEdges.contains(edge.getId())) {
                 trace.add(edge.getLabel());
                 usedEdges.add(edge.getId()); //Sperre Kante für tiefere Aufrufe, um Kreise zu vermeiden
@@ -111,15 +112,15 @@ public class TraceMatcher extends Matcher {
      * @param trace      Bisherige zurückgelegter Weg
      * @param usedEdges  Bereits genutzte Kanten, Kreise sollen verhindert werden
      */
-    private void floodDatabaseSubset(Node actualNode, ArrayList<String> trace, Set<Relationship> usedEdges) {
+    private void floodDatabaseSubset(Node actualNode, ArrayList<String> trace, Set<Relationship> usedEdges, Set<Node> subsetOfPowerSet) {
         if (!dbTraces.containsAll(trace))
             dbTraces.add(trace); //Bisher zurückgelegten Weg zu den Traces hinzufügen
         for (Relationship rel : actualNode.getRelationships(Direction.OUTGOING)) {
-            if (!usedEdges.contains(rel)) {
+            if (!usedEdges.contains(rel) && subsetOfPowerSet.contains(rel.getEndNode())) {
                 trace.add(rel.getType().name());
                 usedEdges.add(rel); //Sperre Kante für tiefere Aufrufe, um Kreise zu vermeiden
                 actualNode = rel.getEndNode(); //Nutze Nachfolger als Startknoten
-                floodDatabaseSubset(actualNode, trace, usedEdges); //Flute mit neuem Startknoten und aktuellem Weg
+                floodDatabaseSubset(actualNode, trace, usedEdges, subsetOfPowerSet); //Flute mit neuem Startknoten und aktuellem Weg
             }
         }
     }
