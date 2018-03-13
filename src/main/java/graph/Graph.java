@@ -69,7 +69,7 @@ public class Graph {
 
         for (Vertex vertex : vertices) {
             //Add every Vertex to file
-            //Knoten für Ausgabe des Graphen
+            //node for the output of the graph
             String VERTEX = "{0} [label='{1}']; \n";
             sb.append(MessageFormat.format(VERTEX, vertex.getId(), vertex.getIdentifier()));
         }
@@ -77,7 +77,7 @@ public class Graph {
         for (Vertex vertex : vertices) {
             //Add every outgoing edge from every vertex to file
             for (Edge out : vertex.getOutgoingEdges()) {
-                //Kante für Ausgabe des Graphen
+                //edge for the output of the graph
                 String EDGE = "{0} -> {1} [label='{2}']; \n";
                 sb.append(MessageFormat.format(EDGE, vertex.getId(), out.getTarget().getId(), out.getLabel()));
             }

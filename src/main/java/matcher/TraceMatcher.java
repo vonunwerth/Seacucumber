@@ -14,12 +14,12 @@ public class TraceMatcher extends Matcher {
 
 
     /**
-     * Das Set aller Traces eines Patterns
+     * set of all traces of a pattern
      */
     private Set<ArrayList<String>> patternTraces = new HashSet<>();
 
     /**
-     * Das Set aller Traces der Datenbank
+     * set of all traces of the database
      */
     private Set<ArrayList<String>> dbTraces = new HashSet<>();
 
@@ -46,12 +46,14 @@ public class TraceMatcher extends Matcher {
         Map<Integer, List<Node>> resultMap = new HashMap<>();
         Set<Node> databaseNodes = new HashSet<>();
 
+        //goes through all vertices and remembers which edges have been used in every recursive step
         for (Vertex vertex : graph.getVertices()) {
             ArrayList<String> trace = new ArrayList<>();
-            Set<Integer> usedEdges = new HashSet<>(); //Merkt sich in jedem Rekursionsschritt, welche Kanten schon genutzt wurden, um nicht erneut eine Kante zu nutzen
+            Set<Integer> usedEdges = new HashSet<>();
 
-            //Use this two lines to get the nodes in the traces instead of the relationsships
-            //Auch als zweites Kriterium nutzbar, um aus der Datenbank die Subsets rauszuschmeißen, welche diese Knoten nicht enthalten, bzw nicht die gleiche Anzahl haben
+            //Use these two lines to get the nodes in the traces instead of the relationships.
+            //Also usable as a secondary criteria to remove all subsets of the database that don´t have the specific
+            //nodes in them or don´t have the same amount of nodes
             //ArrayList<String> simpleActualNode = new ArrayList<>(Collections.singleton(vertex.getIdentifier()));
             //if (!patternTraceNodes.contains(simpleActualNode)) patternTraceNodes.add(simpleActualNode);
 
@@ -60,15 +62,18 @@ public class TraceMatcher extends Matcher {
         for (Node node : db.getAllNodes()) {
             databaseNodes.add(node);
         }
-        //Alle Subsets die so groß wie das Pattern sind
+        //all subsets that are the same size as the pattern
         Set<Set<Node>> powerSet = powerSet(databaseNodes);
         int resultCount = 0;
         for (Set<Node> set : powerSet) {
-            dbTraces = new HashSet<>(); //Alle Traces des vorherigen Sets löschen
+            //delete all traces of the previous set
+            dbTraces = new HashSet<>();
             trace(set);
-            if (dbTraces.equals(patternTraces)) { //Wenn Trace mit Patterntrace übereinstimmt ist ein Ergebnis gefunden
+            //if the trace equals the patterntrace we found a result
+            if (dbTraces.equals(patternTraces)) {
                 resultCount++;
-                resultMap.put(resultCount, new ArrayList<>(set)); //Zum Ergebnisset hinzufügen
+                //add to result
+                resultMap.put(resultCount, new ArrayList<>(set));
             }
         }
         return resultMap;
@@ -77,49 +82,58 @@ public class TraceMatcher extends Matcher {
     private void trace(Set<Node> set) {
         for (Node node : set) {
             ArrayList<String> trace = new ArrayList<>();
-            Set<Relationship> usedEdges = new HashSet<>(); //Merkt sich in jedem Rekursionsschritt, welche Kanten schon genutzt wurden, um nicht erneut eine Kante zu nutzen
+            //goes through all nodes and remembers which edges have been used in every recursive step
+            Set<Relationship> usedEdges = new HashSet<>();
             floodDatabaseSubset(node, trace, usedEdges, set);
         }
     }
 
 
     /**
-     * Findet alle möglichen Traces von einem Starknoten ausgehend. Kreise werden dabei ignoriert
+     * Find all possible traces starting from the starting node. Circles are ignored.
      *
-     * @param actualNode Startknoten
-     * @param trace      Bisherige zurückgelegter Weg
-     * @param usedEdges  Bereits genutzte Kanten, Kreise sollen verhindert werden
+     * @param actualNode starting node
+     * @param trace      already traveled path
+     * @param usedEdges  already used edges; circles should be avoided
      */
     private void floodPattern(Vertex actualNode, ArrayList<String> trace, Set<Integer> usedEdges) {
         //trace.add(actualNode.getIdentifier()); Use this to get the nodes in the traces instead of the relationsships
         if (!patternTraces.containsAll(trace)) {
-            patternTraces.add(trace); //Bisher zurückgelegten Weg zu den Traces hinzufügen
+            //add paths that have been visited to the traces
+            patternTraces.add(trace);
         }
         for (Edge edge : actualNode.getOutgoingEdges()) {
             if (!usedEdges.contains(edge.getId())) {
                 trace.add(edge.getLabel());
-                usedEdges.add(edge.getId()); //Sperre Kante für tiefere Aufrufe, um Kreise zu vermeiden
-                actualNode = edge.getTarget(); //Nutze Nachfolger als Startknoten
-                floodPattern(actualNode, trace, usedEdges); //Flute mit neuem Startknoten und aktuellem Weg
+                //lock edges for deeper call to prevent circles
+                usedEdges.add(edge.getId());
+                //use successor as new starting node
+                actualNode = edge.getTarget();
+                //flood with new starting node and current path
+                floodPattern(actualNode, trace, usedEdges);
             }
         }
     }
 
     /**
-     * Findet alle möglichen Traces von einem Starknoten ausgehend. Kreise werden dabei ignoriert
+     * Find all possible traces starting from the starting node. Circles are ignored.
      *
-     * @param actualNode Startknoten
-     * @param trace      Bisherige zurückgelegter Weg
-     * @param usedEdges  Bereits genutzte Kanten, Kreise sollen verhindert werden
+     * @param actualNode starting node
+     * @param trace      already traveled path
+     * @param usedEdges  already used edges; circles should be avoided
      */
     private void floodDatabaseSubset(Node actualNode, ArrayList<String> trace, Set<Relationship> usedEdges, Set<Node> subsetOfPowerSet) {
         if (!dbTraces.containsAll(trace))
-            dbTraces.add(trace); //Bisher zurückgelegten Weg zu den Traces hinzufügen
+            //add paths that have been visited to the traces
+            dbTraces.add(trace);
         for (Relationship rel : actualNode.getRelationships(Direction.OUTGOING)) {
             if (!usedEdges.contains(rel) && subsetOfPowerSet.contains(rel.getEndNode())) {
                 trace.add(rel.getType().name());
-                usedEdges.add(rel); //Sperre Kante für tiefere Aufrufe, um Kreise zu vermeiden
-                actualNode = rel.getEndNode(); //Nutze Nachfolger als Startknoten
+                //lock edges for deeper call to prevent circles
+                usedEdges.add(rel);
+                //use successor as new starting node
+                actualNode = rel.getEndNode();
+                //flood with new starting node and current path
                 floodDatabaseSubset(actualNode, trace, usedEdges, subsetOfPowerSet); //Flute mit neuem Startknoten und aktuellem Weg
             }
         }

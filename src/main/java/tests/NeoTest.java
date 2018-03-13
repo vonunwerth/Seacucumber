@@ -10,15 +10,15 @@ import java.util.List;
 import static org.neo4j.driver.v1.Values.parameters;
 
 /**
- * In diesem Test werden einfache Methoden auf einer lokal gehosteten Datenbank aufgerufen
+ * In this test some simple methods are called on a locally hosted database
  */
 @SuppressWarnings("unused")
 public class NeoTest {
 
     /**
-     * Testmethode zum Starten einer neuen Abfrage auf einer lokal gehosteten Datenbank
+     * Test method to start a new query on a locally hosted database
      *
-     * @param args Programmparameter
+     * @param args program parameters
      */
     public static void main(String[] args) {
         QueryBuilder qb = new QueryBuilder("MATCH (tom:Person { number:'10'},{name:'hans'})-[:DIRECTED {name :'10'}]->(m:Movie {director: 'Franz'})-[:DIRECTED {name :'333'}]->(m:Movie {director: 'Franz'}) RETURN tom");
@@ -33,7 +33,7 @@ public class NeoTest {
     }
 
     /**
-     * Testanzeige von Datensätzen aus einer lokal gehosteten Datenbank
+     * Display of data sets from a locally hosted database
      */
     private static void createAndShow() {
         Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("trump", "password"));
@@ -48,7 +48,6 @@ public class NeoTest {
             Record record = result.next();
             System.out.println(record.get("title").asString() + " " + record.get("name").asString());
         }
-
         session.close();
         driver.close();
     }
