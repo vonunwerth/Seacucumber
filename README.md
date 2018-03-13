@@ -3,20 +3,18 @@
 ### SeaCucumber-Framework
 
 Before you start, please check our instructions [here](https://github.com/vonunwerth/Seacucumber/blob/master/Instruction/Instructions.pdf).
-This project creates an interface for your own algorithm and the Neo4j database. The best thing is that you need no more software.
-With our project you create a procedure for Neo4j and the only thing you need is the idea for your algorithm. You will see we have a lot of helpful methods, these methods will help you create your algorithm with the Java syntax.
-So have fun and clone this project.
+This project creates an interface for your own algorithm and the Neo4j database. No more software needed.
+Our project allows you to create procedures for Neo4j. The only thing you need is the idea for your algorithm and some knowledge of Java. There are a lot of helper methods, making it easier to write your algorithm in Java.
+Clone this project, and have fun coding!
 
-## Why you need this
-- A simple way to check your new algorithm.
-- You get a lot of helpful methods for generating algorithm.
-- You need no background knowledge, because of the instruction and the good Javadocs.
+## What makes SeaCucumber useful?
+- It is simple way to check your new algorithm.
+- Lots of helpful methods for generating algorithm.
+- No background knowledge needed, this guide and the JavaDoc are enough.
 
-A framework for pros and rookies. So start your new coding experience or read our instruction.
+We strive to make this framework useful for both advanced programmers and beginners. So start your new coding experience after you've read our guide.
 
-## You must change in our code:
-
-In our framework you only must change a few things:
+## Where your code goes:
 
 1. Create a new class for your new Matching-Algorithm in the matcher package and let your new class extend the abstract class Matcher.
 2. Implement the matchingAlgorithm()-method and import org.neo4j.graphdb in order to use the Nodes of Neo4J. Also import the java.util.List instead of the suggested scale list. Lastly import java.util.Map to get a result map of your keys and lists of nodes in the end.
@@ -28,7 +26,7 @@ public Map<Integer, List<Node>> matchingAlgorithm() {
 }
 ```
 
-3. You have to write a constructor in your class. The constructor’s name has to be the same as the classname. The following structure can be used:
+3. Write a constructor for your class. The following structure can be used:
 
 ```
  public [AlgorithmsName] (org.neo4j.graphdb.GraphDatabaseService db,
@@ -38,7 +36,7 @@ public Map<Integer, List<Node>> matchingAlgorithm() {
     }
 ```
 
-4. Now you have to create a new procedure to access your matcher on your Neo4J database. Go to the procedure.GraphProcedures class and e.g. copy one of the example procedures for Dual Simulation or Failures.
+4. Now create a procedure to access your matcher on your Neo4J database. Go to the procedure.GraphProcedures class and, for example, copy one of the example procedures for Dual Simulation or Failures.
 
 ``` 
  @Procedure(value = "graph.[NAME]", mode = Mode.READ)
@@ -55,7 +53,7 @@ public Map<Integer, List<Node>> matchingAlgorithm() {
 Replace [NAME] with the name of your new procedure and [MATCHER] with the name of your new matcher class.
 
 ## Start with your procedure:
-If you want to create your own procedure, you need maven. So your last step before you have a ready procedure is to call this in maven:
+If you want to create your own procedure, you need the Apache Maven build system. So your last step before you have a ready procedure is to call this in Maven:
 
 `mvn clean package`
 
@@ -77,10 +75,10 @@ public GraphDatabaseService db;
 Needed to work with the database.
 ```
 
-If you want to change the graphdatabase, the procedure must be annotated with
+If you want to change the graph database, the procedure must be annotated with
 `@Procedure(value = "NameofPackage.NameofProcedure", mode = MODE.WRITE)` .
 
-Also the procedure must be annotated with `@Description("Description of the Procedure")` and describe the procedure.
+The procedure must also be annotated with `@Description("Description of the Procedure")` and describe the procedure.
 
 Procedures are defined as follows:
 ```
@@ -89,12 +87,12 @@ Procedures are defined as follows:
 public Stream<SearchHit> nameOfProcedure(@Name("parameter1", int parameter1, @Name("parameter2", String parameter2) {...}
 ```
 
-The return value of a procedure can be void. In this case the return Stream is empty.
+The return value of a procedure can be `void`. In this case the returned Stream is empty.
 
 The following types of arguments are allowed in your procedure:
-String, Long, Double, Number, Boolean, Map, List, Object
+`String`, `Long`, `Double`, `Number`, `Boolean`, `Map`, `List`, `Object`
 
-The return of a procedure must be `Stream<SearchHit>`, in which SearchHit is a class with a constructor, with own attributs.
+The return of a procedure must be `Stream<SearchHit>`, in which SearchHit is a class with a constructor, with own attributes.
 
 ```
 UserFunctions funktionieren wie Procedures. Diese können allerdings einfache Rückgabetypen haben. Beispiel:
