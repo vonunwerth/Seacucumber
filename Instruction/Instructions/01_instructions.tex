@@ -1,16 +1,16 @@
 \chapter{Instructions}\label{chap:zielbestimmung}
 \pagenumbering{arabic}
 Dear user,\\
-we are delighted that you use our Framework for Neo4j. For everything to run accordingly, you need Neo4j, Maven and Java for our functions and it runs on every normal operating system.
+we are delighted that you use our Framework for Neo4j. For everything to run accordingly, you need Neo4j, Maven and Java for our functions and it runs on every operating system that these technologies support.
 If you have any questions, please do not hesitate to contact us on our \glqq Git Repository\grqq{}.
 
 \section{Desktop Version} \label{sec:desktop}
-If you use the desktop version, you have a lot of other steps to do.
+If you are using the desktop version, you have to take the following steps. For older Versions see chapter \ref{chap:olderVersion}.
 
 \section{Required-Software}\label{sec:neededsoftwareNew}
 In order to use our Framework you need:
 \begin{itemize}
-	\item The Neo4J-Desktop Client\footnote{\url{https://neo4j.com/download/}} is very important; it has to be installed otherwise you can't run the framework.
+	\item The Neo4J-Desktop Client\footnote{\url{https://neo4j.com/download/}}; it has to be installed otherwise you can't run the framework.
 	\item The latest version of Java\footnote{\url{https://java.com/de/download/}} has to be installed and the needed root-settings have to be set.
 	\item Also your device needs Maven\footnote{\url{https://maven.apache.org/download.cgi}}, this is needed to build the project and import alle dependencies{}.
 \end{itemize}
@@ -20,25 +20,25 @@ For a better programming experience we recommend to use an IDE. During the instr
 
 \section {First use guidance for experienced users} \label{sec:beforeFirstUseNew}
 \begin{itemize}
-	\item The required Software should be installed on your computer so you can ensure that everything works right.
-	\item Please start the Neo4j-Desktop Software and create a new database.
-	\item Now you need our Framework. You can clone our \glqq Git Repository\footnote{\url{https://github.com/vonunwerth/Seacucumber.git}} \grqq{}. If you don't now how to clone the \glqq Git Repository\grqq{} please read the Step by Step Manual.
+	\item The required software should be installed on your computer so you can ensure that everything works correctly.
+	\item Start the Neo4j-Desktop Software and create a new database. Instructions are on the Neo4J website.
+	\item Now clone our \glqq Git Repository\footnote{\url{https://github.com/vonunwerth/Seacucumber.git}} \grqq{}. If you don't know how to clone the \glqq Git Repository\grqq{} please read the Step by Step Manual.
 	\item Furthermore you need to open the project with Maven. You can check your individual IDE for further instructions.
 	\item In the package \glqq matcher\grqq{} you can create a new Java class where you implement your algorithm.
-	\item Things that need to be changed in this class, so that \glqq Neo4j - procedures\grqq{} can work properly, will be explained in chapter \ref{sec:startProgrammingNew} \glqq Start coding\grqq{}.
+	\item The necessary changes to this class, so that \glqq Neo4j - procedures\grqq{} can work properly, will be explained in chapter \ref{sec:startProgrammingNew} \glqq Start coding\grqq{}.
 \end{itemize}
 
 \section{Step by step guide for beginners}\label{sec:stepByStepManualNew}
 This step by step guide is created for using the software \glqq ItelliJ IDEA\grqq{}.
 \begin{itemize}
-	\item The requested Software should be installed on your computer.
-	\item Please start the Neo4j-Desktop Software and create a new project (The tab with the book). A new Database can be create with a click on New Graph on the right site. Neo4j will guide you through the creation process. Please take Database Version 3.3.3 \footnote{constituted on 08.03.2018}.
+	\item The requested software should be installed on your computer.
+	\item Start the Neo4j-Desktop Software and create a new project (The tab with the book). A new Database can be create with a click on New Graph on the right site. Neo4j will guide you through the creation process. Please take Database Version 3.3.3 \footnote{constituted on 08.03.2018}.
 	\item After downloading and installing the Software \glqq IntelliJ IDEA\grqq{} opens and is ready for use. The following window opens. \newpage
 	\begin{center}
 		\includegraphics[width=4.2cm]{common/IntelliJstart.png}\setlength{\unitlength}{1mm}
 	\end{center}
 	
-	\item You click on \glqq Check out from Version Control - GitHub\grqq{} and a window with the name \glqq Clone Repository\grqq{} will open. \\
+	\item Click on \glqq Check out from Version Control - GitHub\grqq{} and a window with the name \glqq Clone Repository\grqq{} will open. \\
 	\textbf{Git Repository URL:} https://github.com/vonunwerth/Seacucumber.git \\
 	\textbf{Parent Directory:} The location where you want to save the project.  \\
 	\textbf{Directory Name:} For example Neo4j (You can choose whatever you want.)\\
@@ -55,7 +55,7 @@ This step by step guide is created for using the software \glqq ItelliJ IDEA\grq
 After checking out the repository you can start coding. Ensure you use Java JDK 1.8 or higher to compile the project. Otherwise some features of the given classes cannot be used.
 \begin{itemize}
 	\item Create a new class for your new Matching-Algorithm in the matcher package and let your new class extends the abstract class \textit{matcher}.
-	\item Implement the \textit{matchingAlgorithm()-method} and import \textit{org.neo4j.graphdb} in order to use the Nodes of Neo4J. Also import the java.util.List instead of the suggested scale list. Last import java.util.Map to get a result map of your keys and lists of nodes in the end.
+	\item Implement the \textit{matchingAlgorithm()-method} and import \textit{org.neo4j.graphdb} in order to use the Nodes of Neo4J. Also import the java.util.List instead of the suggested Scala list. Last import java.util.Map to get a result map of your keys and lists of nodes in the end.
 	\lstset{language=Java}
 	\begin{lstlisting} 
 	@Override
@@ -95,7 +95,7 @@ After checking out the repository you can start coding. Ensure you use Java JDK 
 After you write your algorithm in your new class in the Java package matcher, you have to create the \glqq jar\grqq{} for the database.
 \begin{itemize}
 	\item Before you create the jar, you can test the code. Please use the \glqq ProcedureTest\grqq{} class in the test package. For testing start the main method in the class \glqq ProcedureTest.java\grqq{}.
-	\item Open the Maven tab in \glqq ItelliJ \grqq{} and open the point \glqq Neo4JMatchAlgFramework\grqq{}. The next folder you need is the \glqq Lifecycle\grqq{} folder, here you click \glqq clean\grqq{} then you click on \glqq package\grqq{}.
+	\item Open the Maven tab in \glqq IntelliJ \grqq{} and open the point \glqq Neo4JMatchAlgFramework\grqq{}. The next folder you need is the \glqq Lifecycle\grqq{} folder, here you click \glqq clean\grqq{} then you click on \glqq package\grqq{}.
 	\item After finishing you start your explorer and search for the folder where you cloned the \glqq Git Repository\grqq{} to. Here is a new folder named target. Open this folder and copy the \glqq original-Neo4JMatchAlgFramework-1.0.jar\grqq{}. \\
 	(The other one is for testing and is not important. It won't work.)
 	\item Please go to your Neo4j database from the first steps (see step by step manual \ref{sec:stepByStepManualNew}).
@@ -125,7 +125,7 @@ To test if your procedure works in Neo4j you can use the following example state
 	RETURN m,p
 	\end{lstlisting}
 \end{itemize}
-At this point you know everything we know - So have fun and develop new good algorithms.
+At this point you know everything we know - have fun and develop new algorithms.
 \newpage
 
 \chapter{For older Versions} \label{chap:olderVersion}

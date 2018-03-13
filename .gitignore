@@ -98,3 +98,6 @@ $RECYCLE.BIN/
 *.lnk
 .idea/codeStyles/
 .idea/workspace.xml
+
+# LaTeX
+*.aux
