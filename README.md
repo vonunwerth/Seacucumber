@@ -3,14 +3,14 @@
 ### SeaCucumber-Framework
 
 Before you start, please check our instructions [here](https://github.com/vonunwerth/Seacucumber/blob/master/Instruction/Instructions.pdf).
-This project create an interface for your own algorithm and the Neo4j database. The best thing is that you need no more software.
-You create with our project a procedure for Neo4j and the only thing you need is the idea for your algorithem. You will see we have a lot of helpful methods, this methods helps you create your algotithem with the Java syntax.
+This project creates an interface for your own algorithm and the Neo4j database. The best thing is that you need no more software.
+With our project you create a procedure for Neo4j and the only thing you need is the idea for your algorithm. You will see we have a lot of helpful methods, these methods will help you create your algorithm with the Java syntax.
 So have fun and clone this project.
 
 ## Why you need this
 - A simple way to check your new algorithm.
 - You get a lot of helpful methods for generating algorithm.
-- You need no background knowledge, because the instruction and the good Javadocs.
+- You need no background knowledge, because of the instruction and the good Javadocs.
 
 A framework for pros and rookies. So start your new coding experience or read our instruction.
 
@@ -18,8 +18,8 @@ A framework for pros and rookies. So start your new coding experience or read ou
 
 In our framework you only must change a few things:
 
-1. Create a new class for your new Matching-Algorithm in the matcher package and let your new class extends the abstract class matcher.
-2. Implement the matchingAlgorithm()-method and import org.neo4j.graphdb in order to use the Nodes of Neo4J. Also import the java.util.List instead of the suggested scale list. Last import java.util.Map to get a result map of your keys and lists of nodes in the end.
+1. Create a new class for your new Matching-Algorithm in the matcher package and let your new class extend the abstract class Matcher.
+2. Implement the matchingAlgorithm()-method and import org.neo4j.graphdb in order to use the Nodes of Neo4J. Also import the java.util.List instead of the suggested scale list. Lastly import java.util.Map to get a result map of your keys and lists of nodes in the end.
 
 ```
 @Override
@@ -38,7 +38,7 @@ public Map<Integer, List<Node>> matchingAlgorithm() {
     }
 ```
 
-4. Now you have to create a now procedure to access your matcher on your Neo4J database. Go to the procedure.GraphProcedures class and e.g. copy one of the example procedures for Dual Simulation or Failures.
+4. Now you have to create a new procedure to access your matcher on your Neo4J database. Go to the procedure.GraphProcedures class and e.g. copy one of the example procedures for Dual Simulation or Failures.
 
 ``` 
  @Procedure(value = "graph.[NAME]", mode = Mode.READ)
@@ -59,13 +59,13 @@ If you want to create your own procedure, you need maven. So your last step befo
 
 `mvn clean package`
 
-This create a new target folder at your storage (at the place where you storage this project). In the folder is a .jar file and this is your procedure. The last step is to drag the file to your plugins folder at your database.
+This creates a new target folder at your storage (at the place where you storage this project). In the folder is a .jar file and this is your procedure. The last step is to drag the file to your plugins folder at your database.
 If you have a problem with this step, please check [this](https://github.com/vonunwerth/Seacucumber/blob/master/Instruction/Instructions.pdf).
 
 ## Good to know: Procedures and User functions
 If you want more Knowledge about Neo4j Procedures and user functions you can read this:
 
-Procedures and UserFunctions should have a own Package for storage, this is for a better methods call.
+Procedures and UserFunctions should have an own Package for storage, this is for a better method calling.
 A Query can be written in the Neo4j-Terminal with:
 
 `CALL packageName.procedureName(param)`
@@ -80,7 +80,7 @@ Needed to work with the database.
 If you want to change the graphdatabase, the procedure must be annotated with
 `@Procedure(value = "NameofPackage.NameofProcedure", mode = MODE.WRITE)` .
 
-Also the procedure must be annotated with `@Description("Description from the Procedure")` and discribed the procedures.
+Also the procedure must be annotated with `@Description("Description of the Procedure")` and describe the procedure.
 
 Procedures are defined as follows:
 ```
@@ -89,9 +89,9 @@ Procedures are defined as follows:
 public Stream<SearchHit> nameOfProcedure(@Name("parameter1", int parameter1, @Name("parameter2", String parameter2) {...}
 ```
 
-The return value of a procedure can be void. In this chase the return Stream is empty.
+The return value of a procedure can be void. In this case the return Stream is empty.
 
-For arguments of procedures are the following typs allowed:
+The following types of arguments are allowed in your procedure:
 String, Long, Double, Number, Boolean, Map, List, Object
 
 The return of a procedure must be `Stream<SearchHit>`, in which SearchHit is a class with a constructor, with own attributs.
