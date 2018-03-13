@@ -53,28 +53,6 @@ public class GraphProcedures {
 
     /**
      * NEO4J Procedure that can be executed in the database.
-     *
-     * First, the query is converted to a graph.
-     * Then the matching algorithm is executed.
-     * Finally, the result is returned.
-     *
-     * The passed query is processed with this NEO4J procedure and a result set is returned.
-     *
-     * @param query The given query to execute
-     * @return Stream of NodeResults. Each NodeResult contains only one node, the one it represents in the result set.
-     */
-    @Procedure(value = "graph.failure", mode = Mode.READ)
-    @Description("Failure matching")
-    @SuppressWarnings("unused")
-    public Stream<NodeResult> failure(@Name("query") String query) {
-        Graph graph = prepareQuery(db, query);
-        FailureMatcher matcher = new FailureMatcher(db, graph);
-        Set<Node> simulated = matcher.simulate();
-        return simulated.stream().map(NodeResult::new);
-    }
-
-    /**
-     * NEO4J Procedure that can be executed in the database.
      * <p>
      * First, the query is converted to a graph.
      * Then the matching algorithm is executed.

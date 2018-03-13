@@ -8,6 +8,12 @@ import java.util.concurrent.TimeUnit;
 
 public class ProcedureRessources {
 
+    /**
+     * Prepares query for execution
+     * @param db database
+     * @param query pattern
+     * @return graph
+     */
     public static Graph prepareQuery(GraphDatabaseService db, String query) {
         query = query.trim().replaceAll("\n", " ");
         TimeUnit tu = TimeUnit.MILLISECONDS;

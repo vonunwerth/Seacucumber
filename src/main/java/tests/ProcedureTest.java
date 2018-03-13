@@ -38,20 +38,7 @@ public class ProcedureTest {
             Session session = driver.session();
             System.out.println("TEST: Database initialized");
             // And given I have a node in the database
-            /*System.out.println("Mit welcher Datenbank wollen Sie den Test ausführen\n (1) Große Datenbank > 100 Knoten + Beziehungen \n (2) Kleine Datenbank < 10 Knoten + Beziehungen");
-            Scanner sc = new Scanner(System.in);
-            int var = sc.nextInt();
-            switch (var) {
-                case 1:
-                    session.run(CREATE_TESTQUERY_LITTLE);
-                    break;
-                case 2:
-                    session.run(CREATE_TESTQUERY_LITTLE);
-                    break;
-                default:
-                    System.out.println("Zu dieser Wahl existiert kein Test. Der Test wird beendet.");
-                    System.exit(25);
-            }*/
+
             session.run(CREATE_TESTQUERY_VERY_LITTLE);
             System.out.println("TEST: Test data sets created.");
             // When I use the index procedure to index a node
@@ -59,7 +46,6 @@ public class ProcedureTest {
 
             // Then I can search for that node with lucene query syntax
             StatementResult sr = session.run("CALL graph.isomorphic(\" MATCH (tom:Person)-[:DIRECTED]->(m:Movie) RETURN tom \")");
-            //StatementResult sr = session.run("CALL graph.trace(\" MATCH (tom:Person) RETURN tom \")");
 
             System.out.println("TEST: Query started");
             //assertThat( result.single().get( "nodeId" ).asLong(), equalTo( nodeId ) );

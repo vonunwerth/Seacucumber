@@ -134,7 +134,7 @@ public class TraceMatcher extends Matcher {
                 //use successor as new starting node
                 actualNode = rel.getEndNode();
                 //flood with new starting node and current path
-                floodDatabaseSubset(actualNode, trace, usedEdges, subsetOfPowerSet); //Flute mit neuem Startknoten und aktuellem Weg
+                floodDatabaseSubset(actualNode, trace, usedEdges, subsetOfPowerSet); //flood with new start node and actual way
             }
         }
     }
