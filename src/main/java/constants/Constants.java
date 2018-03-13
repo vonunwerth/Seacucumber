@@ -539,4 +539,20 @@ public class Constants {
             "  (LanaW)-[:DIRECTED]->(TheMatrix),\n" +
             "  (JoelS)-[:PRODUCED]->(TheMatrix)\n" +
             ";";
+
+    /**
+     * Fills a simple database with a test record (example data).
+     */
+    public static final String CREATE_TESTQUERY_VERY_LITTLE = "CREATE (TheMatrix:Movie {title:'The Matrix', released:1999, tagline:'Welcome to the Real World'})\n" +
+            "CREATE (LillyW:Person {name:'Lilly Wachowski', born:1967})\n" +
+            "CREATE (LanaW:Person {name:'Lana Wachowski', born:1965})\n" +
+            "CREATE (JoelS:Person {name:'Joel Silver', born:1952})\n" +
+            "CREATE (PatrickS:Person {name:'Patrick Stewart', born:1940})\n" +
+            "CREATE\n" +
+            "  (LillyW)-[:DIRECTED]->(TheMatrix),\n" +
+            "  (LanaW)-[:DIRECTED]->(TheMatrix),\n" +
+            "  (JoelS)-[:PRODUCED]->(TheMatrix)\n" +
+            ";";
+
+
 }

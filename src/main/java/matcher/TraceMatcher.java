@@ -66,7 +66,6 @@ public class TraceMatcher extends Matcher {
         for (Set<Node> set : powerSet) {
             dbTraces = new HashSet<>(); //Alle Traces des vorherigen Sets löschen
             trace(set);
-            boolean equality = dbTraces.equals(patternTraces);
             if (dbTraces.equals(patternTraces)) { //Wenn Trace mit Patterntrace übereinstimmt ist ein Ergebnis gefunden
                 resultCount++;
                 resultMap.put(resultCount, new ArrayList<>(set)); //Zum Ergebnisset hinzufügen
@@ -92,7 +91,6 @@ public class TraceMatcher extends Matcher {
      */
     private void floodPattern(Vertex actualNode, ArrayList<String> trace, Set<Integer> usedEdges) {
         //trace.add(actualNode.getIdentifier()); Use this to get the nodes in the traces instead of the relationsships
-        //TODO Testen, ob Algortihmus mit Kreisen in Pattern funktioniert
         if (!patternTraces.containsAll(trace)) {
             patternTraces.add(trace); //Bisher zurückgelegten Weg zu den Traces hinzufügen
         }

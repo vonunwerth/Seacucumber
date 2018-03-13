@@ -13,7 +13,7 @@ import java.util.Map;
  */
 @SuppressWarnings({"WeakerAccess", "unused", "ConstantConditions"})
 public class Vertex {
-
+    //TODO Label und Identifier vertauscht
     /**
      * Label of the vertex
      */

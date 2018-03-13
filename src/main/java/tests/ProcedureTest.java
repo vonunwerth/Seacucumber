@@ -6,7 +6,7 @@ import org.neo4j.driver.v1.*;
 import org.neo4j.harness.junit.Neo4jRule;
 import procedure.GraphProcedures;
 
-import static constants.Constants.CREATE_TESTQUERY_LITTLE;
+import static constants.Constants.CREATE_TESTQUERY_VERY_LITTLE;
 
 /**
  * Beispielausführung einer Procedure in einer Klasse als Test
@@ -52,7 +52,7 @@ public class ProcedureTest {
                     System.out.println("Zu dieser Wahl existiert kein Test. Der Test wird beendet.");
                     System.exit(25);
             }*/
-            session.run(CREATE_TESTQUERY_LITTLE);
+            session.run(CREATE_TESTQUERY_VERY_LITTLE);
             System.out.println("TEST: Testdatensätze wurden erstellt.");
             // When I use the index procedure to index a node
             //session.run( "CALL example.index({id}, ['name'])", parameters( "id", nodeId ) );
