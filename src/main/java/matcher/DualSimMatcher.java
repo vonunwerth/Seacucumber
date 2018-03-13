@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Dual simulation for graph databases
  * Sample matcher that extends the abstract class {@link Matcher}.
  */
 public class DualSimMatcher extends Matcher {
@@ -27,6 +28,11 @@ public class DualSimMatcher extends Matcher {
         this.graph = graph;
     }
 
+    /**
+     * Outsources method for the dualSimulation
+     *
+     * @param sim Map of nodes, mapped with key
+     */
     static void count(Map<Integer, List<Node>> sim) {
         for (Integer s : sim.keySet()) {
             int counter = 0;

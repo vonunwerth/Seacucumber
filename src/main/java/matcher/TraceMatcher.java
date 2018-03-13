@@ -79,6 +79,11 @@ public class TraceMatcher extends Matcher {
         return resultMap;
     }
 
+    /**
+     * Starts the trace for a set of nodes
+     *
+     * @param set Set to calculate trace about
+     */
     private void trace(Set<Node> set) {
         for (Node node : set) {
             ArrayList<String> trace = new ArrayList<>();
