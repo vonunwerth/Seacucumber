@@ -27,20 +27,22 @@ public class IsomorphicMatcher extends Matcher {
         //Alle Subsets die so groß wie das Pattern sind
         Set<Set<Node>> powerSet = powerSet(databaseNodes);
 
-        for (Vertex vertex : graph.getVertices()) {
+        for (Vertex vertex : graph.getVertices()) { //Für alle Knoten aus dem Pattern
             int setCounter = 0;
-            for (Set<Node> set : powerSet) {
-                setCounter++;
-                int nodes = set.size();
-                int isomorphNodes = 0;
-                for (Node node : set) {
-                    if (vertex.isomorphic(node)) {
-                        isomorphNodes++;
+            for (Set<Node> set : powerSet) { //Für alle Subgraphen der Datenbank
+                if (set.size() == graph.getVertices().size()) { //Nur wenn Subgraph richtige Größe hat
+                    setCounter++;
+                    int nodes = set.size(); //Isomorphe Knoten, die gefunden werden müssen
+                    int isomorphNodes = 0;
+                    for (Node node : set) {
+                        if (vertex.isomorphic(node)) {
+                            isomorphNodes++; //Isomorpher Knoten gefunden
+                        }
                     }
-                }
-                if (nodes == isomorphNodes) { //Mappen erfolgreich
-                    List<Node> tempList = new ArrayList<>(set);
-                    resultMap.put(setCounter, tempList);
+                    if (nodes == isomorphNodes) { //Mappen erfolgreich
+                        List<Node> tempList = new ArrayList<>(set);
+                        resultMap.put(setCounter, tempList);
+                    }
                 }
             }
         }

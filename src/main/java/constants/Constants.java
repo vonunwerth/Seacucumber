@@ -550,8 +550,8 @@ public class Constants {
             "CREATE (PatrickS:Person {name:'Patrick Stewart', born:1940})\n" +
             "CREATE\n" +
             "  (LillyW)-[:DIRECTED]->(TheMatrix),\n" +
-            "  (LanaW)-[:DIRECTED]->(TheMatrix)\n" +
-            //"  (JoelS)-[:PRODUCED]->(TheMatrix)\n" +
+            "  (LanaW)-[:DIRECTED]->(TheMatrix),\n" +
+            "  (JoelS)-[:PRODUCED]->(TheMatrix)\n" +
             ";";
 
 
