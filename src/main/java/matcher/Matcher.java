@@ -36,6 +36,13 @@ public abstract class Matcher {
     }
 
     /**
+     * Default Matcher
+     */
+    Matcher() {
+        this.db = null;
+    }
+
+    /**
      * Hash code for the matcher
      * finalized to dont get the suggestion to implement in specialised matchers
      *
@@ -49,6 +56,7 @@ public abstract class Matcher {
     /**
      * Equals of the matcher
      * finalized to dont get the suggestion to implement in specialised matchers
+     *
      * @param obj Object to compare
      * @return Comparison of the given object and this
      */
@@ -60,6 +68,7 @@ public abstract class Matcher {
     /**
      * Cloning of matchers
      * finalized to dont get the suggestion to implement in specialised matchers
+     *
      * @return cloned Object
      * @throws CloneNotSupportedException Error
      */
@@ -70,6 +79,7 @@ public abstract class Matcher {
 
     /**
      * toString() for the matcher
+     *
      * @return Matcher information
      */
     @Override
@@ -80,18 +90,12 @@ public abstract class Matcher {
     /**
      * Finalizes the matcher
      * finalized to dont get the suggestion to implement in specialised matchers
+     *
      * @throws Throwable Error
      */
     @Override
     protected final void finalize() throws Throwable {
         super.finalize();
-    }
-
-    /**
-     * Default Matcher
-     */
-    Matcher() {
-        this.db = null;
     }
 
     /**
@@ -259,7 +263,7 @@ public abstract class Matcher {
     final List<Node> findNodesProp(Vertex vertex) {
         ResourceIterable<Node> list = db.getAllNodes();
         //Filter out the nodes equal to the Vertex and collect into a List
-        return list.stream().filter(vertex::equals).collect(Collectors.toList());
+        return list.stream().filter(vertex::equalsProp).collect(Collectors.toList());
     }
 
     /**
@@ -268,12 +272,12 @@ public abstract class Matcher {
      * @return The result set
      */
     public final Set<Node> simulate() {
-        Map<Integer, List<Node>> matched = matchingAlgorithm();
-        Set<Node> results = new HashSet<>();
-        //Collect all the Nodes from the individual results
-        if (matched != null)
-            matched.entrySet().stream().map(Map.Entry::getValue).forEach(results::addAll); //TODO Bei Trace kommen wieder ganze Strukturen nicht nur einzelne Knotn raus
-        return results;
+        Map<Integer, List<Node>> map = matchingAlgorithm();
+        Set<Node> set = new HashSet<>();
+        for (Map.Entry<Integer, List<Node>> entry : map.entrySet()) {
+            set.addAll(entry.getValue());
+        }
+        return set;
     }
 
     /**
