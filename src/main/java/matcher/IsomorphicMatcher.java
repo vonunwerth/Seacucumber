@@ -17,7 +17,7 @@ public class IsomorphicMatcher extends Matcher {
     }
 
     /**
-     * Simple graph isomorphism of the pattern on alle subgraphs of the database
+     * Simple graph isomorphism of the pattern on all subgraphs of the database
      *
      * @return isomorphic subsets
      */
@@ -27,27 +27,36 @@ public class IsomorphicMatcher extends Matcher {
         int nodeCount = 0;
         Set<Node> databaseNodes = new HashSet<>();
         for (Node node : db.getAllNodes()) {
-            nodeCount++; //Anzahl der Knoten in der Datenbank
+            //amount of nodes in the database
+            nodeCount++;
             databaseNodes.add(node);
         }
-        if (graph.getVertices().size() > nodeCount) return null; //Pattern hat mehr Knoten als Datenbank
 
-        //Alle Subsets die so groß wie das Pattern sind
+        //pattern has more nodes than the database
+        if (graph.getVertices().size() > nodeCount) return null;
+
+        //all subsets that have the same size as the pattern
         Set<Set<Node>> powerSet = powerSet(databaseNodes);
 
-        for (Vertex vertex : graph.getVertices()) { //Für alle Knoten aus dem Pattern
+        //for all nodes in the pattern
+        for (Vertex vertex : graph.getVertices()) {
             int setCounter = 0;
-            for (Set<Node> set : powerSet) { //Für alle Subgraphen der Datenbank
-                if (set.size() == graph.getVertices().size()) { //Nur wenn Subgraph richtige Größe hat
+            //for all subgraphs in the database
+            for (Set<Node> set : powerSet) {
+                //if the subgraph has the correct size
+                if (set.size() == graph.getVertices().size()) {
                     setCounter++;
-                    int nodes = set.size(); //Isomorphe Knoten, die gefunden werden müssen
+                    //all isomorphic nodes that need to be found
+                    int nodes = set.size();
                     int isomorphNodes = 0;
                     for (Node node : set) {
                         if (vertex.isomorphic(node)) {
-                            isomorphNodes++; //Isomorpher Knoten gefunden
+                            //isomorphic node found
+                            isomorphNodes++;
                         }
                     }
-                    if (nodes == isomorphNodes) { //Mappen erfolgreich
+                    //mapping successful
+                    if (nodes == isomorphNodes) {
                         List<Node> tempList = new ArrayList<>(set);
                         resultMap.put(setCounter, tempList);
                     }
