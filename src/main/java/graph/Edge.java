@@ -9,6 +9,7 @@ import java.util.Map;
 /**
  * Representation of a directed edge in a graph
  */
+@SuppressWarnings("unused")
 public class Edge {
 
     /**
@@ -37,6 +38,9 @@ public class Edge {
      */
     private boolean visited = false;
 
+    /**
+     * Unique id to identify the edge
+     */
     private Integer id;
 
     /**
@@ -153,10 +157,20 @@ public class Edge {
         return this.label;
     }
 
+    /**
+     * Compares the ids of the given edges
+     *
+     * @param edge edge no. 1
+     * @return are the ids the same
+     */
     public boolean equals(Edge edge) {
         return this.id.equals(edge.id);
     }
 
+    /**
+     * Returns the id of the given Edge
+     * @return unique id
+     */
     public Integer getId() {
         return id;
     }

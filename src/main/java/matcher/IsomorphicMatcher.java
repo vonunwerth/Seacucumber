@@ -7,12 +7,20 @@ import org.neo4j.graphdb.Node;
 
 import java.util.*;
 
+/**
+ * Creates a new Isomorphic matcher
+ */
 public class IsomorphicMatcher extends Matcher {
     public IsomorphicMatcher(GraphDatabaseService database, Graph graph) {
         this.db = database;
         this.graph = graph;
     }
 
+    /**
+     * Simple graph isomorphism of the pattern on alle subgraphs of the database
+     *
+     * @return isomorphic subsets
+     */
     @Override
     public Map<Integer, List<Node>> matchingAlgorithm() {
         Map<Integer, List<Node>> resultMap = new HashMap<>();

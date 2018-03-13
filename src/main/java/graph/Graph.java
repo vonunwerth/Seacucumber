@@ -88,6 +88,9 @@ public class Graph {
         return sb.toString();
     }
 
+    /**
+     * Prints the graph as graphToDOT in the standard output stream
+     */
     public void printGraph() {
         System.out.println(graphToDOT());
     }

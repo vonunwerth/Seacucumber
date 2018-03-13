@@ -27,26 +27,53 @@ public abstract class Matcher {
         this.graph = graph;
     }
 
+    /**
+     * Hash code for the matcher
+     * finalized to dont get the suggestion to implement in specialised matchers
+     *
+     * @return hashCode of object
+     */
     @Override
     public final int hashCode() {
         return super.hashCode();
     }
 
+    /**
+     * Equals of the matcher
+     * finalized to dont get the suggestion to implement in specialised matchers
+     * @param obj Object to compare
+     * @return Comparison of the given object and this
+     */
     @Override
     public final boolean equals(Object obj) {
         return super.equals(obj);
     }
 
+    /**
+     * Cloning of matchers
+     * finalized to dont get the suggestion to implement in specialised matchers
+     * @return cloned Object
+     * @throws CloneNotSupportedException Error
+     */
     @Override
     protected final Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
+    /**
+     * toString() for the matcher
+     * @return Matcher information
+     */
     @Override
-    public final String toString() {
+    public String toString() {
         return super.toString();
     }
 
+    /**
+     * Finalizes the matcher
+     * finalized to dont get the suggestion to implement in specialised matchers
+     * @throws Throwable Error
+     */
     @Override
     protected final void finalize() throws Throwable {
         super.finalize();
