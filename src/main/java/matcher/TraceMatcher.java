@@ -95,7 +95,7 @@ public class TraceMatcher extends Matcher {
         if (!patternTraces.containsAll(trace)) {
             patternTraces.add(trace); //Bisher zurückgelegten Weg zu den Traces hinzufügen
         }
-        for (Edge edge : actualNode.getOutgoingEdges()) { //TODO bei
+        for (Edge edge : actualNode.getOutgoingEdges()) {
             if (!usedEdges.contains(edge.getId())) {
                 trace.add(edge.getLabel());
                 usedEdges.add(edge.getId()); //Sperre Kante für tiefere Aufrufe, um Kreise zu vermeiden

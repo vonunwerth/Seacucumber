@@ -13,7 +13,15 @@ import java.util.stream.Collectors;
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
 public abstract class Matcher {
+
+    /**
+     * Database service
+     */
     GraphDatabaseService db;
+
+    /**
+     * Graph pattern
+     */
     Graph graph;
 
     /**
@@ -289,6 +297,7 @@ public abstract class Matcher {
         }
         return sets;
     }
+
     /**
      * This function must be overridden with the dualSimulation algorithm
      *
